@@ -21,20 +21,12 @@
     </div>
 
     <div class="gg-banner__illustration" aria-hidden="true">
-      {% if section.settings.illustration_image != blank %}
-        <img
-          class="gg-banner__illustration-image"
-          src="{{ section.settings.illustration_image | img_url: '1600x' }}"
-          alt=""
-          aria-hidden="true"
-        />
-      {% else %}
-        <div
-          class="gg-banner__illustration-fallback"
-          style="background-image: url({{ 'Frame.svg' | asset_url }})\;"
-          aria-hidden="true"
-        ></div>
-      {% endif %}
+      <img
+        class="gg-banner__illustration-image"
+        src="{{ 'Frame.svg' | asset_url }}"
+        alt=""
+        aria-hidden="true"
+      />
     </div>
   </div>
 
