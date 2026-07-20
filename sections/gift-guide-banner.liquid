@@ -17,7 +17,8 @@
     </div>
     <p class="gift-guide-banner__headline">{{ section.settings.top_text }}</p>
     <a class="gift-guide-banner__top-button" href="{{ section.settings.top_button_url }}">
-      {{ section.settings.top_button_text }}
+      <span class="gift-guide-btn__label">{{ section.settings.top_button_text }}</span>
+      <span class="gift-guide-btn__arrow" aria-hidden="true">→</span>
     </a>
   </div>
 
@@ -29,7 +30,8 @@
       <h1 class="gift-guide-banner__title">{{ section.settings.hero_heading }}</h1>
       <div class="gift-guide-banner__copy">{{ section.settings.hero_copy | newline_to_br }}</div>
       <a class="gift-guide-banner__cta" href="{{ section.settings.hero_cta_url }}">
-        {{ section.settings.hero_cta_text }}
+        <span class="gift-guide-btn__label">{{ section.settings.hero_cta_text }}</span>
+        <span class="gift-guide-btn__arrow" aria-hidden="true">→</span>
       </a>
     </div>
   </div>

@@ -129,8 +129,8 @@ body[data-template="page.gift-guide"] .content-for-layout {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 44px;
-  padding: 0 26px;
+  min-height: 48px;
+  padding: 0 28px;
   border: none;
   background: #f5e626;
   color: #111;
@@ -158,6 +158,7 @@ body[data-template="page.gift-guide"] .content-for-layout {
   inset: 0;
   overflow: hidden;
   color: #111;
+  display: block;
 }
 
 .gift-guide-banner__illustration .gg-icon {
@@ -166,6 +167,7 @@ body[data-template="page.gift-guide"] .content-for-layout {
   fill: none;
   width: auto;
   height: auto;
+  transform-origin: center center;
 }
 
 .gift-guide-banner__illustration .gg-icon:nth-child(1) {
@@ -222,28 +224,35 @@ body[data-template="page.gift-guide"] .content-for-layout {
   left: 18%;
 }
 
+/* Ensure large center art scales to fill height and is cropped at edges like Figma */
+.gift-guide-banner__illustration svg:nth-child(2) {
+  transform: scale(1.12);
+  left: 50%;
+  transform-origin: 50% 0;
+}
+
 .gift-guide-banner__content {
   position: relative;
   z-index: 1;
   max-width: 520px;
-  padding: 180px 40px 0;
+  padding: 200px 40px 0;
 }
 
 .gift-guide-banner__title {
   font-family: 'Playfair Display', serif;
-  font-size: 5.5rem;
+  font-size: 5.6rem;
   line-height: 0.92;
   letter-spacing: -0.03em;
   font-weight: 700;
-  margin: 0 0 28px;
+  margin: 0 0 26px;
 }
 
 .gift-guide-banner__copy {
-  font-size: 1.05rem;
-  line-height: 1.75;
+  font-size: 1.02rem;
+  line-height: 1.6;
   color: #111;
-  max-width: 430px;
-  margin-bottom: 32px;
+  max-width: 440px;
+  margin-bottom: 30px;
 }
 
 .gift-guide-banner__cta {
@@ -290,7 +299,7 @@ body[data-template="page.gift-guide"] .content-for-layout {
 }
 
 .gift-guide-grid__container {
-  max-width: 1180px;
+  max-width: 1260px;
   margin: 0 auto;
 }
 
@@ -306,13 +315,13 @@ body[data-template="page.gift-guide"] .content-for-layout {
 .gift-guide-grid__cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  gap: 20px;
 }
 
 .gift-guide-card {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   border: none;
   background: #efefef;
@@ -340,18 +349,33 @@ body[data-template="page.gift-guide"] .content-for-layout {
   position: absolute;
   top: 16px;
   right: 16px;
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   background: #fff;
   color: #111;
   font-size: 1.1rem;
   font-weight: 700;
-  line-height: 34px;
+  line-height: 38px;
   text-align: center;
-  pointer-events: none;
+  pointer-events: auto;
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
 }
+
+/* Position tweak for hotspots matching Figma
+   We use smaller offsets on tall images to visually align the plus hotspot */
+.gift-guide-card[data-product-handle] .gift-guide-card__overlay {
+  top: calc(50% - 160px);
+  right: 24px;
+}
+
+/* Per-card hotspot nudges for precise placement */
+.gift-guide-grid__cards > *:nth-child(1) .gift-guide-card__overlay { top: 18px; right: 22px; }
+.gift-guide-grid__cards > *:nth-child(2) .gift-guide-card__overlay { top: 26%; right: 18px; }
+.gift-guide-grid__cards > *:nth-child(3) .gift-guide-card__overlay { top: 22px; right: 20px; }
+.gift-guide-grid__cards > *:nth-child(4) .gift-guide-card__overlay { top: 38%; right: 22px; }
+.gift-guide-grid__cards > *:nth-child(5) .gift-guide-card__overlay { top: 18px; right: 22px; }
+.gift-guide-grid__cards > *:nth-child(6) .gift-guide-card__overlay { top: 26%; right: 18px; }
 
 .gift-guide-card:hover .gift-guide-card__overlay {
   transform: translateY(-1px);
@@ -385,19 +409,47 @@ body[data-template="page.gift-guide"] .content-for-layout {
 .gift-guide-popup__overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.52);
 }
 
 .gift-guide-popup__card {
   position: relative;
   z-index: 1;
-  width: min(420px, 100%);
-  max-height: 92vh;
+  width: 480px;
+  max-width: calc(100% - 40px);
+  max-height: 88vh;
   overflow-y: auto;
   background: #fff;
-  border-radius: 18px;
-  padding: 28px 24px 24px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.22);
+  border-radius: 12px;
+  padding: 28px 28px 28px;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.18);
+}
+
+/* Button arrow animations (top CTA + hero CTA) */
+.gift-guide-btn__label {
+  display: inline-block;
+}
+.gift-guide-btn__arrow {
+  display: inline-block;
+  margin-left: 10px;
+  transition: transform 220ms cubic-bezier(.2,.9,.3,1), opacity 180ms ease;
+  transform: translateX(0);
+  opacity: 1;
+}
+.gift-guide-banner__top-button:hover .gift-guide-btn__arrow,
+.gift-guide-banner__cta:hover .gift-guide-btn__arrow {
+  transform: translateX(8px);
+}
+
+/* Ensure illustration is pure line art, no overlay */
+.gift-guide-banner__illustration {
+  color: #111;
+  background: transparent;
+}
+.gift-guide-banner__illustration svg {
+  display: block;
+  stroke: currentColor;
+  fill: none;
 }
 
 .gift-guide-popup__close {
@@ -417,14 +469,14 @@ body[data-template="page.gift-guide"] .content-for-layout {
 
 .gift-guide-popup__top {
   display: grid;
-  grid-template-columns: 110px 1fr;
+  grid-template-columns: 140px 1fr;
   gap: 18px;
   margin-bottom: 18px;
 }
 
 .gift-guide-popup__thumb {
-  width: 110px;
-  height: 110px;
+  width: 140px;
+  height: 140px;
   border-radius: 16px;
   overflow: hidden;
   background: #f4f4f4;
@@ -495,6 +547,16 @@ body[data-template="page.gift-guide"] .content-for-layout {
   color: #111;
   font-size: 0.95rem;
   appearance: none;
+}
+
+.gift-guide-popup__button-group button {
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.gift-guide-popup__add-to-cart {
+  border-radius: 10px;
+  font-size: 0.95rem;
 }
 
 .gift-guide-popup__button-group {
