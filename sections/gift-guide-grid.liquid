@@ -1,64 +1,68 @@
-<section id="gift-guide-grid" class="gift-guide-grid" aria-label="Gift guide products" data-gift-guide-grid data-auto-add-product="{{ section.settings.auto_add_product.handle }}">
-  <div class="gift-guide-grid__container">
-    <div class="gift-guide-grid__intro">
-      <p class="gift-guide-grid__eyebrow">{{ section.settings.eyebrow_text }}</p>
-      <h2 class="gift-guide-grid__title">{{ section.settings.grid_heading }}</h2>
+<section id="gift-guide-grid" class="gg-grid" aria-label="Gift guide products" data-gift-guide-grid data-auto-add-product="{{ section.settings.auto_add_product.handle }}">
+  <div class="gg-grid__container">
+    <div class="gg-grid__intro">
+      <p class="gg-grid__eyebrow">{{ section.settings.eyebrow_text }}</p>
+      <h2 class="gg-grid__title">{{ section.settings.grid_heading }}</h2>
     </div>
 
-    <div class="gift-guide-grid__cards">
+    <div class="gg-grid__cards">
       {% if section.blocks.size > 0 %}
         {% for block in section.blocks %}
-          <article class="gift-guide-card">
+          <article class="gg-card">
             {% if block.settings.product != blank %}
               {%- assign card_product = block.settings.product -%}
-              <button type="button" class="gift-guide-card__button" data-product-handle="{{ card_product.handle }}">
-                <span class="gift-guide-card__image-wrap">
-                  <span class="gift-guide-card__overlay">+</span>
+              <button
+                type="button"
+                class="gg-card__button"
+                data-product-handle="{{ card_product.handle }}"
+                aria-label="View {{ card_product.title }} details"
+              >
+                <span class="gg-card__media">
+                  <span class="gg-card__overlay">+</span>
                   {% if card_product.featured_image != blank %}
-                    <img class="gift-guide-card__image" src="{{ card_product.featured_image | img_url: '720x' }}" alt="{{ card_product.title }}">
+                    <img
+                      class="gg-card__image"
+                      src="{{ card_product.featured_image | img_url: '900x' }}"
+                      alt="{{ card_product.title }}"
+                    />
                   {% else %}
-                    <span class="gift-guide-card__image-fallback">Image unavailable</span>
+                    <span class="gg-card__image-fallback">Image unavailable</span>
                   {% endif %}
-                </span>
-                <span class="gift-guide-card__copy">
-                  <span class="gift-guide-card__label">Shop gift</span>
-                  <span class="gift-guide-card__name">{{ card_product.title }}</span>
-                  <span class="gift-guide-card__price">{{ card_product.price | money }}</span>
                 </span>
               </button>
             {% else %}
-              <div class="gift-guide-card gift-guide-card--empty">
-                <div class="gift-guide-card__placeholder">Select a product in the section settings</div>
+              <div class="gg-card gg-card--empty">
+                <div class="gg-card__placeholder">Select a product in the customizer</div>
               </div>
             {% endif %}
           </article>
         {% endfor %}
       {% else %}
-        <div class="gift-guide-grid__empty">Add six products in the customizer to populate the grid.</div>
+        <div class="gg-grid__empty">Add six products in the customizer to populate the grid.</div>
       {% endif %}
     </div>
   </div>
 
-  <div class="gift-guide-popup" id="gift-guide-popup" aria-hidden="true">
-    <div class="gift-guide-popup__overlay" data-popup-close></div>
-    <div class="gift-guide-popup__dialog" role="dialog" aria-modal="true" aria-labelledby="gift-guide-popup-title">
-      <button type="button" class="gift-guide-popup__close" data-popup-close aria-label="Close">×</button>
-      <div class="gift-guide-popup__content">
-        <div class="gift-guide-popup__image-panel">
-          <img class="gift-guide-popup__image" alt="" src="">
+  <div class="gg-popup" id="gift-guide-popup" aria-hidden="true">
+    <div class="gg-popup__backdrop" data-popup-close></div>
+    <div class="gg-popup__dialog" role="dialog" aria-modal="true" aria-labelledby="gift-guide-popup-title">
+      <button type="button" class="gg-popup__close" data-popup-close aria-label="Close popup">×</button>
+
+      <div class="gg-popup__content">
+        <div class="gg-popup__image-panel">
+          <img class="gg-popup__image" src="" alt="" />
         </div>
-        <div class="gift-guide-popup__details-panel">
-          <div class="gift-guide-popup__text-wrap">
-            <p class="gift-guide-popup__eyebrow">Product details</p>
-            <h2 id="gift-guide-popup-title" class="gift-guide-popup__title"></h2>
-            <div class="gift-guide-popup__price"></div>
-            <div class="gift-guide-popup__description"></div>
+
+        <div class="gg-popup__details">
+          <div class="gg-popup__header">
+            <h3 id="gift-guide-popup-title" class="gg-popup__title"></h3>
+            <p class="gg-popup__price"></p>
           </div>
-          <form class="gift-guide-popup__form" novalidate>
-            <div class="gift-guide-popup__options" data-popup-options></div>
-            <button type="button" class="gift-guide-popup__add-to-cart" data-add-to-cart>Add to cart</button>
-            <p class="gift-guide-popup__message" data-popup-message aria-live="polite"></p>
-          </form>
+          <p class="gg-popup__description"></p>
+
+          <div class="gg-popup__options" data-popup-options></div>
+          <button type="button" class="gg-popup__cart-btn" data-add-to-cart>ADD TO CART</button>
+          <p class="gg-popup__message" data-popup-message aria-live="polite"></p>
         </div>
       </div>
     </div>
@@ -81,7 +85,7 @@
       "type": "text",
       "id": "grid_heading",
       "label": "Grid heading",
-      "default": "Choose a product to explore"
+      "default": "Tisso vison in the wild"
     },
     {
       "type": "product",

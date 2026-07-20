@@ -1,23 +1,45 @@
-<section class="gift-guide-banner" aria-label="Gift guide banner">
-  <div class="gift-guide-banner__topbar">
-    <div class="gift-guide-banner__brand">{{ section.settings.brand_text }}</div>
-    <div class="gift-guide-banner__headline">{{ section.settings.top_text }}</div>
-    <a class="gift-guide-banner__top-button" href="{{ section.settings.top_button_url }}">{{ section.settings.top_button_text }}</a>
+{{- 'gift-guide.css' | asset_url | stylesheet_tag -}}
+
+<section class="gg-banner" aria-label="{{ section.settings.hero_heading }}">
+  <header class="gg-banner__topbar">
+    <div class="gg-banner__brand">{{ section.settings.brand_text }}</div>
+    <div class="gg-banner__tagline">{{ section.settings.top_text }}</div>
+    <a class="gg-banner__choose-btn" href="{{ section.settings.top_button_url }}">
+      {{ section.settings.top_button_text }}
+      <span class="gg-banner__arrow" aria-hidden="true"></span>
+    </a>
+  </header>
+
+  <div class="gg-banner__body">
+    <div class="gg-banner__text">
+      <h1 class="gg-banner__heading">{{ section.settings.hero_heading }}</h1>
+      <p class="gg-banner__copy">{{ section.settings.hero_copy | newline_to_br }}</p>
+      <a class="gg-banner__shop-btn" href="{{ section.settings.hero_cta_url }}">
+        {{ section.settings.hero_cta_text }}
+        <span class="gg-banner__arrow" aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div class="gg-banner__illustration" aria-hidden="true">
+      {% if section.settings.illustration_image != blank %}
+        <img
+          class="gg-banner__illustration-image"
+          src="{{ section.settings.illustration_image | img_url: '1600x' }}"
+          alt=""
+          aria-hidden="true"
+        />
+      {% else %}
+        <div
+          class="gg-banner__illustration-fallback"
+          style="background-image: url({{ 'gift-guide-banner.svg' | asset_url }});"
+          aria-hidden="true"
+        ></div>
+      {% endif %}
+    </div>
   </div>
 
-  <div class="gift-guide-banner__hero">
-    <h1 class="gift-guide-banner__title">{{ section.settings.hero_heading }}</h1>
-    <div class="gift-guide-banner__copy">{{ section.settings.hero_copy | newline_to_br }}</div>
-    <a class="gift-guide-banner__cta" href="{{ section.settings.hero_cta_url }}">{{ section.settings.hero_cta_text }}</a>
-  </div>
-
-  <div class="gift-guide-banner__visual" aria-hidden="true">
-    <div class="gift-guide-banner__shape gift-guide-banner__shape--circle"></div>
-    <div class="gift-guide-banner__shape gift-guide-banner__shape--line"></div>
-  </div>
+  <div class="gg-banner__ticker">{{ section.settings.ticker_text }}</div>
 </section>
-
-<link rel="stylesheet" href="{{ 'gift-guide.css' | asset_url }}">
 
 {% schema %}
 {
@@ -32,7 +54,7 @@
     {
       "type": "text",
       "id": "top_text",
-      "label": "Top message",
+      "label": "Top tagline",
       "default": "Find the ideal gift for your loved ones."
     },
     {
@@ -62,14 +84,25 @@
     {
       "type": "text",
       "id": "hero_cta_text",
-      "label": "Hero CTA label",
+      "label": "CTA button label",
       "default": "SHOP NOW"
     },
     {
       "type": "url",
       "id": "hero_cta_url",
-      "label": "Hero CTA link",
+      "label": "CTA button link",
       "default": "#gift-guide-grid"
+    },
+    {
+      "type": "text",
+      "id": "ticker_text",
+      "label": "Ticker text",
+      "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+    },
+    {
+      "type": "image_picker",
+      "id": "illustration_image",
+      "label": "Illustration image (optional)"
     }
   ],
   "presets": [

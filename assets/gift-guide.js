@@ -19,73 +19,71 @@
  */
 
 document.addEventListener('DOMContentLoaded', function () {
-  /** @type {HTMLElement | null} */
   const gridSection = document.querySelector('[data-gift-guide-grid]');
   if (!(gridSection instanceof HTMLElement)) {
     return;
   }
 
-  /** @type {HTMLDivElement | null} */
-  const popupElement = /** @type {HTMLDivElement | null} */ (document.getElementById('gift-guide-popup'));
-  if (!(popupElement instanceof HTMLDivElement)) {
+  const popupElement = document.getElementById('gift-guide-popup');
+  if (!(popupElement instanceof HTMLElement)) {
     return;
   }
 
   /** @type {HTMLElement | null} */
-  const popupOverlayElement = /** @type {HTMLElement | null} */ (popupElement.querySelector('[data-popup-close]'));
+  const popupOverlay = popupElement.querySelector('[data-popup-close]');
   /** @type {NodeListOf<HTMLElement>} */
-  const popupCloseButtons = /** @type {NodeListOf<HTMLElement>} */ (popupElement.querySelectorAll('[data-popup-close]'));
+  const popupCloseButtons = popupElement.querySelectorAll('[data-popup-close]');
   /** @type {HTMLElement | null} */
-  const popupTitleElement = /** @type {HTMLElement | null} */ (popupElement.querySelector('.gift-guide-popup__title'));
+  const popupTitle = popupElement.querySelector('.gg-popup__title');
   /** @type {HTMLImageElement | null} */
-  const popupImageElement = /** @type {HTMLImageElement | null} */ (popupElement.querySelector('.gift-guide-popup__image'));
+  const popupImage = popupElement.querySelector('.gg-popup__image');
   /** @type {HTMLElement | null} */
-  const popupPriceElement = /** @type {HTMLElement | null} */ (popupElement.querySelector('.gift-guide-popup__price'));
+  const popupPrice = popupElement.querySelector('.gg-popup__price');
   /** @type {HTMLElement | null} */
-  const popupDescriptionElement = /** @type {HTMLElement | null} */ (popupElement.querySelector('.gift-guide-popup__description'));
+  const popupDescription = popupElement.querySelector('.gg-popup__description');
   /** @type {HTMLElement | null} */
-  const popupOptionsElement = /** @type {HTMLElement | null} */ (popupElement.querySelector('[data-popup-options]'));
+  const popupOptions = popupElement.querySelector('[data-popup-options]');
   /** @type {HTMLButtonElement | null} */
-  const addToCartButtonElement = /** @type {HTMLButtonElement | null} */ (popupElement.querySelector('[data-add-to-cart]'));
+  const addToCartButton = popupElement.querySelector('[data-add-to-cart]');
   /** @type {HTMLElement | null} */
-  const popupMessageElement = /** @type {HTMLElement | null} */ (popupElement.querySelector('[data-popup-message]'));
+  const popupMessage = popupElement.querySelector('[data-popup-message]');
 
   if (
-    !popupOverlayElement ||
-    !popupTitleElement ||
-    !popupImageElement ||
-    !popupPriceElement ||
-    !popupDescriptionElement ||
-    !popupOptionsElement ||
-    !addToCartButtonElement ||
-    !popupMessageElement
+    !(popupOverlay instanceof HTMLElement) ||
+    !(popupTitle instanceof HTMLElement) ||
+    !(popupImage instanceof HTMLImageElement) ||
+    !(popupPrice instanceof HTMLElement) ||
+    !(popupDescription instanceof HTMLElement) ||
+    !(popupOptions instanceof HTMLElement) ||
+    !(addToCartButton instanceof HTMLButtonElement) ||
+    !(popupMessage instanceof HTMLElement)
   ) {
     return;
   }
 
-  // After the guard above all queried elements are non-null; cast once to satisfy TS.
-  const _popupElement = /** @type {HTMLDivElement} */ (popupElement);
-  const _popupMessageElement = /** @type {HTMLElement} */ (popupMessageElement);
-  const _addToCartButtonElement = /** @type {HTMLButtonElement} */ (addToCartButtonElement);
-  const _popupOptionsElement = /** @type {HTMLElement} */ (popupOptionsElement);
-  const _popupPriceElement = /** @type {HTMLElement} */ (popupPriceElement);
-  const _popupTitleElement = /** @type {HTMLElement} */ (popupTitleElement);
-  const _popupDescriptionElement = /** @type {HTMLElement} */ (popupDescriptionElement);
-  const _popupImageElement = /** @type {HTMLImageElement} */ (popupImageElement);
+  const popupElementEl = /** @type {HTMLElement} */ (popupElement);
+  const popupOverlayEl = /** @type {HTMLElement} */ (popupOverlay);
+  const popupTitleEl = /** @type {HTMLElement} */ (popupTitle);
+  const popupImageEl = /** @type {HTMLImageElement} */ (popupImage);
+  const popupPriceEl = /** @type {HTMLElement} */ (popupPrice);
+  const popupDescriptionEl = /** @type {HTMLElement} */ (popupDescription);
+  const popupOptionsEl = /** @type {HTMLElement} */ (popupOptions);
+  const addToCartButtonEl = /** @type {HTMLButtonElement} */ (addToCartButton);
+  const popupMessageEl = /** @type {HTMLElement} */ (popupMessage);
+  const gridSectionEl = /** @type {HTMLElement} */ (gridSection);
 
+  const autoAddProductHandle = gridSectionEl.dataset.autoAddProduct || 'soft-winter-jacket';
   /** @type {ShopProduct | null} */
   let currentProduct = null;
   /** @type {ShopVariant | null} */
   let currentVariant = null;
-  const autoAddProductHandle = gridSection.dataset.autoAddProduct || 'soft-winter-jacket';
 
   /**
    * @param {number} amount
    * @param {string=} currency
-   * @returns {string}
    */
   function formatMoney(amount, currency) {
-    var currencyCode = currency || 'USD';
+    const currencyCode = currency || 'USD';
     try {
       return new Intl.NumberFormat(navigator.language || 'en-US', {
         style: 'currency',
@@ -97,19 +95,19 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function closePopup() {
-    _popupElement.classList.remove('is-open');
-    _popupElement.setAttribute('aria-hidden', 'true');
-    _popupMessageElement.textContent = '';
-    _addToCartButtonElement.disabled = false;
+    popupElementEl.classList.remove('is-open');
+    popupElementEl.setAttribute('aria-hidden', 'true');
+    popupMessageEl.textContent = '';
+    addToCartButtonEl.disabled = false;
   }
 
   function openPopup() {
-    _popupElement.classList.add('is-open');
-    _popupElement.setAttribute('aria-hidden', 'false');
+    popupElementEl.classList.add('is-open');
+    popupElementEl.setAttribute('aria-hidden', 'false');
   }
 
   /**
-   * @param {string[]} selectedOptions
+   * @param {Array<string>} selectedOptions
    * @returns {ShopVariant | null}
    */
   function findVariant(selectedOptions) {
@@ -117,50 +115,59 @@ document.addEventListener('DOMContentLoaded', function () {
       return null;
     }
 
-    return currentProduct.variants.find(function (variant) {
-      return variant.options.every(function (optionValue, idx) {
-        return selectedOptions[idx] === optionValue;
-      });
-    }) || null;
+    return (
+      currentProduct.variants.find(function (variant) {
+        return variant.options.every(function (optionValue, idx) {
+          return selectedOptions[idx] === optionValue;
+        });
+      }) || null
+    );
   }
 
   function buildOptionSelects() {
-    _popupOptionsElement.innerHTML = '';
-    if (!currentProduct) {
+    if (!popupOptions) {
       return;
     }
-    const product = /** @type {ShopProduct} */ (currentProduct);
+    popupOptions.innerHTML = '';
+    const product = currentProduct;
+    const activeVariant = currentVariant;
+    if (!product) {
+      return;
+    }
 
     product.options.forEach(function (optionName, index) {
-      const optionValues = /** @type {string[]} */ (product.variants
-        .map(function (variant) {
-          return variant.options[index];
-        })
-        .filter(function (value, idx, list) {
-          return value !== undefined && list.indexOf(value) === idx;
-        }));
+      const optionValues = Array.from(
+        new Set(
+          product.variants.map(function (variant) {
+            return variant.options[index] || '';
+          })
+        )
+      );
 
       const optionField = document.createElement('div');
-      optionField.className = 'gift-guide-popup__option';
+      optionField.className = 'gg-popup__option';
+
       const label = document.createElement('label');
       label.textContent = optionName;
       optionField.appendChild(label);
 
-      const defaultValue = /** @type {string} */ (currentVariant ? currentVariant.options[index] : optionValues[0]);
+      const defaultValue = activeVariant ? activeVariant.options[index] : optionValues[0] || '';
 
       if (optionValues.length > 3) {
         const select = document.createElement('select');
         select.dataset.optionIndex = String(index);
+
         optionValues.forEach(function (value) {
+          const optionValue = value || '';
           const option = document.createElement('option');
-          option.value = value;
-          option.textContent = value;
-          option.selected = defaultValue === value;
+          option.value = optionValue;
+          option.textContent = optionValue;
+          option.selected = defaultValue === optionValue;
           select.appendChild(option);
         });
 
         select.addEventListener('change', function () {
-          const selects = /** @type {NodeListOf<HTMLSelectElement>} */ (_popupOptionsElement.querySelectorAll('select'));
+          const selects = popupOptionsEl.querySelectorAll('select');
           const selectedOptions = Array.from(selects).map(function (element) {
             return element.value;
           });
@@ -175,41 +182,44 @@ document.addEventListener('DOMContentLoaded', function () {
         optionField.appendChild(select);
       } else {
         const buttonGroup = document.createElement('div');
-        buttonGroup.className = 'gift-guide-popup__button-group';
+        buttonGroup.className = 'gg-popup__button-group';
 
         optionValues.forEach(function (value) {
+          const optionValue = value || '';
           const button = document.createElement('button');
           button.type = 'button';
-          button.textContent = value;
-          button.dataset.optionValue = value;
-          if (defaultValue === value) {
+          button.textContent = optionValue;
+          button.dataset.optionValue = optionValue;
+
+          if (defaultValue === optionValue) {
             button.classList.add('is-selected');
           }
 
           button.addEventListener('click', function () {
-            const selectedOptions = /** @type {string[]} */ (product.options.map(function (_, idx) {
+                  const selectedOptions = product.options.map(function (_, idx) {
               if (idx === index) {
-                return value;
+                return optionValue;
               }
 
-              const selectedButton = /** @type {HTMLButtonElement | null} */ (
-                _popupOptionsElement.querySelector(
-                  '.gift-guide-popup__option:nth-child(' + (idx + 1) + ') .gift-guide-popup__button-group button.is-selected'
-                )
+              const selectedButton = popupOptionsEl.querySelector(
+                '.gg-popup__option:nth-child(' + (idx + 1) + ') .gg-popup__button-group button.is-selected'
               );
-              if (selectedButton && selectedButton.dataset.optionValue) {
+
+              if (selectedButton instanceof HTMLButtonElement && selectedButton.dataset.optionValue) {
                 return selectedButton.dataset.optionValue;
               }
 
-              const selectedSelect = /** @type {HTMLSelectElement | null} */ (
-                _popupOptionsElement.querySelector('.gift-guide-popup__option:nth-child(' + (idx + 1) + ') select')
+              const selectedSelect = popupOptionsEl.querySelector(
+                '.gg-popup__option:nth-child(' + (idx + 1) + ') select'
               );
-              if (selectedSelect) {
+              if (selectedSelect instanceof HTMLSelectElement) {
                 return selectedSelect.value;
               }
 
-              return currentVariant ? currentVariant.options[idx] : optionValues[0];
-            }));
+              return activeVariant ? activeVariant.options[idx] : optionValues[0] || '';
+            }).map(function (value) {
+              return value || '';
+            });
 
             const selectedVariant = findVariant(selectedOptions);
             if (selectedVariant) {
@@ -219,6 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
             buttonGroup.querySelectorAll('button').forEach(function (btn) {
               btn.classList.toggle('is-selected', btn === button);
             });
+
             updateVariantDetails();
           });
 
@@ -228,21 +239,21 @@ document.addEventListener('DOMContentLoaded', function () {
         optionField.appendChild(buttonGroup);
       }
 
-      _popupOptionsElement.appendChild(optionField);
+      popupOptions.appendChild(optionField);
     });
   }
 
   function updateVariantDetails() {
     if (!currentVariant) {
-      _popupPriceElement.textContent = '';
-      _addToCartButtonElement.disabled = true;
+      popupPriceEl.textContent = '';
+      addToCartButtonEl.disabled = true;
       return;
     }
 
     const currency = currentProduct && currentProduct.currency ? currentProduct.currency : 'USD';
-    _popupPriceElement.textContent = formatMoney(currentVariant.price, currency);
-    _addToCartButtonElement.disabled = !currentVariant.available;
-    _addToCartButtonElement.textContent = currentVariant.available ? 'Add to cart' : 'Sold out';
+    popupPriceEl.textContent = formatMoney(currentVariant.price, currency);
+    addToCartButtonEl.disabled = !currentVariant.available;
+    addToCartButtonEl.textContent = currentVariant.available ? 'ADD TO CART' : 'SOLD OUT';
   }
 
   /**
@@ -255,16 +266,23 @@ document.addEventListener('DOMContentLoaded', function () {
         return variant.available;
       }) || product.variants[0] || null;
 
-    _popupTitleElement.textContent = product.title || 'Product';
-    _popupDescriptionElement.textContent = product.description || 'No description available.';
-    _popupImageElement.src =
-      (product.featured_image && typeof product.featured_image === 'object' && product.featured_image.src) ||
-      (Array.isArray(product.images) && product.images.length > 0
-        ? typeof product.images[0] === 'string'
-          ? product.images[0]
-          : product.images[0].src
-        : '');
-    _popupImageElement.alt = product.title || 'Product image';
+    popupTitleEl.textContent = product.title || 'Product';
+    popupDescriptionEl.textContent = product.description || 'No description available.';
+
+    let imageUrl = '';
+    if (product.featured_image && typeof product.featured_image === 'object' && typeof product.featured_image.src === 'string') {
+      imageUrl = product.featured_image.src;
+    } else if (Array.isArray(product.images) && product.images.length > 0) {
+      const firstImage = product.images[0];
+      if (typeof firstImage === 'string') {
+        imageUrl = firstImage;
+      } else if (firstImage && typeof firstImage === 'object' && typeof firstImage.src === 'string') {
+        imageUrl = firstImage.src;
+      }
+    }
+
+    popupImageEl.src = imageUrl;
+    popupImageEl.alt = product.title || 'Product image';
 
     buildOptionSelects();
     updateVariantDetails();
@@ -275,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function () {
    * @param {string} message
    */
   function showMessage(message) {
-    _popupMessageElement.textContent = message;
+    popupMessageEl.textContent = message;
   }
 
   /**
@@ -332,9 +350,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     return fetchProductJson(autoAddProductHandle).then(function (softProduct) {
-      const variantToAdd = softProduct.variants.find(function (variant) {
-        return variant.available;
-      }) || softProduct.variants[0];
+      const variantToAdd =
+        softProduct.variants.find(function (variant) {
+          return variant.available;
+        }) || softProduct.variants[0];
 
       if (!variantToAdd) {
         return Promise.resolve();
@@ -348,15 +367,14 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    _addToCartButtonElement.disabled = true;
-    showMessage('Adding to cart…');
+    addToCartButtonEl.disabled = true;
+    showMessage('Adding to cart...');
 
-    const variantToAdd = /** @type {ShopVariant} */ (currentVariant);
-    addProductToCart(variantToAdd.id)
+    addProductToCart(currentVariant.id)
       .then(function () {
-        if (shouldAutoAddSoftJacket(variantToAdd)) {
+        if (currentVariant && shouldAutoAddSoftJacket(currentVariant)) {
           return addSoftWinterJacketIfRequired().then(function () {
-            showMessage('Added gift and Soft Winter Jacket to the cart.');
+            showMessage('Added product and Soft Winter Jacket to the cart.');
           });
         }
         showMessage('Added to cart successfully.');
@@ -365,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function () {
         showMessage(error && error.message ? error.message : 'Unable to add to cart.');
       })
       .finally(function () {
-        _addToCartButtonElement.disabled = false;
+        addToCartButtonEl.disabled = false;
       });
   }
 
@@ -373,10 +391,11 @@ document.addEventListener('DOMContentLoaded', function () {
    * @param {Event} event
    */
   function openProductPopup(event) {
-    const button = /** @type {HTMLButtonElement | null} */ (event.currentTarget);
+    const button = /** @type {EventTarget & HTMLButtonElement} */ (event.currentTarget);
     if (!(button instanceof HTMLButtonElement)) {
       return;
     }
+
     const handle = button.dataset.productHandle;
     if (!handle) {
       return;
@@ -390,26 +409,27 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
-  const _gridSection = /** @type {HTMLElement} */ (gridSection);
-
   function bindCardButtons() {
-    const cards = /** @type {NodeListOf<HTMLButtonElement>} */ (_gridSection.querySelectorAll('[data-product-handle]'));
+    const cards = gridSectionEl.querySelectorAll('button[data-product-handle]');
     cards.forEach(function (card) {
       card.addEventListener('click', openProductPopup);
     });
   }
 
-  popupOverlayElement.addEventListener('click', closePopup);
+  if (popupOverlay instanceof HTMLElement) {
+    popupOverlay.addEventListener('click', closePopup);
+  }
+
   popupCloseButtons.forEach(function (button) {
     button.addEventListener('click', closePopup);
   });
 
   document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape' && _popupElement.classList.contains('is-open')) {
+    if (event.key === 'Escape' && popupElementEl.classList.contains('is-open')) {
       closePopup();
     }
   });
 
-  _addToCartButtonElement.addEventListener('click', handleAddToCart);
+  addToCartButton.addEventListener('click', handleAddToCart);
   bindCardButtons();
 });
