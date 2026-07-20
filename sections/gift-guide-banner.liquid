@@ -1,73 +1,44 @@
-{{- 'gift-guide.css' | asset_url | stylesheet_tag -}}
+{% comment %}
+  Gift Guide — Banner section.
+  All copy fields below are editable via the theme customizer (see schema).
+  Structure: topbar -> hero (illustration + heading/copy/CTA) -> sustainability strip.
+{% endcomment %}
+<link rel="stylesheet" href="{{ 'gift-guide.css' | asset_url }}">
 
-{%- comment -%}
-  Section: Gift Guide Banner
-  Layout: utility bar | hero copy + illustration collage | ticker strip
-  All text is editable via the section settings.
-{%- endcomment -%}
+<section class="gift-guide-banner" aria-label="Gift guide banner">
 
-<section class="gg-banner">
-  <div class="gg-banner__topbar">
-    <div class="gg-banner__menu" aria-hidden="true">
-      <span></span>
-      <span></span>
-      <span></span>
+  {%- comment -%} Top utility bar: hamburger (mobile only) + brand | promo text | CTA {%- endcomment -%}
+  <div class="gift-guide-banner__topbar">
+    <div class="gift-guide-banner__topbar-left">
+      <button type="button" class="gift-guide-banner__menu" aria-hidden="true" tabindex="-1">
+        <span></span><span></span><span></span>
+      </button>
+      <span class="gift-guide-banner__brand">{{ section.settings.brand_text }}</span>
     </div>
-    <span class="gg-banner__brand">{{ section.settings.brand_text }}</span>
-    <span class="gg-banner__tagline">{{ section.settings.top_text }}</span>
-    <a class="gg-banner__choose-btn" href="{{ section.settings.top_button_url }}">
-      <span class="gg-banner__choose-btn-label">{{ section.settings.top_button_text }}</span>
-      <span class="gg-banner__choose-btn-arrow" aria-hidden="true">→</span>
+    <p class="gift-guide-banner__headline">{{ section.settings.top_text }}</p>
+    <a class="gift-guide-banner__top-button gg-btn gg-btn--yellow" href="{{ section.settings.top_button_url }}">
+      {{ section.settings.top_button_text }}
     </a>
   </div>
 
-  <div class="gg-banner__body">
-    <div class="gg-banner__text">
-      <h1 class="gg-banner__heading">{{ section.settings.hero_heading }}</h1>
-      <p class="gg-banner__copy">{{ section.settings.hero_copy }}</p>
-      <a class="gg-banner__shop-btn" href="{{ section.settings.shop_btn_url }}">
-        <span class="gg-banner__shop-btn-label">{{ section.settings.shop_btn_label }}</span>
-        <span class="gg-banner__shop-btn-arrow" aria-hidden="true">→</span>
-      </a>
-    </div>
+  {%- comment -%} Hero: illustration collage behind the heading/copy/CTA {%- endcomment -%}
+  <div class="gift-guide-banner__hero">
+    {% render 'gift-guide-illustration' %}
 
-    <div class="gg-banner__illustration" aria-hidden="true">
-      {%- if section.settings.illustration_image != blank -%}
-        <img
-          src="{{ section.settings.illustration_image | img_url: 'master' }}"
-          alt=""
-          class="gg-banner__illus-img"
-          loading="eager">
-      {%- else -%}
-        <svg class="gg-banner__illus-svg" viewBox="0 0 900 820" role="presentation" focusable="false">
-          <g fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M140 170h240" />
-            <path d="M220 130l70 80" />
-            <path d="M320 190l60-60" />
-            <path d="M470 200c30 0 50-24 50-54 0-28-20-52-50-52-30 0-50 24-50 52 0 30 20 54 50 54z" />
-            <path d="M526 220l68-40 74 56-68 40z" />
-            <path d="M648 154c32 0 58 24 58 54 0 30-26 54-58 54-32 0-58-24-58-54 0-30 26-54 58-54z" />
-            <path d="M560 364l84-58 92 60-84 58z" />
-            <path d="M402 366h132" />
-            <path d="M250 458l80-50 84 64-80 50z" />
-            <path d="M430 482l70 48 58-34" />
-            <path d="M604 424l82 58" />
-            <path d="M656 386c18 0 32 14 32 32 0 18-14 32-32 32-18 0-32-14-32-32 0-18 14-32 32-32z" />
-            <path d="M742 276c24 0 42 18 42 42 0 24-18 42-42 42-24 0-42-18-42-42 0-24 18-42 42-42z" />
-            <path d="M742 616c18 0 32 14 32 32 0 18-14 32-32 32-18 0-32-14-32-32 0-18 14-32 32-32z" />
-            <path d="M560 652h214" />
-            <path d="M602 604l88 88" />
-            <path d="M690 604l-88 88" />
-            <path d="M174 646l70-56 74 56-70 56z" />
-            <path d="M164 550h124" />
-            <path d="M226 582l-34 52" />
-          </g>
-        </svg>
-      {%- endif -%}
+    <div class="gift-guide-banner__content">
+      <h1 class="gift-guide-banner__title">{{ section.settings.hero_heading }}</h1>
+      <div class="gift-guide-banner__copy">{{ section.settings.hero_copy | newline_to_br }}</div>
+      <a class="gift-guide-banner__cta gg-btn gg-btn--black" href="{{ section.settings.hero_cta_url }}">
+        {{ section.settings.hero_cta_text }}
+      </a>
     </div>
   </div>
 
-  <div class="gg-banner__ticker">{{ section.settings.ticker_text }}</div>
+  {%- comment -%} Sustainability strip: shorter copy on mobile, full copy on desktop {%- endcomment -%}
+  <div class="gift-guide-banner__strip">
+    <span class="gg-desktop-only">{{ section.settings.strip_text_desktop }}</span>
+    <span class="gg-mobile-only">{{ section.settings.strip_text_mobile }}</span>
+  </div>
 </section>
 
 {% schema %}
@@ -83,7 +54,7 @@
     {
       "type": "text",
       "id": "top_text",
-      "label": "Top text",
+      "label": "Top message",
       "default": "Find the ideal gift for your loved ones."
     },
     {
@@ -112,26 +83,27 @@
     },
     {
       "type": "text",
-      "id": "shop_btn_label",
-      "label": "Shop button label",
+      "id": "hero_cta_text",
+      "label": "Hero CTA label",
       "default": "SHOP NOW"
     },
     {
       "type": "url",
-      "id": "shop_btn_url",
-      "label": "Shop button link",
+      "id": "hero_cta_url",
+      "label": "Hero CTA link",
       "default": "#gift-guide-grid"
     },
     {
       "type": "text",
-      "id": "ticker_text",
-      "label": "Bottom ticker text",
-      "default": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
+      "id": "strip_text_desktop",
+      "label": "Sustainability strip (desktop)",
+      "default": "Sustainable, ethically made clothes in sizes XXS to 6XL"
     },
     {
-      "type": "image_picker",
-      "id": "illustration_image",
-      "label": "Illustration image (replaces built-in SVG)"
+      "type": "text",
+      "id": "strip_text_mobile",
+      "label": "Sustainability strip (mobile)",
+      "default": "Sustainable, ethically made activewear"
     }
   ],
   "presets": [

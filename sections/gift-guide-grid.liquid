@@ -1,109 +1,81 @@
-{%- comment -%}
-  Section: Gift Guide Grid
-  Layout: heading + 3×2 photo grid. Each cell has a "+" trigger that opens
-  a compact popup (quick-view) with product details, variant pickers, and
-  a functional Add to Cart button.
-{%- endcomment -%}
+{% comment %}
+  Gift Guide — Grid section.
+  Renders up to 6 merchant-selected products as square photo tiles with a "+"
+  hotspot. Clicking a tile opens the quick-view popup (see gift-guide.js),
+  which resolves variants dynamically from the product's real option/variant
+  data and adds to cart via the Ajax Cart API.
+{% endcomment %}
+<link rel="stylesheet" href="{{ 'gift-guide.css' | asset_url }}">
 
-<section id="gift-guide-grid"
-         class="gg-grid"
-         data-gift-guide-grid
-         data-auto-add-handle="{{ section.settings.auto_add_product.handle | default: '' | escape }}">
+<section
+  id="gift-guide-grid"
+  class="gift-guide-grid"
+  aria-label="Gift guide products"
+  data-gift-guide-grid
+  data-auto-add-product="{{ section.settings.auto_add_product.handle }}"
+  data-currency="{{ cart.currency.iso_code }}"
+>
+  <div class="gift-guide-grid__container">
+    <h2 class="gift-guide-grid__title">{{ section.settings.heading }}</h2>
 
-  <div class="gg-grid__inner">
-
-    {%- comment -%} Editable section heading {%- endcomment -%}
-    <h2 class="gg-grid__heading">{{ section.settings.grid_heading }}</h2>
-
-    {%- comment -%} 3-column photo grid — exactly 6 blocks {%- endcomment -%}
-    <div class="gg-grid__cards">
-      {%- for block in section.blocks -%}
-        {%- assign p = block.settings.product -%}
-        <div class="gg-grid__cell" {{ block.shopify_attributes }}>
-          {%- if p != blank -%}
-            {%- comment -%}
-              The entire cell is a button so the whole image is clickable.
-              data-product-handle is read by JS to fetch /products/[handle].js
-            {%- endcomment -%}
-            <button class="gg-grid__trigger"
-                    type="button"
-                    data-product-handle="{{ p.handle | escape }}"
-                    aria-label="Quick view {{ p.title | escape }}">
-              {%- if p.featured_image != blank -%}
-                <img class="gg-grid__photo"
-                     src="{{ p.featured_image | img_url: '800x800', crop: 'center' }}"
-                     alt="{{ p.featured_image.alt | escape | default: p.title | escape }}"
-                     loading="lazy">
-              {%- else -%}
-                <span class="gg-grid__photo gg-grid__photo--empty"></span>
-              {%- endif -%}
-              {%- comment -%} "+" badge — centred at bottom of image {%- endcomment -%}
-              <span class="gg-grid__plus" aria-hidden="true">+</span>
+    <div class="gift-guide-grid__cards">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          {% if block.settings.product != blank %}
+            {% assign card_product = block.settings.product %}
+            <button type="button" class="gift-guide-card" data-product-handle="{{ card_product.handle }}" {{ block.shopify_attributes }}>
+              <span class="gift-guide-card__overlay" aria-hidden="true">+</span>
+              {% if card_product.featured_image != blank %}
+                <img
+                  class="gift-guide-card__image"
+                  src="{{ card_product.featured_image | image_url: width: 720 }}"
+                  alt="{{ card_product.title | escape }}"
+                  loading="lazy"
+                  width="720"
+                  height="720"
+                >
+              {% else %}
+                <span class="gift-guide-card__image-fallback">{{ card_product.title }}</span>
+              {% endif %}
             </button>
-          {%- else -%}
-            <div class="gg-grid__cell--empty">Select a product</div>
-          {%- endif -%}
-        </div>
-      {%- endfor -%}
+          {% else %}
+            <div class="gift-guide-card gift-guide-card--empty" {{ block.shopify_attributes }}>
+              Select a product in the section settings
+            </div>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <div class="gift-guide-grid__empty">Add up to six products in the theme customizer to populate this grid.</div>
+      {% endif %}
     </div>
-
   </div>
 
-  {%- comment -%}
-    ── Popup / Quick-view ──────────────────────────────────────────────────
-    Hidden by default (aria-hidden="true", display:none via CSS).
-    JS adds class "is-open" to show it.
-    Structure mirrors the Figma popup: small thumb + meta top row,
-    variant pickers below, ADD TO CART button at bottom.
-  {%- endcomment -%}
-  <div id="gg-popup"
-       class="gg-popup"
-       role="dialog"
-       aria-modal="true"
-       aria-labelledby="gg-popup-title"
-       aria-describedby="gg-popup-desc"
-       aria-label="Product quick view"
-       aria-hidden="true">
+  {%- comment -%} Quick-view popup: markup only, content is filled in by gift-guide.js {%- endcomment -%}
+  <div class="gift-guide-popup" id="gift-guide-popup" aria-hidden="true">
+    <div class="gift-guide-popup__overlay" data-popup-close></div>
+    <div class="gift-guide-popup__card" role="dialog" aria-modal="true" aria-labelledby="gift-guide-popup-title">
+      <button type="button" class="gift-guide-popup__close" data-popup-close aria-label="Close">&times;</button>
 
-    {%- comment -%} Click backdrop to close {%- endcomment -%}
-    <div class="gg-popup__backdrop" data-popup-close></div>
-
-    <div class="gg-popup__card">
-
-      {%- comment -%} × close button {%- endcomment -%}
-      <button class="gg-popup__close"
-              type="button"
-              data-popup-close
-              aria-label="Close quick view">&#x2715;</button>
-
-      {%- comment -%} Top row: thumbnail | title + price + description {%- endcomment -%}
-      <div class="gg-popup__top">
-        <img class="gg-popup__thumb" src="" alt="" data-popup-image>
-        <div class="gg-popup__meta">
-          <p class="gg-popup__title" id="gg-popup-title" data-popup-title></p>
-          <p class="gg-popup__price" data-popup-price></p>
-          <p class="gg-popup__desc" id="gg-popup-desc" data-popup-desc></p>
+      <div class="gift-guide-popup__top">
+        <div class="gift-guide-popup__thumb">
+          <img class="gift-guide-popup__image" alt="" src="">
+        </div>
+        <div class="gift-guide-popup__info">
+          <h2 id="gift-guide-popup-title" class="gift-guide-popup__title"></h2>
+          <div class="gift-guide-popup__price"></div>
+          <p class="gift-guide-popup__description"></p>
         </div>
       </div>
 
-      {%- comment -%} Variant option groups — built entirely by JS {%- endcomment -%}
-      <div class="gg-popup__options" data-popup-options></div>
-
-      {%- comment -%} Add to cart + live feedback message {%- endcomment -%}
-      <button class="gg-popup__atc"
-              type="button"
-              data-add-to-cart
-              disabled>
-        ADD TO CART&nbsp;&nbsp;&#8594;
-      </button>
-      <p class="gg-popup__msg" data-popup-message aria-live="polite"></p>
-
+      <form class="gift-guide-popup__form" novalidate>
+        <div class="gift-guide-popup__options" data-popup-options></div>
+        <button type="button" class="gift-guide-popup__add-to-cart gg-btn gg-btn--black" data-add-to-cart>Add to cart</button>
+        <p class="gift-guide-popup__message" data-popup-message aria-live="polite"></p>
+      </form>
     </div>
   </div>
 
-  {%- comment -%} Load JS deferred so it doesn't block render {%- endcomment -%}
   <script defer src="{{ 'gift-guide.js' | asset_url }}"></script>
-
 </section>
 
 {% schema %}
@@ -112,14 +84,15 @@
   "settings": [
     {
       "type": "text",
-      "id": "grid_heading",
-      "label": "Section heading",
+      "id": "heading",
+      "label": "Heading",
       "default": "Tisso vison in the wild"
     },
     {
       "type": "product",
       "id": "auto_add_product",
-      "label": "Soft Winter Jacket product (auto-added with Black + Medium)"
+      "label": "Auto-add product",
+      "info": "Automatically added to cart when a shopper adds a variant matching Black + Medium. Defaults to \"Soft Winter Jacket\" behaviour if left blank and a product with that handle exists."
     }
   ],
   "blocks": [
