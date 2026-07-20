@@ -37,8 +37,6 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #ffde27;
-  color: #111;
   text-decoration: none;
   font-weight: 700;
   text-transform: uppercase;
@@ -46,6 +44,16 @@
   border-radius: 999px;
   transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
   box-shadow: 0 14px 35px rgba(0, 0, 0, 0.08);
+}
+
+.gift-guide-banner__top-button {
+  background: #ffde27;
+  color: #111;
+}
+
+.gift-guide-banner__cta {
+  background: #111;
+  color: #fff;
 }
 
 .gift-guide-banner__top-button:hover,
@@ -153,10 +161,26 @@
 }
 
 .gift-guide-card__image-wrap {
+  position: relative;
   display: block;
   min-height: 320px;
   overflow: hidden;
   background: #f7f7f7;
+}
+
+.gift-guide-card__overlay {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: #111;
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  z-index: 1;
 }
 
 .gift-guide-card__image {
@@ -332,6 +356,36 @@
   border-radius: 14px;
   background: #fff;
   font-size: 1rem;
+}
+
+.gift-guide-popup__button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.gift-guide-popup__button-group button {
+  min-width: 120px;
+  flex: 1 1 auto;
+  border: 1px solid #111;
+  background: #fff;
+  color: #111;
+  padding: 14px 16px;
+  border-radius: 14px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+}
+
+.gift-guide-popup__button-group button:hover {
+  transform: translateY(-1px);
+  border-color: #000;
+}
+
+.gift-guide-popup__button-group button.is-selected {
+  background: #111;
+  color: #fff;
+  border-color: #111;
 }
 
 .gift-guide-popup__add-to-cart {

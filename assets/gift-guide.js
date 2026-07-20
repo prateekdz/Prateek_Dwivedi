@@ -73,31 +73,73 @@ document.addEventListener('DOMContentLoaded', function () {
       label.textContent = optionName;
       optionField.appendChild(label);
 
-      var select = document.createElement('select');
-      select.dataset.optionIndex = index;
-      optionValues.forEach(function (value) {
-        var option = document.createElement('option');
-        option.value = value;
-        option.textContent = value;
-        if (currentVariant && currentVariant.options[index] === value) {
-          option.selected = true;
-        }
-        select.appendChild(option);
-      });
-
-      select.addEventListener('change', function () {
-        var selectedOptions = Array.from(popupOptions.querySelectorAll('select')).map(function (element) {
-          return element.value;
+      if (optionValues.length > 3) {
+        var select = document.createElement('select');
+        select.dataset.optionIndex = index;
+        optionValues.forEach(function (value) {
+          var option = document.createElement('option');
+          option.value = value;
+          option.textContent = value;
+          if (currentVariant && currentVariant.options[index] === value) {
+            option.selected = true;
+          }
+          select.appendChild(option);
         });
 
-        var selectedVariant = findVariant(selectedOptions);
-        if (selectedVariant) {
-          currentVariant = selectedVariant;
-          updateVariantDetails();
-        }
-      });
+        select.addEventListener('change', function () {
+          var selectedOptions = Array.from(popupOptions.querySelectorAll('select')).map(function (element) {
+            return element.value;
+          });
 
-      optionField.appendChild(select);
+          var selectedVariant = findVariant(selectedOptions);
+          if (selectedVariant) {
+            currentVariant = selectedVariant;
+            updateVariantDetails();
+          }
+        });
+
+        optionField.appendChild(select);
+      } else {
+        var buttonGroup = document.createElement('div');
+        buttonGroup.className = 'gift-guide-popup__button-group';
+        optionValues.forEach(function (value) {
+          var button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = value;
+          button.dataset.optionValue = value;
+          if (currentVariant && currentVariant.options[index] === value) {
+            button.classList.add('is-selected');
+          }
+          button.addEventListener('click', function () {
+            var selectedOptions = currentProduct.options.map(function (_, idx) {
+              if (idx === index) {
+                return value;
+              }
+
+              var selectedButton = popupOptions.querySelector('.gift-guide-popup__option:nth-child(' + (idx + 1) + ') .gift-guide-popup__button-group button.is-selected');
+              if (selectedButton) {
+                return selectedButton.dataset.optionValue;
+              }
+
+              var selectedSelect = popupOptions.querySelector('.gift-guide-popup__option:nth-child(' + (idx + 1) + ') select');
+              if (selectedSelect) {
+                return selectedSelect.value;
+              }
+
+              return currentVariant ? currentVariant.options[idx] : optionValues[0];
+            });
+
+            currentVariant = findVariant(selectedOptions);
+            buttonGroup.querySelectorAll('button').forEach(function (btn) {
+              btn.classList.toggle('is-selected', btn === button);
+            });
+            updateVariantDetails();
+          });
+          buttonGroup.appendChild(button);
+        });
+        optionField.appendChild(buttonGroup);
+      }
+
       popupOptions.appendChild(optionField);
     });
   }
@@ -116,10 +158,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function renderPopup(product) {
     currentProduct = product;
-    currentVariant = product.selected_or_first_available_variant || product.variants[0] || null;
+    currentVariant = product.variants.find(function (variant) {
+      return variant.available;
+    }) || product.variants[0] || null;
+
     popupTitle.textContent = product.title || 'Product';
     popupDescription.textContent = product.description || 'No description available.';
-    popupImage.src = product.featured_image || (product.images && product.images[0]) || '';
+    popupImage.src = (product.featured_image && product.featured_image.src) || (product.images && product.images[0] && (typeof product.images[0] === 'string' ? product.images[0] : product.images[0].src)) || '';
     popupImage.alt = product.title || 'Product image';
 
     buildOptionSelects();

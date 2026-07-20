@@ -13,6 +13,7 @@
               {% assign card_product = all_products[block.settings.product] %}
               <button type="button" class="gift-guide-card__button" data-product-handle="{{ block.settings.product }}">
                 <span class="gift-guide-card__image-wrap">
+                  <span class="gift-guide-card__overlay">+</span>
                   {% if card_product.featured_image != blank %}
                     <img class="gift-guide-card__image" src="{{ card_product.featured_image | img_url: '720x' }}" alt="{{ card_product.title }}">
                   {% else %}
