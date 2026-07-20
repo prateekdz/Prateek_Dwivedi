@@ -1,8 +1,8 @@
-<section id="gift-guide-grid" class="gift-guide-grid" aria-label="Gift guide products" data-gift-guide-grid data-auto-add-product="{{ section.settings.auto_add_product }}">
+<section id="gift-guide-grid" class="gift-guide-grid" aria-label="Gift guide products" data-gift-guide-grid data-auto-add-product="{{ section.settings.auto_add_product.handle }}">
   <div class="gift-guide-grid__container">
     <div class="gift-guide-grid__intro">
-      <p class="gift-guide-grid__eyebrow">Gift collection</p>
-      <h2 class="gift-guide-grid__title">Choose a product to explore</h2>
+      <p class="gift-guide-grid__eyebrow">{{ section.settings.eyebrow_text }}</p>
+      <h2 class="gift-guide-grid__title">{{ section.settings.grid_heading }}</h2>
     </div>
 
     <div class="gift-guide-grid__cards">
@@ -10,8 +10,8 @@
         {% for block in section.blocks %}
           <article class="gift-guide-card">
             {% if block.settings.product != blank %}
-              {% assign card_product = all_products[block.settings.product] %}
-              <button type="button" class="gift-guide-card__button" data-product-handle="{{ block.settings.product }}">
+              {%- assign card_product = block.settings.product -%}
+              <button type="button" class="gift-guide-card__button" data-product-handle="{{ card_product.handle }}">
                 <span class="gift-guide-card__image-wrap">
                   <span class="gift-guide-card__overlay">+</span>
                   {% if card_product.featured_image != blank %}
@@ -72,9 +72,21 @@
   "name": "Gift Guide Grid",
   "settings": [
     {
+      "type": "text",
+      "id": "eyebrow_text",
+      "label": "Eyebrow label",
+      "default": "Gift collection"
+    },
+    {
+      "type": "text",
+      "id": "grid_heading",
+      "label": "Grid heading",
+      "default": "Choose a product to explore"
+    },
+    {
       "type": "product",
       "id": "auto_add_product",
-      "label": "Soft Winter Jacket product"
+      "label": "Soft Winter Jacket product (auto-add)"
     }
   ],
   "blocks": [
@@ -90,20 +102,19 @@
       ]
     }
   ],
-  "block_order": [],
   "max_blocks": 6,
   "presets": [
     {
       "name": "Gift Guide Grid",
       "category": "Custom",
       "blocks": [
-        {
-          "type": "product_card",
-          "settings": {
-                                    "product": ""
-                                }
-                                }
-                              ]
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" }
+      ]
     }
   ]
 }
