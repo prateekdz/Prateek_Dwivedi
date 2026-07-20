@@ -127,7 +127,7 @@
 
   .text-block {
     width: var(--width);
-    max-width: 100%;
+    max-width: var(--max-width, 100%);
     display: flex;
     flex-direction: column;
     align-items: var(--horizontal-alignment);
@@ -135,7 +135,7 @@
   }
 
   .text-block > * {
-    width: var(--width);
+    width: min(100%, var(--width));
     max-inline-size: min(100%, var(--max-width, 100%));
     text-align: var(--text-align, var(--text-align-default));
     text-wrap: var(--text-wrap);
