@@ -44,7 +44,20 @@
           class="gg-banner__illus-img"
           loading="eager">
       {%- else -%}
-        {%- comment -%} Inline SVG — mirrors the Figma line-art grid {%- endcomment -%}
+        <img
+          src="{{ 'Frame.svg' | asset_url }}"
+          alt=""
+          class="gg-banner__illus-img"
+          loading="eager">
+      {%- endif -%}
+      {%- comment -%} Inline SVG fallback removed in favor of the theme asset image for reliable Shopify rendering. {%- endcomment -%}
+
+      {%- comment -%}
+        The old inline SVG fallback is intentionally omitted here because Shopify theme
+        previews render the uploaded asset more reliably when an image is used.
+      {%- endcomment -%}
+
+      {%- if false -%}
         <svg class="gg-banner__illus-svg"
              viewBox="0 0 960 640"
              xmlns="http://www.w3.org/2000/svg"
@@ -168,6 +181,8 @@
           <line x1="0"   y1="300" x2="960" y2="300" stroke="#ddd" stroke-dasharray="3 6"/>
           <line x1="320" y1="0"   x2="320" y2="640" stroke="#ddd" stroke-dasharray="3 6"/>
           <line x1="640" y1="0"   x2="640" y2="640" stroke="#ddd" stroke-dasharray="3 6"/>
+        </svg>
+      {%- endif -%}
         </svg>
       {%- endif -%}
     </div>
