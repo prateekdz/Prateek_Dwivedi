@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var cards = gridContainer.querySelectorAll('[data-product-handle]');
     cards.forEach(function (card) {
       // Expand clickable area for hotspot: delegate click from overlay as well
-      var overlay = card.querySelector('.gift-guide-card__overlay');
+      var overlay = /** @type {HTMLElement|null} */ (card.querySelector('.gift-guide-card__overlay'));
       if (overlay) {
         overlay.style.pointerEvents = 'auto';
         overlay.style.cursor = 'pointer';

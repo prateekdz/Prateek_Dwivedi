@@ -77,8 +77,8 @@ body[data-template="page.gift-guide"] .content-for-layout {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 20px;
-  padding: 24px 40px;
-  background: #f5f5f5;
+  padding: 16px 40px;
+  background: #fff;
 }
 
 .gift-guide-banner__topbar-left {
@@ -149,7 +149,7 @@ body[data-template="page.gift-guide"] .content-for-layout {
 
 .gift-guide-banner__hero {
   position: relative;
-  min-height: 760px;
+  min-height: 820px;
   overflow: hidden;
 }
 
@@ -226,7 +226,7 @@ body[data-template="page.gift-guide"] .content-for-layout {
 
 /* Ensure large center art scales to fill height and is cropped at edges like Figma */
 .gift-guide-banner__illustration svg:nth-child(2) {
-  transform: scale(1.12);
+  transform: scale(1.18);
   left: 50%;
   transform-origin: 50% 0;
 }
@@ -235,13 +235,13 @@ body[data-template="page.gift-guide"] .content-for-layout {
   position: relative;
   z-index: 1;
   max-width: 520px;
-  padding: 200px 40px 0;
+  padding: 220px 40px 0;
 }
 
 .gift-guide-banner__title {
   font-family: 'Playfair Display', serif;
-  font-size: 5.6rem;
-  line-height: 0.92;
+  font-size: 6rem;
+  line-height: 0.9;
   letter-spacing: -0.03em;
   font-weight: 700;
   margin: 0 0 26px;
@@ -249,9 +249,9 @@ body[data-template="page.gift-guide"] .content-for-layout {
 
 .gift-guide-banner__copy {
   font-size: 1.02rem;
-  line-height: 1.6;
+  line-height: 1.45;
   color: #111;
-  max-width: 440px;
+  max-width: 420px;
   margin-bottom: 30px;
 }
 
@@ -259,15 +259,15 @@ body[data-template="page.gift-guide"] .content-for-layout {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 52px;
-  padding: 0 34px;
+  min-height: 50px;
+  padding: 0 30px;
   gap: 12px;
   border: none;
   background: #111;
   color: #fff;
   font-weight: 700;
   font-size: 0.95rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
@@ -280,9 +280,9 @@ body[data-template="page.gift-guide"] .content-for-layout {
 
 .gift-guide-banner__strip {
   border-top: 1px solid #e8e8e8;
-  background: #f5f5f5;
+  background: #fff;
   text-align: center;
-  padding: 14px 0;
+  padding: 10px 0;
 }
 
 .gift-guide-banner__strip span {
@@ -315,13 +315,13 @@ body[data-template="page.gift-guide"] .content-for-layout {
 .gift-guide-grid__cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  gap: 28px;
 }
 
 .gift-guide-card {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border: none;
   background: #efefef;
@@ -370,12 +370,12 @@ body[data-template="page.gift-guide"] .content-for-layout {
 }
 
 /* Per-card hotspot nudges for precise placement */
-.gift-guide-grid__cards > *:nth-child(1) .gift-guide-card__overlay { top: 18px; right: 22px; }
-.gift-guide-grid__cards > *:nth-child(2) .gift-guide-card__overlay { top: 26%; right: 18px; }
-.gift-guide-grid__cards > *:nth-child(3) .gift-guide-card__overlay { top: 22px; right: 20px; }
-.gift-guide-grid__cards > *:nth-child(4) .gift-guide-card__overlay { top: 38%; right: 22px; }
-.gift-guide-grid__cards > *:nth-child(5) .gift-guide-card__overlay { top: 18px; right: 22px; }
-.gift-guide-grid__cards > *:nth-child(6) .gift-guide-card__overlay { top: 26%; right: 18px; }
+.gift-guide-grid__cards > *:nth-child(1) .gift-guide-card__overlay { top: 46%; right: 10%; }
+.gift-guide-grid__cards > *:nth-child(2) .gift-guide-card__overlay { top: 44%; right: 14%; }
+.gift-guide-grid__cards > *:nth-child(3) .gift-guide-card__overlay { top: 24%; right: 12%; }
+.gift-guide-grid__cards > *:nth-child(4) .gift-guide-card__overlay { top: 56%; right: 16%; }
+.gift-guide-grid__cards > *:nth-child(5) .gift-guide-card__overlay { top: 40%; right: 12%; }
+.gift-guide-grid__cards > *:nth-child(6) .gift-guide-card__overlay { top: 44%; right: 12%; }
 
 .gift-guide-card:hover .gift-guide-card__overlay {
   transform: translateY(-1px);
@@ -431,14 +431,14 @@ body[data-template="page.gift-guide"] .content-for-layout {
 }
 .gift-guide-btn__arrow {
   display: inline-block;
-  margin-left: 10px;
+  margin-left: 12px;
   transition: transform 220ms cubic-bezier(.2,.9,.3,1), opacity 180ms ease;
   transform: translateX(0);
   opacity: 1;
 }
 .gift-guide-banner__top-button:hover .gift-guide-btn__arrow,
 .gift-guide-banner__cta:hover .gift-guide-btn__arrow {
-  transform: translateX(8px);
+  transform: translateX(10px);
 }
 
 /* Ensure illustration is pure line art, no overlay */
@@ -663,7 +663,7 @@ body[data-template="page.gift-guide"] .content-for-layout {
 
   .gift-guide-grid__cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
+    gap: 12px;
   }
 
   .gift-guide-popup__card {
@@ -676,7 +676,7 @@ body[data-template="page.gift-guide"] .content-for-layout {
   }
 
   .gift-guide-popup__thumb {
-    width: 90px;
-    height: 90px;
+    width: 110px;
+    height: 110px;
   }
 }
