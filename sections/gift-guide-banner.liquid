@@ -2,41 +2,35 @@
 
 {%- comment -%}
   Section: Gift Guide Banner
-  Layout: topbar | split body (text-left / illustration-right) | ticker strip
-  All copy is editable via {% schema %} settings.
+  Layout: utility bar | hero copy + illustration collage | ticker strip
+  All text is editable via the section settings.
 {%- endcomment -%}
 
 <section class="gg-banner">
-
-  {%- comment -%} ── Top bar: brand | tagline | CTA button ── {%- endcomment -%}
   <div class="gg-banner__topbar">
+    <div class="gg-banner__menu" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
     <span class="gg-banner__brand">{{ section.settings.brand_text }}</span>
     <span class="gg-banner__tagline">{{ section.settings.top_text }}</span>
     <a class="gg-banner__choose-btn" href="{{ section.settings.top_button_url }}">
       <span class="gg-banner__choose-btn-label">{{ section.settings.top_button_text }}</span>
-      <span class="gg-banner__choose-btn-arrow" aria-hidden="true">&#8594;</span>
+      <span class="gg-banner__choose-btn-arrow" aria-hidden="true">→</span>
     </a>
   </div>
 
-  {%- comment -%} ── Body: left text column + right illustration ── {%- endcomment -%}
   <div class="gg-banner__body">
-
-    {%- comment -%} Left: heading, copy, SHOP NOW button {%- endcomment -%}
     <div class="gg-banner__text">
       <h1 class="gg-banner__heading">{{ section.settings.hero_heading }}</h1>
       <p class="gg-banner__copy">{{ section.settings.hero_copy }}</p>
       <a class="gg-banner__shop-btn" href="{{ section.settings.shop_btn_url }}">
         <span class="gg-banner__shop-btn-label">{{ section.settings.shop_btn_label }}</span>
-        <span class="gg-banner__shop-btn-arrow" aria-hidden="true">&#8594;</span>
+        <span class="gg-banner__shop-btn-arrow" aria-hidden="true">→</span>
       </a>
     </div>
 
-    {%- comment -%}
-      Right: decorative line-art illustration.
-      Upload your SVG as "gift-guide-illustration.svg" in Shopify Admin → Content → Files,
-      then reference it via asset_url. The inline SVG below is a faithful recreation
-      of the Figma line-art and is used as the default fallback.
-    {%- endcomment -%}
     <div class="gg-banner__illustration" aria-hidden="true">
       {%- if section.settings.illustration_image != blank -%}
         <img
@@ -45,27 +39,35 @@
           class="gg-banner__illus-img"
           loading="eager">
       {%- else -%}
-        <img
-          src="{{ 'Frame.svg' | asset_url }}"
-          alt=""
-          class="gg-banner__illus-img"
-          loading="eager">
+        <svg class="gg-banner__illus-svg" viewBox="0 0 900 820" role="presentation" focusable="false">
+          <g fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M140 170h240" />
+            <path d="M220 130l70 80" />
+            <path d="M320 190l60-60" />
+            <path d="M470 200c30 0 50-24 50-54 0-28-20-52-50-52-30 0-50 24-50 52 0 30 20 54 50 54z" />
+            <path d="M526 220l68-40 74 56-68 40z" />
+            <path d="M648 154c32 0 58 24 58 54 0 30-26 54-58 54-32 0-58-24-58-54 0-30 26-54 58-54z" />
+            <path d="M560 364l84-58 92 60-84 58z" />
+            <path d="M402 366h132" />
+            <path d="M250 458l80-50 84 64-80 50z" />
+            <path d="M430 482l70 48 58-34" />
+            <path d="M604 424l82 58" />
+            <path d="M656 386c18 0 32 14 32 32 0 18-14 32-32 32-18 0-32-14-32-32 0-18 14-32 32-32z" />
+            <path d="M742 276c24 0 42 18 42 42 0 24-18 42-42 42-24 0-42-18-42-42 0-24 18-42 42-42z" />
+            <path d="M742 616c18 0 32 14 32 32 0 18-14 32-32 32-18 0-32-14-32-32 0-18 14-32 32-32z" />
+            <path d="M560 652h214" />
+            <path d="M602 604l88 88" />
+            <path d="M690 604l-88 88" />
+            <path d="M174 646l70-56 74 56-70 56z" />
+            <path d="M164 550h124" />
+            <path d="M226 582l-34 52" />
+          </g>
+        </svg>
       {%- endif -%}
-      {%- comment -%} Inline SVG fallback removed in favor of the theme asset image for reliable Shopify rendering. {%- endcomment -%}
-
-      {%- comment -%}
-        The old inline SVG fallback is intentionally omitted here because Shopify theme
-        previews render the uploaded asset more reliably when an image is used.
-      {%- endcomment -%}
     </div>
-
   </div>
 
-  {%- comment -%} ── Bottom ticker strip ── {%- endcomment -%}
-  <div class="gg-banner__ticker">
-    {{ section.settings.ticker_text }}
-  </div>
-
+  <div class="gg-banner__ticker">{{ section.settings.ticker_text }}</div>
 </section>
 
 {% schema %}
@@ -106,7 +108,7 @@
       "type": "textarea",
       "id": "hero_copy",
       "label": "Hero description",
-      "default": "Discover Joy: Your Ultimate Holiday Gift Destination."
+      "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
     },
     {
       "type": "text",

@@ -1,10 +1,9 @@
 /* =============================================================
    gift-guide.css
    Styles for: Gift Guide Banner + Gift Guide Grid + Popup
-   Breakpoints: ≤900px tablet, ≤600px mobile
+   Breakpoints: desktop ≥ 990px, mobile < 750px
    ============================================================= */
 
-/* ── Shared reset ─────────────────────────────────────────── */
 .gg-banner *,
 .gg-grid *,
 .gg-popup * {
@@ -13,50 +12,57 @@
   padding: 0;
 }
 
-/* =============================================================
-   BANNER
-   ============================================================= */
-
 .gg-banner {
   background: #fff;
   color: #111;
-  font-family: inherit;
+  font-family: 'Poppins', sans-serif;
   overflow: hidden;
 }
 
-/* ── Top bar ── */
 .gg-banner__topbar {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 18px;
-  padding: 24px 40px;
-  background: #fff;
+  gap: 20px;
+  padding: 22px 40px;
+  background: #f5f5f5;
+}
+
+.gg-banner__menu {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 22px;
+}
+
+.gg-banner__menu span {
+  display: block;
+  height: 2px;
+  background: #111;
 }
 
 .gg-banner__brand {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   white-space: nowrap;
-  justify-self: start;
 }
 
 .gg-banner__tagline {
+  justify-self: center;
   text-align: center;
   font-size: 0.95rem;
   color: #111;
-  letter-spacing: 0.08em;
-  justify-self: center;
+  letter-spacing: 0.03em;
 }
 
-/* Yellow "CHOOSE GIFT →" — hover lifts and arrow slides */
 .gg-banner__choose-btn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: #f0e040;
+  background: #f5e626;
   color: #111;
   font-weight: 700;
   font-size: 0.8rem;
@@ -64,10 +70,14 @@
   text-transform: uppercase;
   text-decoration: none;
   padding: 14px 26px;
-  border: none;
-  cursor: pointer;
-  white-space: nowrap;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.gg-banner__choose-btn:hover,
+.gg-banner__shop-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14);
 }
 
 .gg-banner__choose-btn-arrow,
@@ -76,84 +86,57 @@
   transition: transform 0.25s ease;
 }
 
-.gg-banner__choose-btn:hover,
-.gg-banner__shop-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
-}
-
 .gg-banner__choose-btn:hover .gg-banner__choose-btn-arrow,
 .gg-banner__shop-btn:hover .gg-banner__shop-btn-arrow {
   transform: translateX(5px);
 }
 
-/* ── Body: text-left / illustration-right ── */
 .gg-banner__body {
   display: grid;
-  grid-template-columns: minmax(340px, 460px) minmax(520px, 1fr);
+  grid-template-columns: minmax(320px, 460px) minmax(520px, 1fr);
   min-height: 760px;
 }
 
-/* Left text column */
 .gg-banner__text {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 92px 64px 58px 64px;
-  background: #fff;
-  position: relative;
-  z-index: 1;
+  padding: 86px 64px 58px;
   max-width: 520px;
 }
 
 .gg-banner__heading {
-  font-size: clamp(3.5rem, 6vw, 5.6rem);
-  font-weight: 900;
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(3.2rem, 5.5vw, 4.9rem);
   line-height: 0.92;
-  letter-spacing: -0.03em;
-  margin-bottom: 18px;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
 }
 
 .gg-banner__copy {
   font-size: 1rem;
   line-height: 1.75;
   color: #161616;
-  max-width: 420px;
-  margin-bottom: 34px;
+  max-width: 430px;
+  margin-bottom: 32px;
 }
 
-/* Black "SHOP NOW →" — arrow slides right on hover */
 .gg-banner__shop-btn {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  background: #111;
+  background: #000;
   color: #fff;
   font-weight: 700;
-  font-size: 0.86rem;
-  letter-spacing: 0.12em;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 16px 32px;
+  padding: 16px 30px;
   align-self: flex-start;
-  overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.gg-banner__shop-btn-arrow {
-  display: inline-block;
-  transition: transform 0.25s ease;
-  line-height: 1;
-}
-.gg-banner__shop-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
-}
 
-.gg-banner__shop-btn:hover .gg-banner__shop-btn-arrow {
-  transform: translateX(5px);
-}
-
-/* Right illustration column */
 .gg-banner__illustration {
   overflow: hidden;
   background: #fff;
@@ -161,37 +144,27 @@
   min-height: 760px;
 }
 
-.gg-banner__illus-img {
-  width: 100%;
-  min-height: 760px;
-  object-fit: cover;
-  display: block;
-}
-
+.gg-banner__illus-img,
 .gg-banner__illus-svg {
   width: 100%;
   height: 100%;
   display: block;
+  object-fit: cover;
 }
 
-/* ── Bottom ticker ── */
 .gg-banner__ticker {
   text-align: center;
-  font-size: 0.74rem;
+  font-size: 0.75rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #111;
   padding: 12px 24px;
-  background: #f6f6f6;
+  background: #f5f5f5;
   border-top: 1px solid #e9e9e9;
 }
 
-/* =============================================================
-   GRID
-   ============================================================= */
-
 .gg-grid {
-  padding: 80px 36px 96px;
+  padding: 72px 36px 96px;
   background: #fff;
 }
 
@@ -200,31 +173,29 @@
   margin: 0 auto;
 }
 
-/* Heading matches Figma: light-weight serif feel */
 .gg-grid__heading {
-  font-size: clamp(1.6rem, 2.2vw, 2.1rem);
-  font-weight: 500;
-  letter-spacing: -0.02em;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.7rem, 2.2vw, 2.2rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
   color: #111;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
   text-align: left;
 }
 
-/* 3-column grid, portrait aspect ratio */
 .gg-grid__cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
 }
 
 .gg-grid__cell {
   position: relative;
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  background: #e8e8e8;
+  background: #efefef;
 }
 
-/* Full-cell clickable button */
 .gg-grid__trigger {
   display: block;
   width: 100%;
@@ -241,42 +212,26 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.4s ease;
+  transition: transform 0.35s ease;
 }
 
 .gg-grid__trigger:hover .gg-grid__photo {
   transform: scale(1.04);
 }
 
-.gg-grid__photo--empty {
-  background: #ccc;
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-/* "+" circle — bottom-centre of each card */
 .gg-grid__plus {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40px;
-  height: 40px;
+  top: 18px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: #fff;
   color: #111;
-  font-size: 1.4rem;
-  line-height: 40px;
+  font-size: 1.25rem;
+  line-height: 34px;
   text-align: center;
   pointer-events: none;
-  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-}
-
-.gg-grid__trigger:hover .gg-grid__plus {
-  transform: translate(-50%, -50%) scale(1.16);
-  background: #fff;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 }
 
@@ -290,11 +245,6 @@
   border: 1px dashed #ccc;
 }
 
-/* =============================================================
-   POPUP
-   ============================================================= */
-
-/* Hidden until JS adds .is-open */
 .gg-popup {
   display: none;
   position: fixed;
@@ -309,54 +259,46 @@
   display: flex;
 }
 
-/* Dimmed backdrop */
 .gg-popup__backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.42);
+  background: rgba(0, 0, 0, 0.5);
   cursor: pointer;
 }
 
-/* White card — compact, matches Figma */
 .gg-popup__card {
   position: relative;
-  background: #fff;
-  width: min(520px, 100%);
+  z-index: 1;
+  width: min(440px, 100%);
   max-height: 92vh;
   overflow-y: auto;
-  padding: 30px 26px 26px;
-  z-index: 1;
+  background: #fff;
+  padding: 28px 24px 24px;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
 }
 
-/* × close */
 .gg-popup__close {
   position: absolute;
   top: 12px;
-  right: 14px;
-  background: none;
+  right: 12px;
   border: none;
+  background: none;
   font-size: 1.1rem;
-  cursor: pointer;
   color: #111;
+  cursor: pointer;
   padding: 4px 6px;
-  line-height: 1;
-  transition: opacity 0.15s;
 }
 
-.gg-popup__close:hover { opacity: 0.55; }
-
-/* Top row: small square thumb + meta */
 .gg-popup__top {
   display: grid;
-  grid-template-columns: 108px 1fr;
+  grid-template-columns: 110px 1fr;
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .gg-popup__thumb {
-  width: 92px;
-  height: 92px;
+  width: 110px;
+  height: 110px;
   object-fit: cover;
   display: block;
   background: #f0f0f0;
@@ -365,117 +307,99 @@
 .gg-popup__meta {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
 }
 
 .gg-popup__title {
-  font-size: 0.98rem;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  font-size: 1rem;
+  font-weight: 600;
   color: #111;
   line-height: 1.3;
 }
 
 .gg-popup__price {
-  font-size: 0.98rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  letter-spacing: -0.01em;
   color: #111;
 }
 
 .gg-popup__desc {
-  font-size: 0.8rem;
-  font-weight: 400;
-  letter-spacing: 0.01em;
+  font-size: 0.84rem;
+  line-height: 1.5;
   color: #555;
-  line-height: 1.55;
 }
 
-/* Variant option groups */
 .gg-popup__options {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 12px;
 }
 
-/* Individual option group */
 .gg-opt__label {
   display: block;
   font-size: 0.8rem;
   font-weight: 600;
   color: #111;
-  margin-bottom: 2px;
-  letter-spacing: 0.03em;
+  margin-bottom: 4px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-/* Button-style swatches (≤ 4 values) — flush like Figma */
 .gg-opt__buttons {
   display: flex;
   flex-wrap: wrap;
+  gap: 8px;
 }
 
 .gg-opt__btn {
   flex: 1 1 auto;
-  padding: 10px 14px;
-  border: 1px solid #bbb;
+  padding: 10px 12px;
+  border: 1px solid #c8c8c8;
   background: #fff;
   color: #111;
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   text-align: center;
 }
 
-/* Remove double border between adjacent buttons */
-.gg-opt__btn + .gg-opt__btn { border-left: none; }
-
 .gg-opt__btn.is-active {
-  background: #111;
+  background: #2e4bb0;
   color: #fff;
-  border-color: #111;
+  border-color: #2e4bb0;
 }
 
-.gg-opt__btn:hover:not(.is-active) {
-  background: #f4f4f4;
-  border-color: #888;
-}
-
-/* Dropdown for options with > 4 values */
 .gg-opt__select {
   width: 100%;
-  padding: 11px 14px;
-  border: 1px solid #bbb;
-  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%23111' stroke-width='1.4' fill='none'/%3E%3C/svg%3E") no-repeat right 14px center;
-  font-size: 0.88rem;
+  padding: 10px 12px;
+  border: 1px solid #c8c8c8;
+  background: #fff;
+  font-size: 0.86rem;
   color: #111;
-  appearance: none;
-  cursor: pointer;
 }
 
-/* ADD TO CART button */
 .gg-popup__atc {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  width: 100%;
-  padding: 15px;
-  background: #111;
-  color: #fff;
+  gap: 10px;
+  padding: 14px 16px;
   border: none;
+  background: #000;
+  color: #fff;
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   cursor: pointer;
-  margin-bottom: 10px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .gg-popup__atc:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
 }
 
 .gg-popup__atc:disabled {
@@ -483,105 +407,91 @@
   cursor: not-allowed;
 }
 
-/* Feedback message */
 .gg-popup__msg {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: #444;
   text-align: center;
-  min-height: 1.1em;
+  min-height: 1.2em;
+  margin-top: 8px;
 }
 
-/* =============================================================
-   RESPONSIVE — TABLET  ≤ 900px
-   ============================================================= */
-
-@media (max-width: 900px) {
-  /* Banner: stack illustration above text */
+@media (max-width: 989px) {
   .gg-banner__body {
     grid-template-columns: 1fr;
   }
 
   .gg-banner__illustration {
-    height: 280px;
+    min-height: 360px;
     order: -1;
   }
 
   .gg-banner__text {
-    padding: 32px 24px 40px;
+    padding: 36px 24px 44px;
   }
 
-  /* Grid: 2 columns */
   .gg-grid__cards {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-/* =============================================================
-   RESPONSIVE — MOBILE  ≤ 600px
-   ============================================================= */
-
-@media (max-width: 600px) {
-  /* Banner topbar: stack brand, tagline, and button vertically */
+@media (max-width: 749px) {
   .gg-banner__topbar {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 12px 18px;
+    grid-template-columns: auto 1fr auto;
+    padding: 16px 18px;
   }
 
-  .gg-banner__tagline {
-    text-align: left;
-    font-size: 0.8rem;
-  }
-
+  .gg-banner__tagline,
   .gg-banner__choose-btn {
-    justify-self: end;
+    display: none;
+  }
+
+  .gg-banner__brand {
+    justify-self: center;
+    grid-column: 2 / 3;
   }
 
   .gg-banner__illustration {
-    height: 200px;
+    min-height: 240px;
   }
 
   .gg-banner__text {
-    padding: 24px 18px 32px;
+    padding: 28px 18px 32px;
     text-align: center;
   }
 
   .gg-banner__heading {
-    font-size: 2rem;
+    font-size: 2.4rem;
   }
 
   .gg-banner__copy {
-    margin: 0 auto 30px;
-    max-width: 320px;
+    margin: 0 auto 26px;
+    max-width: 360px;
   }
 
   .gg-banner__shop-btn {
     margin: 0 auto;
   }
 
-  /* Grid */
   .gg-grid {
     padding: 36px 14px 52px;
   }
 
-  /* Popup */
+  .gg-grid__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
   .gg-popup__card {
-    padding: 20px 14px 16px;
+    padding: 22px 16px 18px;
   }
 
   .gg-popup__top {
-    grid-template-columns: 80px 1fr;
-    gap: 10px;
+    grid-template-columns: 90px 1fr;
+    gap: 12px;
   }
 
   .gg-popup__thumb {
-    width: 80px;
-    height: 80px;
-  }
-
-  .gg-grid__cards {
-    grid-template-columns: 1fr;
-    gap: 12px;
+    width: 90px;
+    height: 90px;
   }
 }

@@ -1,52 +1,39 @@
 /**
  * gift-guide.js
- * Handles the Gift Guide Grid popup and quick view behavior:
- *   - Opens the popup on product selection and fetches product JSON
- *   - Builds variant pickers dynamically
- *   - Updates price and availability state
- *   - Adds items to cart via Shopify AJAX
- *   - Auto-adds "Soft Winter Jacket" when Black + Medium is selected
- *   - Traps focus inside the popup and restores focus on close
- *
- * Vanilla JS only — no jQuery.
+ * Handles the Gift Guide Grid popup, variant selection, and cart behavior.
  */
 
 document.addEventListener('DOMContentLoaded', function () {
-
-  /* ── DOM references ──────────────────────────────────────── */
-
   /** @type {HTMLElement|null} */
-  const section = document.querySelector('[data-gift-guide-grid]');
+  const section = /** @type {HTMLElement|null} */ (document.querySelector('[data-gift-guide-grid]'));
   if (!section) return;
 
   /** @type {HTMLElement|null} */
-  const popup = document.getElementById('gg-popup');
+  const popup = /** @type {HTMLElement|null} */ (document.getElementById('gg-popup'));
   if (!popup) return;
 
-  // All elements inside the popup card
-  const popupImage   = /** @type {HTMLImageElement}  */ (popup.querySelector('[data-popup-image]'));
-  const popupTitle   = /** @type {HTMLElement}        */ (popup.querySelector('[data-popup-title]'));
-  const popupPrice   = /** @type {HTMLElement}        */ (popup.querySelector('[data-popup-price]'));
-  const popupDesc    = /** @type {HTMLElement}        */ (popup.querySelector('[data-popup-desc]'));
-  const popupOptions = /** @type {HTMLElement}        */ (popup.querySelector('[data-popup-options]'));
-  const atcBtn       = /** @type {HTMLButtonElement}  */ (popup.querySelector('[data-add-to-cart]'));
-  const msgEl        = /** @type {HTMLElement}        */ (popup.querySelector('[data-popup-message]'));
+  /** @type {HTMLImageElement|null} */
+  const popupImage = /** @type {HTMLImageElement|null} */ (popup.querySelector('[data-popup-image]'));
+  /** @type {HTMLElement|null} */
+  const popupTitle = /** @type {HTMLElement|null} */ (popup.querySelector('[data-popup-title]'));
+  /** @type {HTMLElement|null} */
+  const popupPrice = /** @type {HTMLElement|null} */ (popup.querySelector('[data-popup-price]'));
+  /** @type {HTMLElement|null} */
+  const popupDesc = /** @type {HTMLElement|null} */ (popup.querySelector('[data-popup-desc]'));
+  /** @type {HTMLElement|null} */
+  const popupOptions = /** @type {HTMLElement|null} */ (popup.querySelector('[data-popup-options]'));
+  /** @type {HTMLButtonElement|null} */
+  const atcBtn = /** @type {HTMLButtonElement|null} */ (popup.querySelector('[data-add-to-cart]'));
+  /** @type {HTMLElement|null} */
+  const msgEl = /** @type {HTMLElement|null} */ (popup.querySelector('[data-popup-message]'));
 
-  if (!popupImage || !popupTitle || !popupPrice || !popupDesc ||
-      !popupOptions || !atcBtn || !msgEl) return;
+  if (!popupImage || !popupTitle || !popupPrice || !popupDesc || !popupOptions || !atcBtn || !msgEl) return;
 
   const popupElement = popup;
-
-  /* ── State ───────────────────────────────────────────────── */
-
-  /**
-   * @typedef {{ id: number, price: number, available: boolean, options: string[] }} Variant
-   * @typedef {{ title: string, description: string, price: number, featured_image: {src:string}|null, images: {src:string}[], options: string[], variants: Variant[], handle: string }} Product
-   */
-
-  /** @type {Product|null}  */ let currentProduct = null;
-  /** @type {Variant|null}  */ let currentVariant = null;
-  /** @type {HTMLElement|null} */ let lastFocusedElement = null;
+  const autoAddHandle = section.dataset.autoAddHandle || '';
+  let currentProduct = null;
+  let currentVariant = null;
+  let lastFocusedElement = null;
 
   const focusableSelectors = [
     'a[href]:not([tabindex="-1"])',
@@ -61,12 +48,9 @@ document.addEventListener('DOMContentLoaded', function () {
     return Array.from(popupElement.querySelectorAll(focusableSelectors));
   }
 
-  // Handle of the "Soft Winter Jacket" product to auto-add
-  const autoAddHandle = section.dataset.autoAddHandle || '';
-
-  /* ── Popup open / close ──────────────────────────────────── */
-
-  /** Open the popup and trap focus */
+  /**
+   * @param {HTMLElement|null} [trigger]
+   */
   function openPopup(trigger = null) {
     lastFocusedElement = trigger instanceof HTMLElement ? trigger : document.activeElement;
     popupElement.classList.add('is-open');
@@ -83,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('keydown', trapPopupFocus);
   }
 
-  /** Close the popup and restore scroll */
   function closePopup() {
     popupElement.classList.remove('is-open');
     popupElement.setAttribute('aria-hidden', 'true');
@@ -95,6 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  /**
+   * @param {KeyboardEvent} event
+   */
   function trapPopupFocus(event) {
     if (event.key !== 'Tab') return;
 
@@ -119,27 +105,23 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // Close on backdrop / close-button clicks
-  popupElement.addEventListener('click', function (e) {
-    if (!(e.target instanceof Element)) return;
-    if (e.target.closest('[data-popup-close]')) closePopup();
+  popupElement.addEventListener('click', function (event) {
+    if (!(event.target instanceof Element)) return;
+    if (event.target.closest('[data-popup-close]')) closePopup();
   });
 
-  // Close on Escape key
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && popup.classList.contains('is-open')) closePopup();
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && popup.classList.contains('is-open')) closePopup();
   });
 
-  /* ── Grid card click → fetch product → render popup ─────── */
-
-  section.addEventListener('click', function (e) {
-    const trigger = /** @type {HTMLElement} */ (e.target).closest('[data-product-handle]');
+  section.addEventListener('click', function (event) {
+    const trigger = event.target instanceof Element ? event.target.closest('[data-product-handle]') : null;
     if (!trigger) return;
 
-    const handle = /** @type {HTMLElement} */ (trigger).dataset.productHandle;
+    /** @type {string} */
+    const handle = trigger instanceof HTMLElement ? trigger.dataset.productHandle || '' : '';
     if (!handle) return;
 
-    // Show popup immediately with loading state
     resetPopup();
     msgEl.textContent = 'Loading…';
     openPopup(trigger);
@@ -151,73 +133,62 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   });
 
-  /* ── Fetch product JSON from Shopify ─────────────────────── */
-
   /**
    * @param {string} handle
-   * @returns {Promise<Product>}
+   * @returns {Promise<any>}
    */
   function fetchProduct(handle) {
     return fetch('/products/' + encodeURIComponent(handle) + '.js', {
-      credentials: 'same-origin',
-    }).then(function (res) {
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      return res.json();
+      credentials: 'same-origin'
+    }).then(function (response) {
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      return response.json();
     });
   }
 
-  /* ── Render popup with product data ─────────────────────── */
-
   /**
-   * @param {Product} product
+   * @param {{ featured_image?: { src?: string }, images?: Array<{ src?: string }>, title?: string, description?: string, variants?: Array<any>, options?: Array<string> }} product
    */
   function renderPopup(product) {
     currentProduct = product;
     msgEl.textContent = '';
 
-    // Thumbnail — prefer featured_image, fall back to first image
-    const imgSrc = (product.featured_image && product.featured_image.src)
-      || (product.images[0]?.src || '');
+    const imgSrc = product.featured_image?.src || product.images?.[0]?.src || '';
     popupImage.src = imgSrc;
     popupImage.alt = product.title || '';
-    
     popupTitle.textContent = product.title || '';
     popupDesc.textContent = stripHtml(product.description || '');
 
-    // Default to first available variant
-    currentVariant = product.variants.find(function (v) { return v.available; })
-      || product.variants[0]
-      || null;
+    currentVariant = product.variants.find(function (variant) {
+      return variant.available;
+    }) || product.variants[0] || null;
 
     buildVariantPickers(product);
     updatePrice();
   }
 
-  /** Strip HTML tags from Shopify's description field */
-  /** @param {string} html */
+  /**
+   * @param {string} html
+   * @returns {string}
+   */
   function stripHtml(html) {
-    const tmp = document.createElement('div');
-    tmp.innerHTML = html;
-    return tmp.textContent || tmp.innerText || '';
+    const container = document.createElement('div');
+    container.innerHTML = html;
+    return container.textContent || container.innerText || '';
   }
 
-  /* ── Build variant option pickers ───────────────────────── */
-
   /**
-   * Builds one picker per option (e.g. Color, Size).
-   * ≤ 4 values → button swatches (matches Figma).
-   * > 4 values → <select> dropdown.
-   *
-   * @param {Product} product
+   * @param {{ options?: Array<string>, variants?: Array<any> }} product
    */
   function buildVariantPickers(product) {
     popupOptions.innerHTML = '';
 
     product.options.forEach(function (optionName, optionIndex) {
-      // Collect unique values for this option position
       const values = product.variants
-        .map(function (v) { return v.options[optionIndex]; })
-        .filter(function (val, i, arr) { return arr.indexOf(val) === i; });
+        .map(function (variant) { return variant.options[optionIndex]; })
+        .filter(function (value, index, array) {
+          return array.indexOf(value) === index;
+        });
 
       const group = document.createElement('div');
       group.className = 'gg-opt';
@@ -227,58 +198,52 @@ document.addEventListener('DOMContentLoaded', function () {
       label.textContent = optionName;
       group.appendChild(label);
 
-      // Current selection for this option
-      const currentVal = currentVariant ? currentVariant.options[optionIndex] : values[0];
+      const currentValue = currentVariant ? currentVariant.options[optionIndex] : values[0];
 
       if (values.length <= 4) {
-        // ── Button swatches ──
-        const btnWrap = document.createElement('div');
-        btnWrap.className = 'gg-opt__buttons';
-        btnWrap.dataset.optionIndex = String(optionIndex);
+        const buttonGroup = document.createElement('div');
+        buttonGroup.className = 'gg-opt__buttons';
+        buttonGroup.dataset.optionIndex = String(optionIndex);
 
-        values.forEach(function (val) {
-          const safeValue = val || '';
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'gg-opt__btn' + (safeValue === currentVal ? ' is-active' : '');
-          btn.textContent = safeValue;
-          btn.dataset.value = safeValue;
+        values.forEach(function (value) {
+          const safeValue = value || '';
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'gg-opt__btn' + (safeValue === currentValue ? ' is-active' : '');
+          button.textContent = safeValue;
+          button.dataset.value = safeValue;
 
-          btn.addEventListener('click', function () {
-            // Deactivate siblings, activate this
-            btnWrap.querySelectorAll('.gg-opt__btn').forEach(function (b) {
-              b.classList.remove('is-active');
+          button.addEventListener('click', function () {
+            buttonGroup.querySelectorAll('.gg-opt__btn').forEach(function (btn) {
+              btn.classList.remove('is-active');
             });
-            btn.classList.add('is-active');
+            button.classList.add('is-active');
             resolveVariant();
           });
 
-          btnWrap.appendChild(btn);
+          buttonGroup.appendChild(button);
         });
 
-        group.appendChild(btnWrap);
-
+        group.appendChild(buttonGroup);
       } else {
-        // ── Select dropdown ──
         const select = document.createElement('select');
         select.className = 'gg-opt__select';
         select.dataset.optionIndex = String(optionIndex);
 
-        // Placeholder option
         const placeholder = document.createElement('option');
         placeholder.value = '';
         placeholder.textContent = 'Choose your ' + optionName.toLowerCase();
         placeholder.disabled = true;
-        placeholder.selected = !currentVal;
+        placeholder.selected = !currentValue;
         select.appendChild(placeholder);
 
-        values.forEach(function (val) {
-          const opt = document.createElement('option');
-          const safeValue = val || '';
-          opt.value = safeValue;
-          opt.textContent = safeValue;
-          opt.selected = safeValue === currentVal;
-          select.appendChild(opt);
+        values.forEach(function (value) {
+          const option = document.createElement('option');
+          const safeValue = value || '';
+          option.value = safeValue;
+          option.textContent = safeValue;
+          option.selected = safeValue === currentValue;
+          select.appendChild(option);
         });
 
         select.addEventListener('change', resolveVariant);
@@ -289,70 +254,58 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ── Resolve which variant matches current picker state ──── */
-
   function resolveVariant() {
     if (!currentProduct) return;
 
-    // Read selected value for each option position
-    const selected = currentProduct.options.map(function (_, i) {
-      // Try button group first
-      const activeBtn = /** @type {HTMLElement|null} */ (
-        popupOptions.querySelector('.gg-opt__buttons[data-option-index="' + i + '"] .gg-opt__btn.is-active')
-      );
-      if (activeBtn) return activeBtn.dataset.value || '';
+    const selectedOptions = currentProduct.options.map(function (_, index) {
+      const activeButton = popupOptions.querySelector('.gg-opt__buttons[data-option-index="' + index + '"] .gg-opt__btn.is-active');
+      if (activeButton instanceof HTMLElement) return activeButton.dataset.value || '';
 
-      // Fall back to select
-      const sel = /** @type {HTMLSelectElement|null} */ (
-        popupOptions.querySelector('select[data-option-index="' + i + '"]')
-      );
-      return sel ? sel.value : '';
+      const select = popupOptions.querySelector('select[data-option-index="' + index + '"]');
+      return select instanceof HTMLSelectElement ? select.value : '';
     });
 
-    // Find matching variant
-    currentVariant = currentProduct.variants.find(function (v) {
-      return v.options.every(function (val, i) { return val === selected[i]; });
+    currentVariant = currentProduct.variants.find(function (variant) {
+      return variant.options.every(function (value, optionIndex) {
+        return value === selectedOptions[optionIndex];
+      });
     }) || null;
 
     updatePrice();
   }
 
-  /* ── Update price display and ATC button state ───────────── */
-
   function updatePrice() {
     if (!currentVariant) {
       popupPrice.textContent = '';
       atcBtn.disabled = true;
+      atcBtn.textContent = 'ADD TO CART  →';
       return;
     }
 
-    // Format price (Shopify returns price in cents)
     popupPrice.textContent = formatMoney(currentVariant.price);
     atcBtn.disabled = !currentVariant.available;
-    atcBtn.textContent = currentVariant.available
-      ? 'ADD TO CART  →'
-      : 'SOLD OUT';
+    atcBtn.textContent = currentVariant.available ? 'ADD TO CART  →' : 'SOLD OUT';
   }
 
-  /**
-   * Format cents to locale currency string.
-   * @param {number} cents
-   * @returns {string}
-   */
   function formatMoney(cents) {
     try {
       return new Intl.NumberFormat(navigator.language || 'en-US', {
         style: 'currency',
-        currency: window.Shopify && window.Shopify.currency
-          ? window.Shopify.currency.active
-          : 'USD',
+        currency: window.Shopify && window.Shopify.currency ? window.Shopify.currency.active : 'USD'
       }).format(cents / 100);
     } catch (_) {
       return (cents / 100).toFixed(2);
     }
   }
 
-  /* ── Add to Cart ─────────────────────────────────────────── */
+  function updateCartCount() {
+    const cartCountElements = document.querySelectorAll('.cart-count-bubble, [data-cart-count], .cart-count');
+    cartCountElements.forEach(function (element) {
+      if (element.textContent.trim()) {
+        element.textContent = String(Number(element.textContent) + 1);
+      }
+    });
+  }
 
   atcBtn.addEventListener('click', function () {
     if (!currentVariant || !currentVariant.available) return;
@@ -360,70 +313,61 @@ document.addEventListener('DOMContentLoaded', function () {
     atcBtn.disabled = true;
     msgEl.textContent = 'Adding to cart…';
 
-    // Build items array — always includes the chosen variant
     const items = [{ id: currentVariant.id, quantity: 1 }];
-
-    // Business rule: if Color=Black AND Size=Medium → also add Soft Winter Jacket
     const shouldAutoAdd = variantHasBlackAndMedium(currentVariant);
 
-    /**
-     * POST to /cart/add.js with the items array.
-     * @param {{ id: number, quantity: number }[]} cartItems
-     * @returns {Promise<any>}
-     */
     function postToCart(cartItems) {
       return fetch('/cart/add.js', {
         method: 'POST',
         credentials: 'same-origin',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: cartItems }),
-      }).then(function (res) {
-        if (!res.ok) {
-          return res.json().then(function (err) {
-            throw new Error(err.description || 'Cart error');
+        body: JSON.stringify({ items: cartItems })
+      }).then(function (response) {
+        if (!response.ok) {
+          return response.json().then(function (error) {
+            throw new Error(error.description || 'Cart error');
           });
         }
-        return res.json();
+        return response.json();
       });
     }
 
-    // If auto-add needed, fetch the jacket's default variant first
     const cartPromise = shouldAutoAdd && autoAddHandle
       ? fetchProduct(autoAddHandle).then(function (jacket) {
-          const jacketVariant = jacket.variants.find(function (v) { return v.available; })
-            || jacket.variants[0];
-          if (jacketVariant) items.push({ id: jacketVariant.id, quantity: 1 });
+          const jacketVariant = jacket.variants.find(function (variant) {
+            return variant.available;
+          }) || jacket.variants[0];
+          if (jacketVariant) {
+            items.push({ id: jacketVariant.id, quantity: 1 });
+          }
           return postToCart(items);
         })
       : postToCart(items);
 
     cartPromise
       .then(function () {
-        msgEl.textContent = shouldAutoAdd
-          ? 'Added to cart + Soft Winter Jacket!'
-          : 'Added to cart!';
+        msgEl.textContent = shouldAutoAdd ? 'Added to cart + Soft Winter Jacket!' : 'Added to cart!';
+        atcBtn.textContent = 'ADDED  ✓';
+        updateCartCount();
         atcBtn.disabled = false;
       })
-      .catch(function (err) {
-        msgEl.textContent = err.message || 'Could not add to cart.';
+      .catch(function (error) {
+        msgEl.textContent = error.message || 'Could not add to cart.';
+        atcBtn.textContent = 'ADD TO CART  →';
         atcBtn.disabled = false;
       });
   });
 
-  /* ── Business rule helper ────────────────────────────────── */
-
   /**
-   * Returns true if the variant's options include both "Black" and "Medium".
-   * Matches on option VALUES, not product title.
-   * @param {Variant} variant
+   * @param {{ options?: Array<string> }} variant
    * @returns {boolean}
    */
   function variantHasBlackAndMedium(variant) {
-    const opts = variant.options.map(function (o) { return o.toLowerCase(); });
-    return opts.includes('black') && opts.includes('medium');
+    const values = variant.options.map(function (option) {
+      return option.toLowerCase();
+    });
+    return values.includes('black') && values.includes('medium');
   }
-
-  /* ── Reset popup to blank state ──────────────────────────── */
 
   function resetPopup() {
     currentProduct = null;
@@ -432,11 +376,10 @@ document.addEventListener('DOMContentLoaded', function () {
     popupImage.alt = '';
     popupTitle.textContent = '';
     popupPrice.textContent = '';
-    popupDesc.textContent  = '';
+    popupDesc.textContent = '';
     popupOptions.innerHTML = '';
     atcBtn.disabled = true;
     atcBtn.textContent = 'ADD TO CART  →';
     msgEl.textContent = '';
   }
-
 });
