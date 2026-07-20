@@ -1,10 +1,42 @@
 {
   "sections": {
     "gift_guide_banner": {
-      "type": "gift-guide-banner"
+      "type": "gift-guide-banner",
+      "settings": {
+        "brand_text": "TISSO VISON",
+        "top_text": "Find the ideal gift for your loved ones.",
+        "top_button_text": "CHOOSE GIFT",
+        "top_button_url": "#gift-guide-grid",
+        "hero_heading": "The Gift Guide",
+        "hero_copy": "Discover Joy: Your Ultimate Holiday Gift Destination.",
+        "shop_btn_label": "SHOP NOW",
+        "shop_btn_url": "#gift-guide-grid",
+        "ticker_text": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR",
+        "illustration_image": ""
+      }
     },
     "gift_guide_grid": {
-      "type": "gift-guide-grid"
+      "type": "gift-guide-grid",
+      "settings": {
+        "grid_heading": "Tisso vison in the wild",
+        "auto_add_product": ""
+      },
+      "blocks": {
+        "product_card_1": { "type": "product_card", "settings": { "product": "" } },
+        "product_card_2": { "type": "product_card", "settings": { "product": "" } },
+        "product_card_3": { "type": "product_card", "settings": { "product": "" } },
+        "product_card_4": { "type": "product_card", "settings": { "product": "" } },
+        "product_card_5": { "type": "product_card", "settings": { "product": "" } },
+        "product_card_6": { "type": "product_card", "settings": { "product": "" } }
+      },
+      "block_order": [
+        "product_card_1",
+        "product_card_2",
+        "product_card_3",
+        "product_card_4",
+        "product_card_5",
+        "product_card_6"
+      ]
     }
   },
   "order": [

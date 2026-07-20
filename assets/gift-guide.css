@@ -49,11 +49,11 @@
   color: #333;
 }
 
-/* Yellow "CHOOSE GIFT →" — hover lifts */
+/* Yellow "CHOOSE GIFT →" — hover lifts and arrow slides */
 .gg-banner__choose-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background: #f0e040;
   color: #111;
   font-weight: 700;
@@ -68,9 +68,21 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.gg-banner__choose-btn:hover {
+.gg-banner__choose-btn-arrow,
+.gg-banner__shop-btn-arrow {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+
+.gg-banner__choose-btn:hover,
+.gg-banner__shop-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+}
+
+.gg-banner__choose-btn:hover .gg-banner__choose-btn-arrow,
+.gg-banner__shop-btn:hover .gg-banner__shop-btn-arrow {
+  transform: translateX(5px);
 }
 
 /* ── Body: text-left / illustration-right ── */
@@ -162,13 +174,12 @@
 /* ── Bottom ticker ── */
 .gg-banner__ticker {
   text-align: center;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: #555;
-  padding: 13px 32px;
-  border-top: 1px solid #e0e0e0;
-  background: #fff;
+  color: #111;
+  padding: 14px 32px;
+  background: #f6f6f6;
 }
 
 /* =============================================================
@@ -192,6 +203,7 @@
   letter-spacing: -0.01em;
   color: #111;
   margin-bottom: 24px;
+  text-align: center;
 }
 
 /* 3-column grid, portrait aspect ratio */
@@ -525,10 +537,20 @@
 
   .gg-banner__text {
     padding: 24px 18px 32px;
+    text-align: center;
   }
 
   .gg-banner__heading {
     font-size: 2rem;
+  }
+
+  .gg-banner__copy {
+    margin: 0 auto 30px;
+    max-width: 320px;
+  }
+
+  .gg-banner__shop-btn {
+    margin: 0 auto;
   }
 
   /* Grid */

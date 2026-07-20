@@ -13,7 +13,8 @@
     <span class="gg-banner__brand">{{ section.settings.brand_text }}</span>
     <span class="gg-banner__tagline">{{ section.settings.top_tagline }}</span>
     <a class="gg-banner__choose-btn" href="{{ section.settings.top_btn_url }}">
-      {{ section.settings.top_btn_label }}&nbsp;&nbsp;&#8594;
+      <span class="gg-banner__choose-btn-label">{{ section.settings.top_btn_label }}</span>
+      <span class="gg-banner__choose-btn-arrow" aria-hidden="true">&#8594;</span>
     </a>
   </div>
 
@@ -244,7 +245,7 @@
       "type": "text",
       "id": "ticker_text",
       "label": "Bottom ticker text",
-      "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+      "default": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
     },
     {
       "type": "image_picker",
