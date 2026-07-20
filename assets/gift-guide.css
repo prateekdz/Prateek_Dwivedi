@@ -10,6 +10,54 @@
   box-sizing: border-box;
 }
 
+[data-template="index"] .gift-guide-banner,
+[data-template="index"] .gift-guide-grid,
+[data-template="page.gift-guide"] .gift-guide-banner,
+[data-template="page.gift-guide"] .gift-guide-grid {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+[data-template="index"] .shopify-section,
+[data-template="page.gift-guide"] .shopify-section,
+[data-template="index"] .section,
+[data-template="page.gift-guide"] .section {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  min-height: 0 !important;
+}
+
+body[data-template="index"] #header-group,
+body[data-template="page.gift-guide"] #header-group {
+  display: none !important;
+}
+
+body[data-template="index"],
+body[data-template="page.gift-guide"] {
+  min-height: 100vh;
+  background: #fff;
+}
+
+body[data-template="index"] .page-wrapper,
+body[data-template="page.gift-guide"] .page-wrapper,
+body[data-template="index"] main#MainContent,
+body[data-template="page.gift-guide"] main#MainContent {
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
+body[data-template="index"] .content-for-layout,
+body[data-template="page.gift-guide"] .content-for-layout {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
 .gg-desktop-only {
   display: inline-block;
 }

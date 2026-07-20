@@ -9,16 +9,16 @@
         "top_button_url": "#gift-guide-grid",
         "hero_heading": "The Gift Guide",
         "hero_copy": "Discover Joy: Your Ultimate Holiday Gift Destination.",
-        "shop_btn_label": "SHOP NOW",
-        "shop_btn_url": "#gift-guide-grid",
-        "ticker_text": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR",
-        "illustration_image": ""
+        "hero_cta_text": "SHOP NOW",
+        "hero_cta_url": "#gift-guide-grid",
+        "strip_text_desktop": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR",
+        "strip_text_mobile": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
       }
     },
     "gift_guide_grid": {
       "type": "gift-guide-grid",
       "settings": {
-        "grid_heading": "Tisso vison in the wild",
+        "heading": "Tisso vison in the wild",
         "auto_add_product": ""
       },
       "blocks": {
