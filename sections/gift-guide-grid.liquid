@@ -1,0 +1,109 @@
+<section id="gift-guide-grid" class="gift-guide-grid" aria-label="Gift guide products" data-gift-guide-grid data-auto-add-product="{{ section.settings.auto_add_product }}">
+  <div class="gift-guide-grid__container">
+    <div class="gift-guide-grid__intro">
+      <p class="gift-guide-grid__eyebrow">Gift collection</p>
+      <h2 class="gift-guide-grid__title">Choose a product to explore</h2>
+    </div>
+
+    <div class="gift-guide-grid__cards">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          <article class="gift-guide-card">
+            {% if block.settings.product != blank %}
+              {% assign card_product = all_products[block.settings.product] %}
+              <button type="button" class="gift-guide-card__button" data-product-handle="{{ block.settings.product }}">
+                <span class="gift-guide-card__image-wrap">
+                  {% if card_product.featured_image != blank %}
+                    <img class="gift-guide-card__image" src="{{ card_product.featured_image | img_url: '720x' }}" alt="{{ card_product.title }}">
+                  {% else %}
+                    <span class="gift-guide-card__image-fallback">Image unavailable</span>
+                  {% endif %}
+                </span>
+                <span class="gift-guide-card__copy">
+                  <span class="gift-guide-card__label">Shop gift</span>
+                  <span class="gift-guide-card__name">{{ card_product.title }}</span>
+                  <span class="gift-guide-card__price">{{ card_product.price | money }}</span>
+                </span>
+              </button>
+            {% else %}
+              <div class="gift-guide-card gift-guide-card--empty">
+                <div class="gift-guide-card__placeholder">Select a product in the section settings</div>
+              </div>
+            {% endif %}
+          </article>
+        {% endfor %}
+      {% else %}
+        <div class="gift-guide-grid__empty">Add six products in the customizer to populate the grid.</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="gift-guide-popup" id="gift-guide-popup" aria-hidden="true">
+    <div class="gift-guide-popup__overlay" data-popup-close></div>
+    <div class="gift-guide-popup__dialog" role="dialog" aria-modal="true" aria-labelledby="gift-guide-popup-title">
+      <button type="button" class="gift-guide-popup__close" data-popup-close aria-label="Close">×</button>
+      <div class="gift-guide-popup__content">
+        <div class="gift-guide-popup__image-panel">
+          <img class="gift-guide-popup__image" alt="" src="">
+        </div>
+        <div class="gift-guide-popup__details-panel">
+          <div class="gift-guide-popup__text-wrap">
+            <p class="gift-guide-popup__eyebrow">Product details</p>
+            <h2 id="gift-guide-popup-title" class="gift-guide-popup__title"></h2>
+            <div class="gift-guide-popup__price"></div>
+            <div class="gift-guide-popup__description"></div>
+          </div>
+          <form class="gift-guide-popup__form" novalidate>
+            <div class="gift-guide-popup__options" data-popup-options></div>
+            <button type="button" class="gift-guide-popup__add-to-cart" data-add-to-cart>Add to cart</button>
+            <p class="gift-guide-popup__message" data-popup-message aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script defer src="{{ 'gift-guide.js' | asset_url }}"></script>
+</section>
+
+{% schema %}
+{
+  "name": "Gift Guide Grid",
+  "settings": [
+    {
+      "type": "product",
+      "id": "auto_add_product",
+      "label": "Soft Winter Jacket product"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product card",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "block_order": [],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Gift Guide Grid",
+      "category": "Custom",
+      "blocks": [
+        {
+          "type": "product_card",
+          "settings": {
+                                    "product": ""
+                                }
+                                }
+                              ]
+    }
+  ]
+}
+{% endschema %}

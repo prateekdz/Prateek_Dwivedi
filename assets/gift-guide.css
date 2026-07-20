@@ -1,0 +1,408 @@
+.gift-guide-banner {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  padding: 32px 24px 64px;
+  display: grid;
+  align-items: center;
+  background: #fff;
+  color: #111;
+}
+
+.gift-guide-banner__topbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 64px;
+}
+
+.gift-guide-banner__brand {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.gift-guide-banner__headline {
+  flex: 1 1 320px;
+  max-width: 640px;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.gift-guide-banner__top-button,
+.gift-guide-banner__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffde27;
+  color: #111;
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 16px 26px;
+  border-radius: 999px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.25s ease;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.08);
+}
+
+.gift-guide-banner__top-button:hover,
+.gift-guide-banner__cta:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+}
+
+.gift-guide-banner__hero {
+  max-width: 760px;
+}
+
+.gift-guide-banner__title {
+  font-size: clamp(3.2rem, 5vw, 7rem);
+  line-height: 0.95;
+  margin: 0 0 24px;
+  letter-spacing: -0.04em;
+}
+
+.gift-guide-banner__copy {
+  font-size: 1.05rem;
+  max-width: 560px;
+  margin-bottom: 36px;
+  line-height: 1.85;
+}
+
+.gift-guide-banner__visual {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle at top left, rgba(255, 222, 39, 0.14), transparent 18%),
+    radial-gradient(circle at bottom right, rgba(17, 17, 17, 0.05), transparent 18%);
+}
+
+.gift-guide-banner__shape {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.gift-guide-banner__shape--circle {
+  width: 220px;
+  height: 220px;
+  top: 10%;
+  right: -80px;
+}
+
+.gift-guide-banner__shape--line {
+  width: 4px;
+  height: 200px;
+  bottom: 12%;
+  left: 16%;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.gift-guide-grid {
+  padding: 64px 24px 80px;
+  background: #fff;
+}
+
+.gift-guide-grid__container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.gift-guide-grid__intro {
+  margin-bottom: 40px;
+}
+
+.gift-guide-grid__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 14px;
+}
+
+.gift-guide-grid__title {
+  font-size: clamp(2rem, 3vw, 3rem);
+  line-height: 1.05;
+  margin: 0;
+}
+
+.gift-guide-grid__cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.gift-guide-card {
+  background: #111;
+  color: #fff;
+  border-radius: 28px;
+  overflow: hidden;
+}
+
+.gift-guide-card__button {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.gift-guide-card__image-wrap {
+  display: block;
+  min-height: 320px;
+  overflow: hidden;
+  background: #f7f7f7;
+}
+
+.gift-guide-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gift-guide-card__image-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.gift-guide-card__copy {
+  display: grid;
+  gap: 10px;
+  padding: 26px;
+}
+
+.gift-guide-card__label {
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f1f1f1;
+}
+
+.gift-guide-card__name {
+  font-size: 1.3rem;
+  line-height: 1.1;
+}
+
+.gift-guide-card__price {
+  font-size: 0.95rem;
+  color: #d8d8d8;
+}
+
+.gift-guide-card--empty,
+.gift-guide-grid__empty {
+  background: #f3f3f3;
+  border: 1px dashed #dcdcdc;
+  border-radius: 28px;
+  padding: 40px;
+  color: #444;
+  text-align: center;
+}
+
+.gift-guide-card__placeholder {
+  font-size: 1rem;
+}
+
+.gift-guide-popup {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  padding: 24px;
+}
+
+.gift-guide-popup.is-open {
+  display: flex;
+}
+
+.gift-guide-popup__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 8, 10, 0.75);
+}
+
+.gift-guide-popup__dialog {
+  position: relative;
+  width: min(1140px, 100%);
+  max-height: min(90vh, 100%);
+  overflow: auto;
+  background: #fff;
+  border-radius: 28px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.18);
+  z-index: 1;
+}
+
+.gift-guide-popup__close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  background: transparent;
+  border: 0;
+  color: #111;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.gift-guide-popup__content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  padding: 40px;
+}
+
+.gift-guide-popup__image-panel {
+  min-height: 420px;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #f8f8f8;
+}
+
+.gift-guide-popup__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gift-guide-popup__details-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gift-guide-popup__text-wrap {
+  margin-bottom: 20px;
+}
+
+.gift-guide-popup__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #666;
+  margin-bottom: 16px;
+  font-size: 0.8rem;
+}
+
+.gift-guide-popup__title {
+  margin: 0;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  line-height: 1.05;
+}
+
+.gift-guide-popup__price {
+  margin: 18px 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.gift-guide-popup__description {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #444;
+  margin-bottom: 24px;
+}
+
+.gift-guide-popup__options {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.gift-guide-popup__option label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.gift-guide-popup__option select {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #ddd;
+  border-radius: 14px;
+  background: #fff;
+  font-size: 1rem;
+}
+
+.gift-guide-popup__add-to-cart {
+  width: 100%;
+  border: 0;
+  background: #111;
+  color: #fff;
+  padding: 18px 22px;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.gift-guide-popup__add-to-cart:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
+}
+
+.gift-guide-popup__message {
+  margin-top: 18px;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 980px) {
+  .gift-guide-grid__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gift-guide-popup__content {
+    grid-template-columns: 1fr;
+    padding: 28px;
+  }
+}
+
+@media (max-width: 720px) {
+  .gift-guide-banner {
+    padding: 24px 18px 48px;
+  }
+
+  .gift-guide-banner__topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .gift-guide-banner__headline {
+    max-width: 100%;
+  }
+
+  .gift-guide-banner__hero {
+    max-width: 100%;
+  }
+
+  .gift-guide-grid {
+    padding: 48px 18px 60px;
+  }
+
+  .gift-guide-grid__cards {
+    grid-template-columns: 1fr;
+  }
+
+  .gift-guide-popup__dialog {
+    max-height: 100vh;
+    margin: 16px;
+  }
+
+  .gift-guide-popup__close {
+    right: 16px;
+    top: 16px;
+  }
+}
