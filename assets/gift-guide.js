@@ -1,11 +1,12 @@
 /**
  * gift-guide.js
- * Handles the Gift Guide Grid popup:
- *   - Opens on "+" button click, fetches product JSON
- *   - Builds variant pickers dynamically (button swatches ≤4 values, select >4)
- *   - Tracks selected variant, updates price
- *   - POST /cart/add.js to add to cart
- *   - Auto-adds "Soft Winter Jacket" when variant has Color=Black AND Size=Medium
+ * Handles the Gift Guide Grid popup and quick view behavior:
+ *   - Opens the popup on product selection and fetches product JSON
+ *   - Builds variant pickers dynamically
+ *   - Updates price and availability state
+ *   - Adds items to cart via Shopify AJAX
+ *   - Auto-adds "Soft Winter Jacket" when Black + Medium is selected
+ *   - Traps focus inside the popup and restores focus on close
  *
  * Vanilla JS only — no jQuery.
  */
@@ -45,6 +46,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /** @type {Product|null}  */ let currentProduct = null;
   /** @type {Variant|null}  */ let currentVariant = null;
+  /** @type {HTMLElement|null} */ let lastFocusedElement = null;
+
+  const focusableSelectors = [
+    'a[href]:not([tabindex="-1"])',
+    'button:not([disabled]):not([tabindex="-1"])',
+    'input:not([disabled]):not([tabindex="-1"])',
+    'select:not([disabled]):not([tabindex="-1"])',
+    'textarea:not([disabled]):not([tabindex="-1"])',
+    '[tabindex]:not([tabindex="-1"])'
+  ].join(', ');
+
+  function getPopupFocusableElements() {
+    return Array.from(popupElement.querySelectorAll(focusableSelectors));
+  }
 
   // Handle of the "Soft Winter Jacket" product to auto-add
   const autoAddHandle = section.dataset.autoAddHandle || '';
@@ -52,11 +67,20 @@ document.addEventListener('DOMContentLoaded', function () {
   /* ── Popup open / close ──────────────────────────────────── */
 
   /** Open the popup and trap focus */
-  function openPopup() {
+  function openPopup(trigger = null) {
+    lastFocusedElement = trigger instanceof HTMLElement ? trigger : document.activeElement;
     popupElement.classList.add('is-open');
     popupElement.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    atcBtn.focus();
+
+    const focusable = getPopupFocusableElements();
+    if (focusable.length) {
+      focusable[0].focus();
+    } else {
+      atcBtn.focus();
+    }
+
+    document.addEventListener('keydown', trapPopupFocus);
   }
 
   /** Close the popup and restore scroll */
@@ -64,12 +88,41 @@ document.addEventListener('DOMContentLoaded', function () {
     popupElement.classList.remove('is-open');
     popupElement.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    document.removeEventListener('keydown', trapPopupFocus);
     msgEl.textContent = '';
+    if (lastFocusedElement instanceof HTMLElement) {
+      lastFocusedElement.focus();
+    }
+  }
+
+  function trapPopupFocus(event) {
+    if (event.key !== 'Tab') return;
+
+    const focusable = getPopupFocusableElements();
+    if (!focusable.length) return;
+
+    const firstFocusable = focusable[0];
+    const lastFocusable = focusable[focusable.length - 1];
+    const activeElement = document.activeElement;
+
+    if (event.shiftKey) {
+      if (activeElement === firstFocusable || activeElement === popupElement) {
+        lastFocusable.focus();
+        event.preventDefault();
+      }
+      return;
+    }
+
+    if (activeElement === lastFocusable) {
+      firstFocusable.focus();
+      event.preventDefault();
+    }
   }
 
   // Close on backdrop / close-button clicks
   popupElement.addEventListener('click', function (e) {
-    if (/** @type {HTMLElement} */ (e.target).closest('[data-popup-close]')) closePopup();
+    if (!(e.target instanceof Element)) return;
+    if (e.target.closest('[data-popup-close]')) closePopup();
   });
 
   // Close on Escape key
@@ -89,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Show popup immediately with loading state
     resetPopup();
     msgEl.textContent = 'Loading…';
-    openPopup();
+    openPopup(trigger);
 
     fetchProduct(handle)
       .then(renderPopup)

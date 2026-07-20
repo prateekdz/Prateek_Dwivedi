@@ -144,12 +144,6 @@
   transition: transform 0.25s ease;
   line-height: 1;
 }
-
-.gg-banner__shop-btn-arrow {
-  display: inline-block;
-  transition: transform 0.25s ease;
-}
-
 .gg-banner__shop-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
@@ -527,22 +521,21 @@
    ============================================================= */
 
 @media (max-width: 600px) {
-  /* Banner topbar: wrap tagline below brand/button */
+  /* Banner topbar: stack brand, tagline, and button vertically */
   .gg-banner__topbar {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
     padding: 12px 18px;
-    gap: 8px;
   }
 
   .gg-banner__tagline {
-    order: 3;
-    flex: 0 0 100%;
     text-align: left;
     font-size: 0.8rem;
   }
 
   .gg-banner__choose-btn {
-    margin-left: auto;
+    justify-self: end;
   }
 
   .gg-banner__illustration {
@@ -570,11 +563,6 @@
   /* Grid */
   .gg-grid {
     padding: 36px 14px 52px;
-  }
-
-  .gg-grid__cards {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 4px;
   }
 
   /* Popup */

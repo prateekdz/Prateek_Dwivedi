@@ -1,5 +1,14 @@
 {
   "sections": {
+    "header": {
+      "type": "header",
+      "settings": {
+        "brand_text": "TISSO VISON",
+        "top_text": "Find the ideal gift for your loved ones.",
+        "top_button_text": "CHOOSE GIFT",
+        "top_button_url": "#gift-guide-grid"
+      }
+    },
     "gift_guide_banner": {
       "type": "gift-guide-banner",
       "settings": {
@@ -40,6 +49,7 @@
     }
   },
   "order": [
+    "header",
     "gift_guide_banner",
     "gift_guide_grid"
   ]

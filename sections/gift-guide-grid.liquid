@@ -60,6 +60,8 @@
        class="gg-popup"
        role="dialog"
        aria-modal="true"
+       aria-labelledby="gg-popup-title"
+       aria-describedby="gg-popup-desc"
        aria-label="Product quick view"
        aria-hidden="true">
 
@@ -78,9 +80,9 @@
       <div class="gg-popup__top">
         <img class="gg-popup__thumb" src="" alt="" data-popup-image>
         <div class="gg-popup__meta">
-          <p class="gg-popup__title" data-popup-title></p>
+          <p class="gg-popup__title" id="gg-popup-title" data-popup-title></p>
           <p class="gg-popup__price" data-popup-price></p>
-          <p class="gg-popup__desc"  data-popup-desc></p>
+          <p class="gg-popup__desc" id="gg-popup-desc" data-popup-desc></p>
         </div>
       </div>
 

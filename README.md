@@ -1,30 +1,33 @@
-# Gift Guide Page Implementation
+# Shopify Gift Guide Theme Extension
 
-This repository includes a custom Shopify page implementation for the Ecomexperts hiring test.
+This theme export implements a custom Shopify gift guide homepage and supporting sections on top of the Horizon theme.
 
-## What was built
-- `templates/page.gift-guide.json` — custom page template for the gift guide page
-- `sections/gift-guide-banner.liquid` — editable banner section with custom text controls
-- `sections/gift-guide-grid.liquid` — product grid section with six selectable product blocks and popup behavior
-- `assets/gift-guide.css` — styles for the banner, grid, popup, and mobile layout
-- `assets/gift-guide.js` — vanilla JavaScript for product loading, popup interaction, variant selection, and Add to Cart
+## Custom functionality
+- `templates/index.json` — homepage template with a custom navbar section, a gift guide hero banner, and a 6-product quick-view grid
+- `templates/page.gift-guide.json` — gift guide page template with a banner and product grid
+- `sections/header.liquid` — simplified custom navbar section for the gift guide homepage
+- `sections/gift-guide-banner.liquid` — editable hero section with headline, copy, CTA, illustration, and ticker
+- `sections/gift-guide-grid.liquid` — product grid section with quick-view popup and Add to Cart behavior
+- `assets/gift-guide.css` — isolated styles for the gift guide sections and popup
+- `assets/gift-guide.js` — vanilla JavaScript for quick-view interactions, variant selection, cart add behavior, and auto-add logic
 
 ## Key behaviors
-- Banner text is fully editable through the Shopify theme customizer
-- Grid supports six products selected from the section settings
-- Product popup displays name, price, description, image, and variant controls dynamically
-- Add to Cart uses Shopify AJAX API and is functional without jQuery
-- If a selected variant contains both `Black` and `Medium`, the configured `Soft Winter Jacket` product is also added to the cart automatically
-- Responsive mobile view is implemented
+- Homepage includes a simple custom navbar above the hero content
+- The gift guide banner supports editable text and optional illustration uploads
+- The grid shows six product cards that open a quick-view popup
+- Variant selection adapts to option count with buttons or dropdowns
+- Add to Cart uses Shopify AJAX `/cart/add.js`
+- When the chosen variant includes both `Black` and `Medium`, the configured `Soft Winter Jacket` product is added automatically
+- The popup now traps focus and restores focus on close for better accessibility
 
-## Usage
-1. Create a new page in Shopify admin
-2. Assign the `gift-guide` page template
-3. Add the `Gift Guide Banner` and `Gift Guide Grid` sections
-4. Select six products in the grid section
-5. Set the `Soft Winter Jacket` product under the grid settings if needed
+## Installation / Usage
+1. Upload this theme to Shopify or use Shopify CLI to preview locally
+2. Set `templates/index.json` as the homepage template, or assign `page.gift-guide.json` to a page
+3. Add the `Navbar`, `Gift Guide Banner`, and `Gift Guide Grid` sections to the appropriate template
+4. Select six products in the `Gift Guide Grid` blocks
+5. Set the optional `Soft Winter Jacket` product under the grid settings for auto-add behavior
 
 ## Notes
-- This implementation uses only vanilla JavaScript and custom section code.
-- A public GitHub repository was not created from this environment.
-- Store connection and live theme publishing cannot be completed from this local environment.
+- This is a Shopify theme export and is intended to run inside a Shopify storefront environment
+- No additional build tooling is required for the theme assets in this repo
+- The project has been cleaned for maintainability and accessibility without changing existing business logic
