@@ -11,9 +11,9 @@
   {%- comment -%} ── Top bar: brand | tagline | CTA button ── {%- endcomment -%}
   <div class="gg-banner__topbar">
     <span class="gg-banner__brand">{{ section.settings.brand_text }}</span>
-    <span class="gg-banner__tagline">{{ section.settings.top_tagline }}</span>
-    <a class="gg-banner__choose-btn" href="{{ section.settings.top_btn_url }}">
-      <span class="gg-banner__choose-btn-label">{{ section.settings.top_btn_label }}</span>
+    <span class="gg-banner__tagline">{{ section.settings.top_text }}</span>
+    <a class="gg-banner__choose-btn" href="{{ section.settings.top_button_url }}">
+      <span class="gg-banner__choose-btn-label">{{ section.settings.top_button_text }}</span>
       <span class="gg-banner__choose-btn-arrow" aria-hidden="true">&#8594;</span>
     </a>
   </div>
@@ -38,146 +38,25 @@
       of the Figma line-art and is used as the default fallback.
     {%- endcomment -%}
     <div class="gg-banner__illustration" aria-hidden="true">
-      <img
-        src="{{ section.settings.illustration_image != blank ? section.settings.illustration_image | img_url: 'master' : 'Frame.svg' | asset_url }}"
-        alt=""
-        class="gg-banner__illus-img"
-        loading="eager">
+      {%- if section.settings.illustration_image != blank -%}
+        <img
+          src="{{ section.settings.illustration_image | img_url: 'master' }}"
+          alt=""
+          class="gg-banner__illus-img"
+          loading="eager">
+      {%- else -%}
+        <img
+          src="{{ 'Frame.svg' | asset_url }}"
+          alt=""
+          class="gg-banner__illus-img"
+          loading="eager">
+      {%- endif -%}
       {%- comment -%} Inline SVG fallback removed in favor of the theme asset image for reliable Shopify rendering. {%- endcomment -%}
 
       {%- comment -%}
         The old inline SVG fallback is intentionally omitted here because Shopify theme
         previews render the uploaded asset more reliably when an image is used.
       {%- endcomment -%}
-
-      {%- if false -%}
-        <svg class="gg-banner__illus-svg"
-             viewBox="0 0 960 640"
-             xmlns="http://www.w3.org/2000/svg"
-             fill="none"
-             stroke="#111"
-             stroke-width="1.4"
-             stroke-linecap="round"
-             stroke-linejoin="round">
-
-          <!-- Ruler strip top -->
-          <rect x="0" y="0" width="960" height="28" fill="#f5f5f5" stroke="none"/>
-          <line x1="0" y1="28" x2="960" y2="28"/>
-          <line x1="0"   y1="14" x2="0"   y2="28"/>
-          <line x1="48"  y1="20" x2="48"  y2="28"/>
-          <line x1="96"  y1="14" x2="96"  y2="28"/>
-          <line x1="144" y1="20" x2="144" y2="28"/>
-          <line x1="192" y1="14" x2="192" y2="28"/>
-          <line x1="240" y1="20" x2="240" y2="28"/>
-          <line x1="288" y1="14" x2="288" y2="28"/>
-          <line x1="336" y1="20" x2="336" y2="28"/>
-          <line x1="384" y1="14" x2="384" y2="28"/>
-          <line x1="432" y1="20" x2="432" y2="28"/>
-          <line x1="480" y1="14" x2="480" y2="28"/>
-          <line x1="528" y1="20" x2="528" y2="28"/>
-          <line x1="576" y1="14" x2="576" y2="28"/>
-          <line x1="624" y1="20" x2="624" y2="28"/>
-          <line x1="672" y1="14" x2="672" y2="28"/>
-          <line x1="720" y1="20" x2="720" y2="28"/>
-          <line x1="768" y1="14" x2="768" y2="28"/>
-          <line x1="816" y1="20" x2="816" y2="28"/>
-          <line x1="864" y1="14" x2="864" y2="28"/>
-          <line x1="912" y1="20" x2="912" y2="28"/>
-          <line x1="960" y1="14" x2="960" y2="28"/>
-
-          <!-- Sunglasses (left) -->
-          <ellipse cx="72" cy="120" rx="52" ry="34"/>
-          <ellipse cx="184" cy="120" rx="52" ry="34"/>
-          <path d="M124 120 h12"/>
-          <line x1="20" y1="118" x2="-4" y2="110"/>
-          <line x1="236" y1="118" x2="260" y2="110"/>
-
-          <!-- Camera body (centre-left) -->
-          <rect x="100" y="160" width="240" height="170" rx="20"/>
-          <circle cx="220" cy="245" r="62"/>
-          <circle cx="220" cy="245" r="44"/>
-          <circle cx="220" cy="245" r="22"/>
-          <rect x="110" y="148" width="70" height="18" rx="6"/>
-          <!-- shutter button -->
-          <circle cx="320" cy="168" r="10"/>
-
-          <!-- Compass (centre) -->
-          <circle cx="480" cy="130" r="76"/>
-          <circle cx="480" cy="130" r="62"/>
-          <line x1="480" y1="68"  x2="480" y2="192"/>
-          <line x1="418" y1="130" x2="542" y2="130"/>
-          <!-- N pointer -->
-          <polygon points="480,72 472,122 480,114 488,122" fill="#111" stroke="none"/>
-          <!-- S pointer -->
-          <polygon points="480,188 472,138 480,146 488,138" fill="#ccc" stroke="none"/>
-
-          <!-- Notebook -->
-          <rect x="580" y="60" width="110" height="155" rx="4"/>
-          <line x1="596" y1="82"  x2="674" y2="82"/>
-          <line x1="596" y1="98"  x2="674" y2="98"/>
-          <line x1="596" y1="114" x2="674" y2="114"/>
-          <line x1="596" y1="130" x2="650" y2="130"/>
-          <line x1="596" y1="146" x2="660" y2="146"/>
-          <!-- binding -->
-          <line x1="580" y1="80"  x2="580" y2="215" stroke-dasharray="4 4"/>
-
-          <!-- Pencil -->
-          <rect x="718" y="52" width="14" height="148" rx="4"/>
-          <polygon points="718,200 732,200 725,222" fill="#111" stroke="none"/>
-          <line x1="718" y1="68" x2="732" y2="68"/>
-
-          <!-- Lens / camera right -->
-          <circle cx="860" cy="110" r="78"/>
-          <circle cx="860" cy="110" r="60"/>
-          <circle cx="860" cy="110" r="38"/>
-          <rect x="820" y="30"  width="80" height="18" rx="4"/>
-          <rect x="820" y="192" width="80" height="18" rx="4"/>
-          <!-- focus ring marks -->
-          <line x1="784" y1="110" x2="796" y2="110"/>
-          <line x1="924" y1="110" x2="936" y2="110"/>
-          <line x1="860" y1="34"  x2="860" y2="46"/>
-          <line x1="860" y1="174" x2="860" y2="186"/>
-
-          <!-- Watch strap + face -->
-          <rect x="340" y="310" width="220" height="32" rx="8"/>
-          <circle cx="450" cy="390" r="62"/>
-          <circle cx="450" cy="390" r="50"/>
-          <!-- hour/minute hands -->
-          <line x1="450" y1="345" x2="450" y2="390" stroke-width="2"/>
-          <line x1="450" y1="390" x2="482" y2="390" stroke-width="2"/>
-          <!-- tick marks -->
-          <line x1="450" y1="342" x2="450" y2="350"/>
-          <line x1="450" y1="430" x2="450" y2="438"/>
-          <line x1="392" y1="390" x2="400" y2="390"/>
-          <line x1="500" y1="390" x2="508" y2="390"/>
-          <!-- crown -->
-          <rect x="500" y="384" width="14" height="12" rx="3"/>
-
-          <!-- Bow tie -->
-          <polygon points="390,470 430,490 390,510"/>
-          <polygon points="470,470 430,490 470,510"/>
-          <circle cx="430" cy="490" r="9"/>
-
-          <!-- Small camera bottom-right -->
-          <rect x="720" y="400" width="180" height="120" rx="14"/>
-          <circle cx="810" cy="460" r="40"/>
-          <circle cx="810" cy="460" r="26"/>
-          <rect x="730" y="388" width="50" height="18" rx="5"/>
-          <circle cx="880" cy="418" r="8"/>
-
-          <!-- Tape measure bottom-left -->
-          <circle cx="80" cy="520" r="50"/>
-          <circle cx="80" cy="520" r="36"/>
-          <path d="M80 484 a36 36 0 0 1 36 36" stroke-dasharray="5 3"/>
-
-          <!-- Dotted grid lines (background texture) -->
-          <line x1="0"   y1="300" x2="960" y2="300" stroke="#ddd" stroke-dasharray="3 6"/>
-          <line x1="320" y1="0"   x2="320" y2="640" stroke="#ddd" stroke-dasharray="3 6"/>
-          <line x1="640" y1="0"   x2="640" y2="640" stroke="#ddd" stroke-dasharray="3 6"/>
-        </svg>
-      {%- endif -%}
-        </svg>
-      {%- endif -%}
     </div>
 
   </div>
@@ -201,19 +80,19 @@
     },
     {
       "type": "text",
-      "id": "top_tagline",
-      "label": "Top tagline",
+      "id": "top_text",
+      "label": "Top text",
       "default": "Find the ideal gift for your loved ones."
     },
     {
       "type": "text",
-      "id": "top_btn_label",
+      "id": "top_button_text",
       "label": "Top button label",
       "default": "CHOOSE GIFT"
     },
     {
       "type": "url",
-      "id": "top_btn_url",
+      "id": "top_button_url",
       "label": "Top button link",
       "default": "#gift-guide-grid"
     },
@@ -227,7 +106,7 @@
       "type": "textarea",
       "id": "hero_copy",
       "label": "Hero description",
-      "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
+      "default": "Discover Joy: Your Ultimate Holiday Gift Destination."
     },
     {
       "type": "text",

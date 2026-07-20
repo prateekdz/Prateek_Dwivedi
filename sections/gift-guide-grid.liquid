@@ -8,7 +8,7 @@
 <section id="gift-guide-grid"
          class="gg-grid"
          data-gift-guide-grid
-         data-auto-add-handle="{{ section.settings.auto_add_product.handle | escape }}">
+         data-auto-add-handle="{{ section.settings.auto_add_product.handle | default: '' | escape }}">
 
   <div class="gg-grid__inner">
 

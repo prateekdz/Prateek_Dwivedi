@@ -129,6 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
     popupImage.alt = product.title || '';
     
     popupTitle.textContent = product.title || '';
+    popupDesc.textContent = stripHtml(product.description || '');
 
     // Default to first available variant
     currentVariant = product.variants.find(function (v) { return v.available; })

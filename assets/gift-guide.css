@@ -30,14 +30,14 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 16px 32px;
-  border-bottom: 1px solid #e0e0e0;
+  padding: 20px 40px;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .gg-banner__brand {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 800;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -45,8 +45,9 @@
 .gg-banner__tagline {
   flex: 1;
   text-align: center;
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   color: #333;
+  letter-spacing: 0.08em;
 }
 
 /* Yellow "CHOOSE GIFT →" — hover lifts and arrow slides */
@@ -57,11 +58,11 @@
   background: #f0e040;
   color: #111;
   font-weight: 700;
-  font-size: 0.78rem;
-  letter-spacing: 0.1em;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 12px 20px;
+  padding: 14px 26px;
   border: none;
   cursor: pointer;
   white-space: nowrap;
@@ -89,7 +90,7 @@
 .gg-banner__body {
   display: grid;
   grid-template-columns: 420px 1fr;
-  min-height: 620px;
+  min-height: 680px;
 }
 
 /* Left text column */
@@ -97,26 +98,26 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 64px 48px 52px 52px;
+  padding: 84px 64px 56px 64px;
   background: #fff;
   position: relative;
   z-index: 1;
 }
 
 .gg-banner__heading {
-  font-size: clamp(2.4rem, 3.8vw, 4rem);
+  font-size: clamp(3rem, 5vw, 5.2rem);
   font-weight: 900;
-  line-height: 1.0;
-  letter-spacing: -0.02em;
-  margin-bottom: 18px;
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+  margin-bottom: 22px;
 }
 
 .gg-banner__copy {
-  font-size: 0.92rem;
-  line-height: 1.75;
+  font-size: 1rem;
+  line-height: 1.65;
   color: #222;
-  max-width: 300px;
-  margin-bottom: 30px;
+  max-width: 360px;
+  margin-bottom: 28px;
 }
 
 /* Black "SHOP NOW →" — arrow slides right on hover */
@@ -127,11 +128,11 @@
   background: #111;
   color: #fff;
   font-weight: 700;
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 16px 26px;
+  padding: 18px 32px;
   align-self: flex-start;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -154,7 +155,7 @@
 /* Right illustration column */
 .gg-banner__illustration {
   overflow: hidden;
-  background: #fafafa;
+  background: #fff;
   position: relative;
 }
 
@@ -174,11 +175,11 @@
 /* ── Bottom ticker ── */
 .gg-banner__ticker {
   text-align: center;
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: #111;
-  padding: 14px 32px;
+  padding: 16px 32px;
   background: #f6f6f6;
 }
 
@@ -187,7 +188,7 @@
    ============================================================= */
 
 .gg-grid {
-  padding: 56px 32px 72px;
+  padding: 64px 32px 80px;
   background: #fff;
 }
 
@@ -198,11 +199,11 @@
 
 /* Heading matches Figma: light-weight serif feel */
 .gg-grid__heading {
-  font-size: clamp(1.5rem, 2.2vw, 2rem);
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-size: clamp(1.6rem, 2.2vw, 2.1rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
   color: #111;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
   text-align: center;
 }
 
@@ -210,7 +211,7 @@
 .gg-grid__cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
+  gap: 8px;
 }
 
 .gg-grid__cell {
@@ -317,10 +318,10 @@
 .gg-popup__card {
   position: relative;
   background: #fff;
-  width: min(460px, 100%);
+  width: min(520px, 100%);
   max-height: 92vh;
   overflow-y: auto;
-  padding: 28px 22px 22px;
+  padding: 30px 26px 26px;
   z-index: 1;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22);
 }
@@ -346,13 +347,13 @@
 .gg-popup__top {
   display: grid;
   grid-template-columns: 108px 1fr;
-  gap: 14px;
-  margin-bottom: 18px;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
 .gg-popup__thumb {
-  width: 108px;
-  height: 108px;
+  width: 92px;
+  height: 92px;
   object-fit: cover;
   display: block;
   background: #f0f0f0;
@@ -366,19 +367,23 @@
 
 .gg-popup__title {
   font-size: 0.98rem;
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: #111;
   line-height: 1.3;
 }
 
 .gg-popup__price {
   font-size: 0.98rem;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   color: #111;
 }
 
 .gg-popup__desc {
   font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
   color: #555;
   line-height: 1.55;
 }
@@ -387,8 +392,8 @@
 .gg-popup__options {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  margin-bottom: 18px;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 /* Individual option group */
@@ -397,7 +402,7 @@
   font-size: 0.8rem;
   font-weight: 600;
   color: #111;
-  margin-bottom: 7px;
+  margin-bottom: 2px;
   letter-spacing: 0.03em;
 }
 
@@ -576,5 +581,10 @@
   .gg-popup__thumb {
     width: 80px;
     height: 80px;
+  }
+
+  .gg-grid__cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 }
