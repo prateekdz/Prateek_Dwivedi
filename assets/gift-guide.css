@@ -75,6 +75,10 @@
   margin: 0 auto;
 }
 
+.gg-banner__illustration {
+  min-height: 680px;
+}
+
 .gg-banner__text {
   max-width: 640px;
 }
@@ -139,7 +143,23 @@
 }
 
 .gg-grid__intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
   margin-bottom: 30px;
+}
+
+.gg-grid__view-all {
+  color: #111;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.gg-grid__view-all:hover {
+  text-decoration: underline;
 }
 
 .gg-grid__eyebrow {

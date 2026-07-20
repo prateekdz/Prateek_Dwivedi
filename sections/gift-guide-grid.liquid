@@ -1,8 +1,13 @@
 <section id="gift-guide-grid" class="gg-grid" aria-label="Gift guide products" data-gift-guide-grid data-auto-add-product="{{ section.settings.auto_add_product.handle }}">
   <div class="gg-grid__container">
     <div class="gg-grid__intro">
-      <p class="gg-grid__eyebrow">{{ section.settings.eyebrow_text }}</p>
-      <h2 class="gg-grid__title">{{ section.settings.grid_heading }}</h2>
+      <div>
+        <p class="gg-grid__eyebrow">{{ section.settings.eyebrow_text }}</p>
+        <h2 class="gg-grid__title">{{ section.settings.grid_heading }}</h2>
+      </div>
+      <a class="gg-grid__view-all" href="{{ section.settings.view_all_url | default: '#' }}">
+        {{ section.settings.view_all_text }}
+      </a>
     </div>
 
     <div class="gg-grid__cards">
@@ -91,6 +96,18 @@
       "type": "product",
       "id": "auto_add_product",
       "label": "Soft Winter Jacket product (auto-add)"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View all label",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "View all link",
+      "default": "#"
     }
   ],
   "blocks": [
