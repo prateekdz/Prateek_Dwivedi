@@ -1,4 +1,5 @@
 .gift-guide-banner {
+  /* Banner section styling and layout */
   position: relative;
   overflow: hidden;
   min-height: 100vh;
@@ -359,6 +360,7 @@
 }
 
 .gift-guide-popup__button-group {
+  /* Variant buttons for small option sets */
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
