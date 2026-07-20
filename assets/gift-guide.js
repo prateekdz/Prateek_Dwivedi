@@ -34,6 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!popupImage || !popupTitle || !popupPrice || !popupDesc ||
       !popupOptions || !atcBtn || !msgEl) return;
 
+  const popupElement = popup;
+
   /* ── State ───────────────────────────────────────────────── */
 
   /**
@@ -51,22 +53,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
   /** Open the popup and trap focus */
   function openPopup() {
-    popup.classList.add('is-open');
-    popup.setAttribute('aria-hidden', 'false');
+    popupElement.classList.add('is-open');
+    popupElement.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     atcBtn.focus();
   }
 
   /** Close the popup and restore scroll */
   function closePopup() {
-    popup.classList.remove('is-open');
-    popup.setAttribute('aria-hidden', 'true');
+    popupElement.classList.remove('is-open');
+    popupElement.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     msgEl.textContent = '';
   }
 
   // Close on backdrop / close-button clicks
-  popup.addEventListener('click', function (e) {
+  popupElement.addEventListener('click', function (e) {
     if (/** @type {HTMLElement} */ (e.target).closest('[data-popup-close]')) closePopup();
   });
 
@@ -122,12 +124,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Thumbnail — prefer featured_image, fall back to first image
     const imgSrc = (product.featured_image && product.featured_image.src)
-      || (product.images.length ? product.images[0].src : '');
+      || (product.images[0]?.src || '');
     popupImage.src = imgSrc;
-    popupImage.alt = product.title;
-
-    popupTitle.textContent = product.title;
-    popupDesc.textContent  = stripHtml(product.description);
+    popupImage.alt = product.title || '';
+    
+    popupTitle.textContent = product.title || '';
 
     // Default to first available variant
     currentVariant = product.variants.find(function (v) { return v.available; })
@@ -139,6 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /** Strip HTML tags from Shopify's description field */
+  /** @param {string} html */
   function stripHtml(html) {
     const tmp = document.createElement('div');
     tmp.innerHTML = html;
@@ -181,11 +183,12 @@ document.addEventListener('DOMContentLoaded', function () {
         btnWrap.dataset.optionIndex = String(optionIndex);
 
         values.forEach(function (val) {
+          const safeValue = val || '';
           const btn = document.createElement('button');
           btn.type = 'button';
-          btn.className = 'gg-opt__btn' + (val === currentVal ? ' is-active' : '');
-          btn.textContent = val;
-          btn.dataset.value = val;
+          btn.className = 'gg-opt__btn' + (safeValue === currentVal ? ' is-active' : '');
+          btn.textContent = safeValue;
+          btn.dataset.value = safeValue;
 
           btn.addEventListener('click', function () {
             // Deactivate siblings, activate this
@@ -217,9 +220,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         values.forEach(function (val) {
           const opt = document.createElement('option');
-          opt.value = val;
-          opt.textContent = val;
-          opt.selected = val === currentVal;
+          const safeValue = val || '';
+          opt.value = safeValue;
+          opt.textContent = safeValue;
+          opt.selected = safeValue === currentVal;
           select.appendChild(opt);
         });
 
