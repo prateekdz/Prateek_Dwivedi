@@ -301,7 +301,20 @@ document.addEventListener('DOMContentLoaded', function () {
    * @returns {boolean}
    */
   function shouldAutoAddSoftJacket(variant) {
-    return variant.options.includes('Black') && variant.options.includes('Medium');
+    if (!currentProduct || !variant || !Array.isArray(currentProduct.options)) return false;
+    const optionIndex = function (name) {
+      return currentProduct.options.findIndex(function (opt) {
+        return typeof opt === 'string' && opt.toLowerCase() === name.toLowerCase();
+      });
+    };
+
+    const colorIdx = optionIndex('color');
+    const sizeIdx = optionIndex('size');
+
+    const hasColor = colorIdx >= 0 && variant.options[colorIdx] && variant.options[colorIdx].toLowerCase() === 'black';
+    const hasSize = sizeIdx >= 0 && variant.options[sizeIdx] && variant.options[sizeIdx].toLowerCase() === 'medium';
+
+    return hasColor && hasSize;
   }
 
   /**
@@ -320,20 +333,19 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /**
-   * @param {number} variantId
+   * Add items to cart. Accepts either a single variant id or an array of {id, quantity}.
+   * @param {number|Array<{id:number,quantity:number}>} variantOrItems
    * @returns {Promise<any>}
    */
-  function addProductToCart(variantId) {
+  function addProductToCart(variantOrItems) {
+    var isArray = Array.isArray(variantOrItems);
+    var payload = isArray ? { items: variantOrItems } : { id: variantOrItems, quantity: 1 };
+
     return fetch('/cart/add.js', {
       method: 'POST',
       credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        id: variantId,
-        quantity: 1,
-      }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
     }).then(function (response) {
       if (!response.ok) {
         return response.json().then(function (error) {
@@ -346,19 +358,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function addSoftWinterJacketIfRequired() {
     if (!autoAddProductHandle || !currentProduct || autoAddProductHandle === currentProduct.handle) {
-      return Promise.resolve();
+      return Promise.resolve(null);
     }
 
     return fetchProductJson(autoAddProductHandle).then(function (softProduct) {
-      const variantToAdd =
-        softProduct.variants.find(function (variant) {
-          return variant.available;
-        }) || softProduct.variants[0];
+      if (!softProduct || !Array.isArray(softProduct.variants)) return null;
+      var variantToAdd = softProduct.variants.find(function (v) {
+        return v.available;
+      }) || softProduct.variants[0];
 
-      if (!variantToAdd) {
-        return Promise.resolve();
-      }
-      return addProductToCart(variantToAdd.id);
+      return variantToAdd ? variantToAdd.id : null;
+    }).catch(function () {
+      return null;
     });
   }
 
@@ -366,25 +377,42 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!currentVariant) {
       return;
     }
-
     addToCartButtonEl.disabled = true;
     showMessage('Adding to cart...');
 
-    addProductToCart(currentVariant.id)
-      .then(function () {
-        if (currentVariant && shouldAutoAddSoftJacket(currentVariant)) {
-          return addSoftWinterJacketIfRequired().then(function () {
-            showMessage('Added product and Soft Winter Jacket to the cart.');
+    if (shouldAutoAddSoftJacket(currentVariant)) {
+      addSoftWinterJacketIfRequired()
+        .then(function (jacketVariantId) {
+          if (jacketVariantId) {
+            return addProductToCart([
+              { id: currentVariant.id, quantity: 1 },
+              { id: jacketVariantId, quantity: 1 },
+            ]).then(function () {
+              showMessage('Added product and Soft Winter Jacket to the cart.');
+            });
+          }
+          return addProductToCart(currentVariant.id).then(function () {
+            showMessage('Added to cart successfully.');
           });
-        }
-        showMessage('Added to cart successfully.');
-      })
-      .catch(function (error) {
-        showMessage(error && error.message ? error.message : 'Unable to add to cart.');
-      })
-      .finally(function () {
-        addToCartButtonEl.disabled = false;
-      });
+        })
+        .catch(function (error) {
+          showMessage(error && error.message ? error.message : 'Unable to add to cart.');
+        })
+        .finally(function () {
+          addToCartButtonEl.disabled = false;
+        });
+    } else {
+      addProductToCart(currentVariant.id)
+        .then(function () {
+          showMessage('Added to cart successfully.');
+        })
+        .catch(function (error) {
+          showMessage(error && error.message ? error.message : 'Unable to add to cart.');
+        })
+        .finally(function () {
+          addToCartButtonEl.disabled = false;
+        });
+    }
   }
 
   /**
