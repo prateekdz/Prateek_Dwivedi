@@ -37,19 +37,11 @@
       of the Figma line-art and is used as the default fallback.
     {%- endcomment -%}
     <div class="gg-banner__illustration" aria-hidden="true">
-      {%- if section.settings.illustration_image != blank -%}
-        <img
-          src="{{ section.settings.illustration_image | img_url: 'master' }}"
-          alt=""
-          class="gg-banner__illus-img"
-          loading="eager">
-      {%- else -%}
-        <img
-          src="{{ 'Frame.svg' | asset_url }}"
-          alt=""
-          class="gg-banner__illus-img"
-          loading="eager">
-      {%- endif -%}
+      <img
+        src="{{ section.settings.illustration_image != blank ? section.settings.illustration_image | img_url: 'master' : 'Frame.svg' | asset_url }}"
+        alt=""
+        class="gg-banner__illus-img"
+        loading="eager">
       {%- comment -%} Inline SVG fallback removed in favor of the theme asset image for reliable Shopify rendering. {%- endcomment -%}
 
       {%- comment -%}

@@ -76,17 +76,16 @@
 /* ── Body: text-left / illustration-right ── */
 .gg-banner__body {
   display: grid;
-  /* Left column fixed ~380px; illustration fills the rest */
-  grid-template-columns: 380px 1fr;
-  min-height: 500px;
+  grid-template-columns: 420px 1fr;
+  min-height: 620px;
 }
 
 /* Left text column */
 .gg-banner__text {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;   /* push content to bottom-left like Figma */
-  padding: 40px 36px 52px 32px;
+  justify-content: center;
+  padding: 64px 48px 52px 52px;
   background: #fff;
   position: relative;
   z-index: 1;
@@ -243,25 +242,26 @@
 /* "+" circle — bottom-centre of each card */
 .gg-grid__plus {
   position: absolute;
-  bottom: 14px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  width: 32px;
-  height: 32px;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(0, 0, 0, 0.15);
   color: #111;
-  font-size: 1.2rem;
-  line-height: 30px;
+  font-size: 1.4rem;
+  line-height: 40px;
   text-align: center;
   pointer-events: none;
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .gg-grid__trigger:hover .gg-grid__plus {
-  transform: translateX(-50%) scale(1.18);
+  transform: translate(-50%, -50%) scale(1.16);
   background: #fff;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 }
 
 .gg-grid__cell--empty {
