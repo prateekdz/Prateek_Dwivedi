@@ -6,7 +6,7 @@
         <div class="gg-grid__card-wrapper {% if block.settings.hotspot_position == 'top-left' %}gg-grid__card--hotspot-left{% elsif block.settings.hotspot_position == 'center-right' %}gg-grid__card--hotspot-center-right{% elsif block.settings.hotspot_position == 'center' %}gg-grid__card--hotspot-center{% else %}gg-grid__card--hotspot-right{% endif %}">
           {% if block.settings.product != blank %}
             {% assign product = block.settings.product %}
-            <button type="button" class="gg-grid__card" data-gg-product-handle="{{ product.handle }}" data-gg-block-id="{{ block.id }}" aria-haspopup="dialog">
+            <button type="button" class="gg-grid__card" data-product-handle="{{ product.handle }}" data-gg-block-id="{{ block.id }}" aria-haspopup="dialog">
               {% if product.featured_image != blank %}
                 <img class="gg-grid__image" src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" loading="lazy">
               {% else %}
@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <div class="gg-modal" id="gg-quickview" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="gg-quickview-title">
+  <div class="gg-modal gg-modal--closed" id="gg-quickview" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="gg-quickview-title" data-gg-modal>
     <div class="gg-modal__overlay" data-gg-close></div>
     <div class="gg-modal__content">
       <button type="button" class="gg-modal__close" aria-label="Close" data-gg-close>✕</button>

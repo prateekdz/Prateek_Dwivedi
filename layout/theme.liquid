@@ -220,6 +220,10 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
+    {%- if template == 'page.gift-guide' -%}
+      {{ 'gift-guide.css' | asset_url | stylesheet_tag }}
+    {%- endif -%}
+
     {%- unless settings.type_body_font.system? -%}
       <link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>
     {%- endunless -%}
@@ -295,6 +299,9 @@
     {%- endif -%}
     {% if template contains "product" %}
       {{ "custom.js" | asset_url | script_tag }}
+    {% endif %}
+    {% if template == "page.gift-guide" %}
+      {{ "gift-guide.js" | asset_url | script_tag }}
     {% endif %}
   </body>
 </html>

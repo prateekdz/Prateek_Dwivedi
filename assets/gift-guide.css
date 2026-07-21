@@ -26,6 +26,19 @@ button, a {
   width: 100%;
 }
 
+/* Modal initial state - hidden by default */
+#gg-quickview {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#gg-quickview.gg-modal--closed {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .gg-banner {
   position: relative;
   overflow: hidden;
@@ -94,6 +107,16 @@ button, a {
 
 .gg-button__arrow {
   display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.gg-button:hover .gg-button__arrow {
+  transform: translateX(4px);
+}
+
+.gg-banner__topbar-cta:hover .gg-button__arrow,
+.gg-button:hover .gg-button__arrow {
+  transform: translateX(4px);
 }
 
 .gg-banner__topbar-cta {
@@ -247,6 +270,11 @@ button, a {
   padding: 0;
   cursor: pointer;
   border-radius: 2px;
+  transition: transform 0.3s ease;
+}
+
+.gg-grid__card:hover {
+  transform: scale(1.02);
 }
 
 .gg-grid__card:focus-visible {
@@ -274,6 +302,13 @@ button, a {
   font-size: 1rem;
   font-weight: 700;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.gg-grid__card:hover .gg-grid__hotspot {
+  transform: scale(1.1);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
 }
 
 .gg-grid__card-wrapper.gg-grid__card--hotspot-right .gg-grid__hotspot {
@@ -326,14 +361,20 @@ button, a {
   justify-content: center;
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.18s ease;
+  transition: opacity 0.18s ease, visibility 0.18s ease;
   pointer-events: none;
 }
 
-.gg-modal.gg-modal--open {
+.gg-modal:not(.gg-modal--closed) {
   visibility: visible;
   opacity: 1;
   pointer-events: auto;
+}
+
+.gg-modal--closed {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .gg-modal__overlay {
@@ -363,6 +404,14 @@ button, a {
   font-size: 1.45rem;
   cursor: pointer;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.gg-modal__close:hover {
+  opacity: 0.7;
 }
 
 .gg-modal__panel {
@@ -380,6 +429,7 @@ button, a {
   align-items: center;
   justify-content: center;
   background: #fff;
+  border-radius: 4px;
 }
 
 .gg-modal__image {
@@ -387,6 +437,7 @@ button, a {
   height: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 2px;
 }
 
 .gg-modal__info {
@@ -400,6 +451,7 @@ button, a {
   font-size: 1.35rem;
   line-height: 1.14;
   font-weight: 700;
+  font-family: 'Playfair Display', serif;
 }
 
 .gg-modal__price {
@@ -422,6 +474,9 @@ button, a {
 .gg-modal__option {
   display: grid;
   gap: 10px;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
 .gg-modal__option legend {
@@ -430,6 +485,7 @@ button, a {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   margin: 0;
+  padding: 0;
 }
 
 .gg-modal__option-row {
@@ -446,6 +502,11 @@ button, a {
   font-size: 0.95rem;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
+  font-weight: 600;
+}
+
+.gg-modal__option-button:hover {
+  background: #f0f0f0;
 }
 
 .gg-modal__option-button.is-selected {
@@ -461,6 +522,13 @@ button, a {
   background: #fff;
   color: #111;
   font-size: 0.95rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.gg-modal__option-select:focus {
+  outline: 2px solid #111;
+  outline-offset: -1px;
 }
 
 .gg-modal__add {
@@ -474,6 +542,20 @@ button, a {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: opacity 0.2s ease;
+}
+
+.gg-modal__add:hover:not(:disabled) {
+  opacity: 0.92;
+}
+
+.gg-modal__add:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .gg-modal__notice {
@@ -481,6 +563,7 @@ button, a {
   font-size: 0.88rem;
   color: #111;
   min-height: 1.2em;
+  line-height: 1.4;
 }
 
 @media (max-width: 1100px) {
@@ -510,6 +593,10 @@ button, a {
     min-height: auto;
   }
 
+  .gg-banner__hamburger {
+    display: block;
+  }
+
   .gg-banner__content {
     left: 24px;
     bottom: 48px;
@@ -522,6 +609,20 @@ button, a {
 
   .gg-grid__cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gg-modal__content {
+    width: calc(100vw - 24px);
+    border-radius: 12px;
+  }
+
+  .gg-modal__panel {
+    padding: 20px 20px 24px;
+    gap: 20px;
+  }
+
+  .gg-modal__title {
+    font-size: 1.15rem;
   }
 }
 
@@ -536,5 +637,9 @@ button, a {
 
   .gg-modal__content {
     width: calc(100vw - 24px);
+  }
+
+  .gg-grid__cards {
+    grid-template-columns: 1fr;
   }
 }
