@@ -1,1 +1,6 @@
-{"type":"header","name":"Header","sections":{},"settings":{}}
+{
+  "name": "Header",
+  "type": "header",
+  "sections": {},
+  "order": []
+}
