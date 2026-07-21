@@ -41,14 +41,8 @@
                 <span class="gift-guide-card__image-fallback">{{ card_product.title }}</span>
               {% endif %}
             </button>
-          {% else %}
-            <div class="gift-guide-card gift-guide-card--empty" {{ block.shopify_attributes }}>
-              Select a product in the section settings
-            </div>
           {% endif %}
         {% endfor %}
-      {% else %}
-        <div class="gift-guide-grid__empty">Add up to six products in the theme customizer to populate this grid.</div>
       {% endif %}
     </div>
   </div>

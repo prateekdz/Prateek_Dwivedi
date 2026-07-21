@@ -183,9 +183,44 @@ body[data-template="page.gift-guide"] .content-for-layout > .shopify-section:las
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 }
 
+@media (min-width: 1600px) {
+  .gift-guide-banner__topbar {
+    min-height: 75px;
+    padding-inline: 59px;
+  }
+
+  .gift-guide-banner__brand {
+    font-size: 2rem;
+    letter-spacing: 0.01em;
+  }
+
+  .gift-guide-banner__headline {
+    font-size: 1.125rem;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .gift-guide-banner__top-button {
+    width: 260px;
+    min-height: 55px;
+    gap: 28px;
+    background: #fff42b;
+    font-size: 1.125rem;
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .gift-guide-banner__top-button .gift-guide-btn__arrow {
+    margin-left: 0;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1;
+  }
+}
+
 .gift-guide-banner__hero {
   position: relative;
-  height: 720px;
+  height: 54.545vw;
   overflow: hidden;
 }
 
@@ -210,13 +245,13 @@ body[data-template="page.gift-guide"] .content-for-layout > .shopify-section:las
 .gift-guide-banner__content {
   position: relative;
   z-index: 1;
-  max-width: 560px;
-  padding: 390px 60px 0;
+  max-width: 45vw;
+  padding: calc(31.85vw - 32px) calc(2.55vw + 26px) 0;
 }
 
 .gift-guide-banner__title {
   font-family: 'Poppins', sans-serif;
-  font-size: 4rem;
+  font-size: 4.83vw;
   line-height: 1.08;
   letter-spacing: -0.03em;
   font-weight: 600;
@@ -224,25 +259,25 @@ body[data-template="page.gift-guide"] .content-for-layout > .shopify-section:las
 }
 
 .gift-guide-banner__copy {
-  font-size: 1.02rem;
+  font-size: 1.21vw;
   line-height: 1.45;
   color: #111;
-  max-width: 420px;
-  margin-bottom: 42px;
+  max-width: 35.2vw;
+  margin-bottom: 3.18vw;
 }
 
 .gift-guide-banner__cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 47px;
-  padding: 0 30px;
+  min-height: 3.55vw;
+  padding: 0 2.26vw;
   gap: 12px;
   border: none;
   background: #111;
   color: #fff;
   font-weight: 700;
-  font-size: 0.8125rem;
+  font-size: 1vw;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   text-decoration: none;
@@ -255,7 +290,7 @@ body[data-template="page.gift-guide"] .content-for-layout > .shopify-section:las
 }
 
 .gift-guide-banner__strip {
-  height: 31px;
+  height: 2.31vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -266,7 +301,7 @@ body[data-template="page.gift-guide"] .content-for-layout > .shopify-section:las
 
 .gift-guide-banner__strip span {
   display: inline-block;
-  font-size: 0.6875rem;
+  font-size: 1vw;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #111;
@@ -274,17 +309,17 @@ body[data-template="page.gift-guide"] .content-for-layout > .shopify-section:las
 
 .gift-guide-grid {
   background: #fff;
-  padding: 82px 36px 96px;
+  padding: 6.18vw 3.55vw 7.24vw;
 }
 
 .gift-guide-grid__container {
-  max-width: 1235px;
+  max-width: none;
   margin: 0 auto;
 }
 
 .gift-guide-grid__title {
   font-family: 'Playfair Display', serif;
-  font-size: 2rem;
+  font-size: 2.41vw;
   font-weight: 400;
   letter-spacing: -0.02em;
   color: #111;
@@ -294,7 +329,7 @@ body[data-template="page.gift-guide"] .content-for-layout > .shopify-section:las
 .gift-guide-grid__cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
+  gap: 1.36vw;
 }
 
 .gift-guide-card {
@@ -355,17 +390,6 @@ body[data-template="page.gift-guide"] .content-for-layout > .shopify-section:las
 
 .gift-guide-card:hover .gift-guide-card__overlay {
   transform: translateY(-1px);
-}
-
-.gift-guide-card--empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 18px;
-  font-size: 0.95rem;
-  color: #555;
-  text-align: center;
-  background: #f8f8f8;
 }
 
 .gift-guide-popup {
@@ -623,12 +647,32 @@ body[data-template="page.gift-guide"] .content-for-layout > .shopify-section:las
   }
 
   .gift-guide-banner__copy {
+    font-size: 1rem;
+    line-height: 1.45;
     max-width: 360px;
     margin: 0 0 28px;
   }
 
+  .gift-guide-banner__cta {
+    min-height: 47px;
+    padding-inline: 30px;
+    font-size: 0.8125rem;
+  }
+
+  .gift-guide-banner__strip {
+    height: 31px;
+  }
+
+  .gift-guide-banner__strip span {
+    font-size: 0.6875rem;
+  }
+
   .gift-guide-grid {
     padding: 36px 14px 52px;
+  }
+
+  .gift-guide-grid__title {
+    font-size: 2rem;
   }
 
   .gift-guide-grid__cards {
