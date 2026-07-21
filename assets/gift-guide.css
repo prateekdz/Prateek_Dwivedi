@@ -116,6 +116,11 @@ button, a {
   z-index: 1500;
   background: rgba(255, 255, 255, 0.98);
   padding: 32px 24px;
+  overflow-y: auto;
+}
+
+.gg-banner__mobile-menu.gg-banner__mobile-menu--open {
+  display: block;
 }
 
 .gg-banner__mobile-menu-inner {

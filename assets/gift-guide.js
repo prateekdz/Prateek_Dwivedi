@@ -58,6 +58,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  function getSelectedOptions() {
+    return Array.from(modalOptions.querySelectorAll('select, .gg-modal__option-button.is-selected'))
+      .sort(function(a, b) {
+        return Number(a.dataset.optionIndex) - Number(b.dataset.optionIndex);
+      })
+      .map(function(el) {
+        if (el.tagName === 'SELECT') return el.value;
+        return el.dataset.optionValue;
+      });
+  }
+
   function renderOptions(product) {
     modalOptions.innerHTML = '';
     if (!product.options) return;
@@ -91,11 +102,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         select.addEventListener('change', function() {
-          var selected = Array.from(modalOptions.querySelectorAll('select, [data-selected-value]')).map(function(el) {
-            if (el.tagName === 'SELECT') return el.value;
-            return el.dataset.selectedValue || '';
-          });
-          currentVariant = findMatchingVariant(selected);
+          currentVariant = findMatchingVariant(getSelectedOptions());
           updatePrice();
         });
 
@@ -117,12 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
             siblings.forEach(function(b) { b.classList.remove('is-selected'); });
             btn.classList.add('is-selected');
 
-            var selected = Array.from(modalOptions.querySelectorAll('[data-option-index]')).map(function(el, idx) {
-              if (el.dataset.optionIndex == optionIdx) return value;
-              var sibling = modalOptions.querySelector('[data-option-index="' + idx + '"].is-active');
-              return sibling ? sibling.dataset.optionValue : '';
-            });
-            currentVariant = findMatchingVariant(selected);
+            currentVariant = findMatchingVariant(getSelectedOptions());
             updatePrice();
           });
 
