@@ -21,9 +21,20 @@
   </div>
 
   <div class="gg-banner__hero">
+    {% comment %} Render two illustration frames: prefer the uploaded illustration, otherwise use Frame.svg twice to mimic the example layout {% endcomment %}
     {% if section.settings.illustration != blank %}
-      <div class="gg-banner__illustration-frame" aria-hidden="true">
+      <div class="gg-banner__illustration-frame gg-banner__illustration-frame--left" aria-hidden="true">
         <img class="gg-banner__illustration" src="{{ section.settings.illustration | image_url: width: 2400 }}" alt="" loading="lazy">
+      </div>
+      <div class="gg-banner__illustration-frame gg-banner__illustration-frame--right" aria-hidden="true">
+        <img class="gg-banner__illustration" src="{{ 'Frame.svg' | asset_url }}" alt="" loading="lazy">
+      </div>
+    {% else %}
+      <div class="gg-banner__illustration-frame gg-banner__illustration-frame--left" aria-hidden="true">
+        <img class="gg-banner__illustration" src="{{ 'Frame.svg' | asset_url }}" alt="" loading="lazy">
+      </div>
+      <div class="gg-banner__illustration-frame gg-banner__illustration-frame--right" aria-hidden="true">
+        <img class="gg-banner__illustration" src="{{ 'Frame.svg' | asset_url }}" alt="" loading="lazy">
       </div>
     {% endif %}
 

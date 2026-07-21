@@ -154,17 +154,68 @@ button, a {
 
 .gg-banner__illustration-frame {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
   overflow: hidden;
-  transform: scale(1.02);
+  pointer-events: none;
 }
 
 .gg-banner__illustration {
-  width: 100%;
+  width: 120%;
   height: 100%;
   object-fit: cover;
   object-position: center top;
   display: block;
+  transform-origin: center;
+}
+
+.gg-banner__illustration-frame--left {
+  left: -8%;
+  right: 50%;
+  z-index: 0;
+}
+
+.gg-banner__illustration-frame--right {
+  left: 50%;
+  right: -8%;
+  z-index: 0;
+  transform: rotateY(180deg);
+  opacity: 0.96;
+}
+
+@media (max-width: 1100px) {
+  .gg-banner__illustration-frame--left {
+    left: -12%;
+    right: 52%;
+  }
+  .gg-banner__illustration-frame--right {
+    left: 48%;
+    right: -12%;
+    opacity: 0.92;
+  }
+  .gg-banner__illustration {
+    width: 140%;
+  }
+}
+
+@media (max-width: 760px) {
+  .gg-banner__illustration-frame--right {
+    display: none;
+  }
+  .gg-banner__illustration-frame--left {
+    left: 0;
+    right: 0;
+  }
+  .gg-banner__illustration {
+    width: 100%;
+    object-position: center center;
+    transform: none;
+  }
+  .gg-banner__content {
+    left: 24px;
+    bottom: 48px;
+    max-width: calc(100% - 48px);
+  }
 }
 
 .gg-banner__content {
