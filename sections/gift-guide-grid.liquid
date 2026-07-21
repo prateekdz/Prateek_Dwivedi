@@ -21,8 +21,11 @@
     <div class="gift-guide-grid__cards">
       {% if section.blocks.size > 0 %}
         {% for block in section.blocks %}
-          {% if block.settings.product != blank %}
-            {% assign card_product = block.settings.product %}
+          {% assign card_product = block.settings.product %}
+          {% if card_product == blank and collections.all.products.size > forloop.index0 %}
+            {% assign card_product = collections.all.products[forloop.index0] %}
+          {% endif %}
+          {% if card_product != blank %}
             <button type="button" class="gift-guide-card" data-product-handle="{{ card_product.handle }}" {{ block.shopify_attributes }}>
               <span class="gift-guide-card__overlay" aria-hidden="true">+</span>
               {% if card_product.featured_image != blank %}

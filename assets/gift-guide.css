@@ -288,7 +288,7 @@ body[data-template="page.gift-guide"] .content-for-layout > .shopify-section:las
   font-weight: 400;
   letter-spacing: -0.02em;
   color: #111;
-  margin: 28px 0 29px;
+  margin: 0 0 29px;
 }
 
 .gift-guide-grid__cards {
@@ -328,14 +328,14 @@ body[data-template="page.gift-guide"] .content-for-layout > .shopify-section:las
   position: absolute;
   top: 16px;
   right: 16px;
-  width: 22px;
-  height: 22px;
+  width: 21px;
+  height: 21px;
   border-radius: 50%;
   background: #fff;
   color: #111;
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 700;
-  line-height: 22px;
+  line-height: 20px;
   text-align: center;
   pointer-events: auto;
   box-shadow: none;
