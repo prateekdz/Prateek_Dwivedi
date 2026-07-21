@@ -356,11 +356,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   /**
-   * @param {Event} event
+   * @param {string} handle
    */
-  function openProductPopup(event) {
-    var button = /** @type {HTMLElement} */ (event.currentTarget);
-    var handle = /** @type {string} */ (button.dataset.productHandle || '');
+  function openProductPopupByHandle(handle) {
     if (!handle) {
       return;
     }
@@ -372,8 +370,20 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
+  /**
+   * @param {Event} event
+   */
+  function openProductPopup(event) {
+    var button = /** @type {HTMLElement} */ (event.currentTarget);
+    var handle = /** @type {string} */ (button.dataset.productHandle || '');
+    if (!handle) {
+      return;
+    }
+    openProductPopupByHandle(handle);
+  }
+
   function bindCardButtons() {
-    var cards = gridContainer.querySelectorAll('[data-product-handle]');
+    var cards = /** @type {NodeListOf<HTMLElement>} */ (gridContainer.querySelectorAll('[data-product-handle]'));
     cards.forEach(function (card) {
       // Expand clickable area for hotspot: delegate click from overlay as well
       var overlay = /** @type {HTMLElement|null} */ (card.querySelector('.gift-guide-card__overlay'));
@@ -382,7 +392,7 @@ document.addEventListener('DOMContentLoaded', function () {
         overlay.style.cursor = 'pointer';
         overlay.addEventListener('click', function (e) {
           e.stopPropagation();
-          openProductPopup.call(card, e);
+          openProductPopupByHandle(/** @type {string} */ (card.dataset.productHandle || ''));
         });
       }
       card.addEventListener('click', openProductPopup);
