@@ -543,10 +543,10 @@ button, a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 56px;
-  min-height: 96px;
-  gap: 24px;
-  border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+  padding: 20px 56px;
+  min-height: 88px;
+  gap: 20px;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.06);
 }
 
 .tisso-banner__topbar-logo {
@@ -637,54 +637,58 @@ button, a {
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.tisso-banner__strip {
+/* Make the hero heading sit directly on the illustration (no white card)
+   to match the provided design. */
+.tisso-banner__content {
   position: absolute;
-  left: 48px;
-  bottom: 0;
-  right: 48px;
-  z-index: 3;
-  background: #F5F5F4;
-  min-height: 56px;
-  display: flex;
+  z-index: 2;
+  top: 220px;
+  left: 72px;
+  width: clamp(360px, 34vw, 520px);
+  max-width: 520px;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+  color: #111;
+}
+
+.tisso-banner__heading {
+  margin: 0 0 18px;
+  max-width: 720px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(48px, 6.5vw, 78px);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: #0b0b0b;
+}
+
+.tisso-banner__copy {
+  margin: 28px 0 32px 0;
+  max-width: 420px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 17px;
+  line-height: 1.8;
+  letter-spacing: -0.01em;
+  color: #222;
+}
+
+.tisso-banner__hero-cta {
+  background: #111;
+  color: #fff;
+  border: none;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  padding: 16px 44px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid rgba(17, 17, 17, 0.08);
-  padding: 12px 0;
+  gap: 12px;
+  border-radius: 6px;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
-
-.tisso-banner__strip p {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.24em;
-}
-
-.tisso-banner__topbar-cta:hover,
-.tisso-banner__hero-cta:hover {
-  background: #e6db00;
-}
-
-.tisso-banner__topbar-cta:hover .gg-button__arrow,
-.tisso-banner__hero-cta:hover .gg-button__arrow {
-  transform: translateX(4px);
-}
-
-.tisso-product-grid {
-  width: 100%;
-  background: #fff;
-  padding: 78px 0 92px;
-}
-
-.tisso-product-grid .gg-grid__container {
-  max-width: 1432px;
-  margin: 0 auto;
-  padding: 0 56px;
-}
-
-.tisso-product-grid .gg-grid__cards {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0;
 }
 
