@@ -6,8 +6,17 @@
 
 class GiftGuideModal {
   constructor() {
+    // Get required elements
     this.gridSection = document.querySelector('[data-gg-grid]');
     this.modal = document.getElementById('gg-quickview');
+    
+    // Validate elements exist
+    if (!this.gridSection || !this.modal) {
+      console.error('Gift Guide: Required elements not found');
+      return;
+    }
+
+    // Cache modal elements
     this.modalOverlay = this.modal.querySelector('[data-gg-close]');
     this.modalClose = this.modal.querySelector('.gg-modal__close');
     this.modalImage = this.modal.querySelector('.gg-modal__image');
@@ -18,11 +27,13 @@ class GiftGuideModal {
     this.modalNotice = this.modal.querySelector('[data-gg-notice]');
     this.addToCartBtn = this.modal.querySelector('[data-gg-add-to-cart]');
 
+    // State variables
     this.currentProduct = null;
     this.currentVariant = null;
     this.selectedOptions = {};
     this.autoAddProductHandle = 'soft-winter-jacket';
 
+    // Initialize
     this.init();
   }
 
@@ -30,8 +41,12 @@ class GiftGuideModal {
    * Initialize event listeners
    */
   init() {
+    console.log('GiftGuideModal initializing...');
+    
     // Product card clicks
     const productCards = this.gridSection.querySelectorAll('.gg-grid__card[data-product-handle]');
+    console.log(`Found ${productCards.length} product cards`);
+    
     productCards.forEach(card => {
       card.addEventListener('click', () => this.handleCardClick(card));
     });
@@ -47,6 +62,8 @@ class GiftGuideModal {
         this.closeModal();
       }
     });
+    
+    console.log('GiftGuideModal initialized successfully');
   }
 
   /**

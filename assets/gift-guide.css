@@ -6,6 +6,7 @@
 html, body {
   margin: 0;
   min-height: 100%;
+  background: #fff;
 }
 
 body.gift-guide-page {
@@ -21,22 +22,14 @@ button, a {
   font: inherit;
 }
 
-.gg-banner,
-.gg-grid {
+main {
   width: 100%;
 }
 
-/* Modal initial state - hidden by default */
-#gg-quickview {
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
-}
-
-#gg-quickview.gg-modal--closed {
-  visibility: hidden;
-  opacity: 0;
-  pointer-events: none;
+.gg-banner,
+.gg-grid {
+  width: 100%;
+  display: block;
 }
 
 .gg-banner {
@@ -53,7 +46,7 @@ button, a {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 20px;
-  min-height: 84px;
+  min-height: auto;
 }
 
 .gg-banner__hamburger {
@@ -168,6 +161,10 @@ button, a {
 .gg-banner__hero {
   position: relative;
   min-height: 860px;
+  background: #f5f5f5;
+  display: flex;
+  align-items: flex-end;
+  padding: 60px 64px;
 }
 
 .gg-banner__illustration-frame {
@@ -184,9 +181,9 @@ button, a {
 }
 
 .gg-banner__content {
-  position: absolute;
-  left: 64px;
-  bottom: 92px;
+  position: relative;
+  left: auto;
+  bottom: auto;
   z-index: 1;
   max-width: 560px;
   width: clamp(320px, 40vw, 560px);
@@ -359,20 +356,17 @@ button, a {
   display: flex;
   align-items: center;
   justify-content: center;
-  visibility: hidden;
   opacity: 0;
-  transition: opacity 0.18s ease, visibility 0.18s ease;
   pointer-events: none;
+  transition: opacity 0.2s ease;
 }
 
 .gg-modal:not(.gg-modal--closed) {
-  visibility: visible;
   opacity: 1;
   pointer-events: auto;
 }
 
 .gg-modal--closed {
-  visibility: hidden;
   opacity: 0;
   pointer-events: none;
 }
