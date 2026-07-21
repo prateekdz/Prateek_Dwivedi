@@ -11,6 +11,7 @@ html, body {
 body.gift-guide-page {
   background: #fff;
   line-height: 1.5;
+  overflow-x: hidden;
 }
 
 *, *::before, *::after {
@@ -41,6 +42,8 @@ button, a {
   align-items: center;
   gap: 20px;
   min-height: 84px;
+  background: #fff;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.08);
 }
 
 .gg-banner__hamburger {
@@ -62,8 +65,8 @@ button, a {
 .gg-banner__topbar-message {
   margin: 0;
   font-size: 0.94rem;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
   line-height: 1.4;
   text-align: center;
 }
@@ -74,13 +77,13 @@ button, a {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  min-height: 52px;
-  padding: 0 30px;
+  min-height: 56px;
+  padding: 0 34px;
   border: none;
   background: #111;
   color: #fff;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -144,9 +147,7 @@ button, a {
 
 .gg-banner__hero {
   position: relative;
-  /* Height comes from the tiled illustration + the content card below it,
-     not a fixed value — see .gg-banner__illustration-frame. */
-  min-height: 780px;
+  min-height: 820px;
 }
 
 .gg-banner__illustration-frame {
@@ -154,25 +155,21 @@ button, a {
   inset: 0;
   overflow: hidden;
   background-repeat: repeat-y;
-  background-position: top left;
-  /* Illustration strip is 1052x400 natively (~2.63:1). A fixed pixel width
-     (rather than 100%) keeps icon scale consistent with the Figma comp
-     regardless of viewport, while height scales proportionally so nothing
-     is distorted. repeat-y tiles the strip down the hero. */
-  background-size: 1300px auto;
+  background-position: center top;
+  background-size: 1400px auto;
 }
 
 .gg-banner__content {
   position: absolute;
-  left: 64px;
-  bottom: 92px;
+  left: 72px;
+  bottom: 96px;
   z-index: 1;
   max-width: 560px;
   width: clamp(320px, 40vw, 560px);
-  /* Opaque so the illustration tiles sit visually behind the copy instead
-     of bleeding through it. */
   background: #fff;
-  padding: 32px 32px 0 0;
+  padding: 32px;
+  box-shadow: 0 24px 64px rgba(17, 17, 17, 0.08);
+  border-radius: 16px;
 }
 
 .gg-banner__heading {
@@ -193,8 +190,17 @@ button, a {
 }
 
 .gg-banner__hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 0 32px;
+  border: none;
   background: #111;
   color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
 }
 
 .gg-banner__footer {
@@ -235,7 +241,7 @@ button, a {
 
 .gg-grid__cards {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 22px;
 }
 
@@ -246,13 +252,13 @@ button, a {
 .gg-grid__card {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
   background: #f2f2f2;
   border: none;
   padding: 0;
   cursor: pointer;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 .gg-grid__card:focus-visible {
