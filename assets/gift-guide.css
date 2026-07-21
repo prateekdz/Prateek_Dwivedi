@@ -720,37 +720,59 @@ button, a {
 
 @media (max-width: 760px) {
   .tisso-banner__topbar {
-    flex-direction: column;
-    align-items: stretch;
-    text-align: center;
-    padding: 24px 24px 0;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 24px;
+  }
+
+  .tisso-banner__topbar-logo {
+    width: auto;
+    flex: 0 0 auto;
   }
 
   .tisso-banner__topbar-tagline {
-    order: 3;
+    order: 2;
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 700;
   }
 
-  .tisso-banner__topbar-logo,
-  .tisso-banner__topbar-tagline,
   .tisso-banner__topbar-cta {
-    width: 100%;
+    width: auto;
+    justify-content: center;
   }
 
   .tisso-banner__hero {
-    display: block;
+    min-height: 520px;
   }
 
   .tisso-banner__content {
-    margin: 0;
+    position: relative;
+    top: auto;
+    left: auto;
     width: calc(100% - 48px);
     max-width: none;
+    margin: 0 auto;
     padding: 32px;
-    left: auto;
-    right: auto;
+  }
+
+  .tisso-banner__heading {
+    font-size: 44px;
+  }
+
+  .tisso-banner__copy {
+    font-size: 15px;
   }
 
   .tisso-banner__strip {
-    padding: 12px 24px;
+    padding: 0 24px;
+  }
+
+  .tisso-banner__strip p {
+    font-size: 11px;
   }
 
   .tisso-product-grid .gg-grid__container {
@@ -763,12 +785,29 @@ button, a {
 }
 
 @media (max-width: 560px) {
+  .tisso-banner__topbar {
+    padding: 12px 16px;
+  }
+
+  .tisso-banner__topbar-tagline {
+    display: none;
+  }
+
+  .tisso-banner__content {
+    width: calc(100% - 32px);
+    padding: 24px;
+  }
+
   .tisso-banner__heading {
-    font-size: 48px;
+    font-size: 36px;
   }
 
   .tisso-banner__copy {
-    font-size: 16px;
+    font-size: 14px;
+  }
+
+  .tisso-banner__strip p {
+    font-size: 10px;
   }
 }
 
