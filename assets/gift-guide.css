@@ -544,7 +544,7 @@ button, a {
   align-items: center;
   justify-content: space-between;
   padding: 24px 56px;
-  min-height: 92px;
+  min-height: 96px;
   gap: 24px;
   border-bottom: 1px solid rgba(17, 17, 17, 0.08);
 }
@@ -553,7 +553,7 @@ button, a {
   font-family: 'Poppins', sans-serif;
   font-size: 18px;
   font-weight: 700;
-  letter-spacing: 0.4em;
+  letter-spacing: 0.36em;
   text-transform: uppercase;
 }
 
@@ -561,7 +561,8 @@ button, a {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-align: center;
   flex: 1;
   min-width: 0;
@@ -571,12 +572,12 @@ button, a {
   background: #F5E400;
   color: #111;
   border: none;
-  border-radius: 18px;
+  border-radius: 20px;
   box-shadow: none;
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.24em;
-  padding: 0 42px;
+  padding: 0 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -589,30 +590,31 @@ button, a {
 .tisso-banner__content {
   position: absolute;
   z-index: 2;
-  bottom: 132px;
-  left: 64px;
+  bottom: 136px;
+  left: 56px;
   width: clamp(340px, 30vw, 400px);
   max-width: 400px;
   background: #fff;
-  border-radius: 28px;
+  border-radius: 32px;
   padding: 56px 48px 62px;
-  box-shadow: 0 42px 120px rgba(17, 17, 17, 0.12);
+  box-shadow: 0 48px 120px rgba(17, 17, 17, 0.12);
   color: #111;
 }
 
 .tisso-banner__heading {
-  margin: 0 0 26px;
-  max-width: 260px;
+  margin: 0 0 28px;
+  max-width: 250px;
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(4.2rem, 6vw, 5.2rem);
-  line-height: 1.03;
+  font-size: clamp(4.4rem, 6vw, 5.2rem);
+  line-height: 1.02;
   letter-spacing: -0.04em;
   font-weight: 800;
+  word-break: break-word;
 }
 
 .tisso-banner__copy {
   margin: 0 0 34px;
-  max-width: 360px;
+  max-width: 340px;
   font-family: 'Poppins', sans-serif;
   font-size: 17px;
   line-height: 1.75;
@@ -626,7 +628,7 @@ button, a {
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.18em;
-  padding: 18px 42px;
+  padding: 18px 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
