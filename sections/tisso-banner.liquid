@@ -1,16 +1,16 @@
 <section class="tisso-banner" aria-label="Tisso Banner">
-  <div class="tisso-banner__topbar">
-    <div class="tisso-banner__topbar-logo">{{ section.settings.logo_text }}</div>
-    <p class="tisso-banner__topbar-tagline">{{ section.settings.tagline_text }}</p>
-    <a class="tisso-banner__topbar-cta gg-button" href="{{ section.settings.button_1_link }}">
-      <span>{{ section.settings.button_1_label }}</span>
-      <span class="gg-button__arrow" aria-hidden="true">→</span>
-    </a>
-  </div>
-
   <div class="tisso-banner__hero">
     <div class="tisso-banner__illustration-frame" aria-hidden="true">
       <img class="tisso-banner__illustration-image" src="{{ 'Frame.svg' | asset_url }}" alt="" loading="lazy">
+    </div>
+
+    <div class="tisso-banner__topbar">
+      <div class="tisso-banner__topbar-logo">{{ section.settings.logo_text }}</div>
+      <p class="tisso-banner__topbar-tagline">{{ section.settings.tagline_text }}</p>
+      <a class="tisso-banner__topbar-cta gg-button" href="{{ section.settings.button_1_link }}">
+        <span>{{ section.settings.button_1_label }}</span>
+        <span class="gg-button__arrow" aria-hidden="true">→</span>
+      </a>
     </div>
 
     <div class="tisso-banner__content">
@@ -21,10 +21,10 @@
         <span class="gg-button__arrow" aria-hidden="true">→</span>
       </a>
     </div>
-  </div>
 
-  <div class="tisso-banner__strip">
-    <p>{{ section.settings.strip_text }}</p>
+    <div class="tisso-banner__strip">
+      <p>{{ section.settings.strip_text }}</p>
+    </div>
   </div>
 </section>
 

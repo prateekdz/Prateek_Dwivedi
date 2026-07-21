@@ -497,19 +497,50 @@ button, a {
 
 .tisso-banner {
   width: 100%;
+  position: relative;
+  overflow: hidden;
   background: #fff;
 }
 
-.tisso-banner__topbar {
+.tisso-banner__hero {
+  position: relative;
   width: 100%;
-  background: #fff;
+  min-height: 860px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.tisso-banner__illustration-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.tisso-banner__illustration-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.tisso-banner__topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.98);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 48px;
-  min-height: 84px;
-  border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+  padding: 20px 48px;
+  min-height: 76px;
   gap: 24px;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.08);
 }
 
 .tisso-banner__topbar-logo {
@@ -539,64 +570,41 @@ button, a {
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 0.18em;
-  padding: 18px 34px;
+  padding: 18px 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-width: 192px;
+  min-width: 180px;
   height: 56px;
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.tisso-banner__hero {
-  position: relative;
-  width: 100%;
-  min-height: 820px;
-  padding: 0;
-  overflow: hidden;
-}
-
-.tisso-banner__illustration-frame {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.tisso-banner__illustration-image {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  object-position: center top;
-}
-
 .tisso-banner__content {
   position: absolute;
-  top: 22%;
+  z-index: 2;
+  bottom: 15%;
   left: 48px;
-  width: clamp(420px, 36vw, 560px);
-  max-width: 560px;
-  background: transparent;
-  padding: 0;
-  box-shadow: none;
+  width: clamp(420px, 34vw, 500px);
+  max-width: 500px;
+  background: #fff;
+  padding: 46px 48px;
+  box-shadow: 0 40px 120px rgba(17, 17, 17, 0.12);
   color: #111;
 }
 
 .tisso-banner__heading {
-  margin: 0 0 22px;
+  margin: 0 0 24px;
   font-family: 'Poppins', sans-serif;
-  font-size: clamp(68px, 7vw, 88px);
-  line-height: 0.96;
+  font-size: clamp(48px, 5vw, 64px);
+  line-height: 1.02;
   letter-spacing: -0.04em;
   font-weight: 800;
 }
 
 .tisso-banner__copy {
-  margin: 0 0 36px;
-  max-width: 520px;
+  margin: 0 0 32px;
+  max-width: 440px;
   font-family: 'Poppins', sans-serif;
   font-size: 18px;
   line-height: 1.75;
@@ -619,13 +627,18 @@ button, a {
 }
 
 .tisso-banner__strip {
-  width: 100%;
-  background: #fff;
-  padding: 16px 48px 24px;
+  position: absolute;
+  left: 48px;
+  bottom: 0;
+  right: 48px;
+  z-index: 3;
+  background: #F5F5F4;
+  min-height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-top: 1px solid rgba(17, 17, 17, 0.08);
+  padding: 12px 0;
 }
 
 .tisso-banner__strip p {
@@ -720,38 +733,34 @@ button, a {
 
 @media (max-width: 760px) {
   .tisso-banner__topbar {
+    position: relative;
+    background: #fff;
+    padding: 18px 24px;
+    min-height: auto;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    padding: 16px 24px;
-  }
-
-  .tisso-banner__topbar-logo {
-    width: auto;
-    flex: 0 0 auto;
+    justify-content: center;
   }
 
   .tisso-banner__topbar-tagline {
     order: 2;
     width: 100%;
-    text-align: left;
+    text-align: center;
     font-size: 14px;
     font-weight: 700;
   }
 
   .tisso-banner__topbar-cta {
-    width: auto;
+    width: 100%;
     justify-content: center;
   }
 
   .tisso-banner__hero {
-    min-height: 520px;
+    min-height: 760px;
   }
 
   .tisso-banner__content {
     position: relative;
-    top: auto;
+    bottom: auto;
     left: auto;
     width: calc(100% - 48px);
     max-width: none;
@@ -767,8 +776,16 @@ button, a {
     font-size: 15px;
   }
 
+  .tisso-banner__hero-cta {
+    padding: 16px 30px;
+  }
+
   .tisso-banner__strip {
-    padding: 0 24px;
+    position: static;
+    margin: 24px 24px 0;
+    width: auto;
+    border-top: none;
+    padding: 16px 16px;
   }
 
   .tisso-banner__strip p {
