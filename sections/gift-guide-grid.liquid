@@ -26,10 +26,9 @@
             <button type="button" class="gg-grid__card" data-product-handle="{{ product_handle }}" data-gg-block-id="{{ block.id }}" aria-haspopup="dialog">
               {% if product_obj != nil and product_obj.featured_image != blank %}
                 <img class="gg-grid__image" src="{{ product_obj.featured_image | image_url: width: 1200 }}" alt="{{ product_obj.title | escape }}" loading="lazy">
-              {% elsif product_obj != nil and product_obj.title != blank %}
-                <span class="gg-grid__empty">{{ product_obj.title }}</span>
               {% else %}
-                <span class="gg-grid__empty">Product</span>
+                {%- comment -%} Fallback placeholder image for preview when product or image is missing {%- endcomment -%}
+                <img class="gg-grid__image" src="{{ 'Frame.svg' | asset_url }}" alt="Placeholder" loading="lazy">
               {% endif %}
 
               <span class="gg-grid__hotspot" aria-label="Quick view">+</span>
