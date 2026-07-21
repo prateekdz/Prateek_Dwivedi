@@ -1,32 +1,31 @@
 {
   "sections": {
     "gift_guide_banner": {
-      "type": "gift-guide-banner",
+      "type": "tisso-banner",
       "settings": {
         "logo_text": "TISSO VISON",
-        "topbar_text": "Find the ideal gift for your loved ones.",
-        "topbar_button_label": "Choose Gift",
-        "topbar_button_link": "#gift-guide-grid",
+        "tagline_text": "Find the ideal gift for your loved ones.",
+        "button_1_label": "Choose Gift",
+        "button_1_link": "#gift-guide-grid",
         "heading": "The Gift Guide",
         "subheading": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
-        "cta_label": "Shop Now",
-        "cta_link": "#gift-guide-grid",
-        "bottom_bar_text": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR",
-        "illustration": ""
+        "button_2_label": "Shop Now",
+        "button_2_link": "#gift-guide-grid",
+        "strip_text": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
       }
     },
     "gift_guide_grid": {
-      "type": "gift-guide-grid",
+      "type": "tisso-product-grid",
       "settings": {
-        "section_heading": "Tisso vison in the wild"
+        "grid_heading": "Tisso vison in the wild"
       },
       "blocks": {
-        "product_block_1": { "type": "product_block", "settings": { "product": "led-high-tops", "hotspot_position": "top-right", "show_dot_markers": false } },
-        "product_block_2": { "type": "product_block", "settings": { "product": "striped-skirt-and-top", "hotspot_position": "top-right", "show_dot_markers": false } },
-        "product_block_3": { "type": "product_block", "settings": { "product": "red-sports-tee", "hotspot_position": "top-right", "show_dot_markers": false } },
-        "product_block_4": { "type": "product_block", "settings": { "product": "blue-silk-tuxedo", "hotspot_position": "center-right", "show_dot_markers": true } },
-        "product_block_5": { "type": "product_block", "settings": { "product": "olive-green-jacket", "hotspot_position": "top-left", "show_dot_markers": false } },
-        "product_block_6": { "type": "product_block", "settings": { "product": "white-cotton-shirt", "hotspot_position": "top-right", "show_dot_markers": false } }
+        "product_block_1": { "type": "product_block", "settings": { "product": "led-high-tops" } },
+        "product_block_2": { "type": "product_block", "settings": { "product": "striped-skirt-and-top" } },
+        "product_block_3": { "type": "product_block", "settings": { "product": "red-sports-tee" } },
+        "product_block_4": { "type": "product_block", "settings": { "product": "blue-silk-tuxedo" } },
+        "product_block_5": { "type": "product_block", "settings": { "product": "olive-green-jacket" } },
+        "product_block_6": { "type": "product_block", "settings": { "product": "white-cotton-shirt" } }
       },
       "block_order": [
         "product_block_1",

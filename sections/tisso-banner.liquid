@@ -1,0 +1,49 @@
+<section class="tisso-banner" aria-label="Tisso Banner">
+  <div class="tisso-banner__topbar">
+    <div class="tisso-banner__topbar-logo">{{ section.settings.logo_text }}</div>
+    <p class="tisso-banner__topbar-tagline">{{ section.settings.tagline_text }}</p>
+    <a class="tisso-banner__topbar-cta gg-button" href="{{ section.settings.button_1_link }}">
+      <span>{{ section.settings.button_1_label }}</span>
+      <span class="gg-button__arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+
+  <div class="tisso-banner__hero">
+    <div class="tisso-banner__illustration-frame" aria-hidden="true">
+      <img class="tisso-banner__illustration-image" src="{{ 'gift-guide-banner.svg' | asset_url }}" alt="" loading="lazy">
+    </div>
+
+    <div class="tisso-banner__content">
+      <h1 class="tisso-banner__heading">{{ section.settings.heading }}</h1>
+      <p class="tisso-banner__copy">{{ section.settings.subheading | newline_to_br }}</p>
+      <a class="tisso-banner__hero-cta gg-button gg-button--black" href="{{ section.settings.button_2_link }}">
+        <span>{{ section.settings.button_2_label }}</span>
+        <span class="gg-button__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="tisso-banner__strip">
+    <p>{{ section.settings.strip_text }}</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Tisso Banner",
+  "settings": [
+    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "TISSO VISON" },
+    { "type": "text", "id": "tagline_text", "label": "Tagline text", "default": "Find the ideal gift for your loved ones." },
+    { "type": "text", "id": "button_1_label", "label": "Top bar button label", "default": "CHOOSE GIFT" },
+    { "type": "url", "id": "button_1_link", "label": "Top bar button link", "default": "#gift-guide-grid" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Gift Guide" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season." },
+    { "type": "text", "id": "button_2_label", "label": "Hero button label", "default": "SHOP NOW" },
+    { "type": "url", "id": "button_2_link", "label": "Hero button link", "default": "#gift-guide-grid" },
+    { "type": "text", "id": "strip_text", "label": "Bottom strip text", "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL" }
+  ],
+  "presets": [
+    { "name": "Tisso Banner" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,86 @@
+<section id="gift-guide-grid" class="gg-grid tisso-product-grid" aria-label="Tisso Product Grid" data-gg-grid>
+  <div class="gg-grid__container">
+    <h2 class="gg-grid__heading">{{ section.settings.grid_heading }}</h2>
+    <div class="gg-grid__cards">
+      {% for block in section.blocks %}
+        <div class="gg-grid__card-wrapper">
+          {% if block.settings.product != blank %}
+            {% assign product_handle = block.settings.product.handle | default: block.settings.product %}
+            {% assign product_obj = all_products[product_handle] %}
+            {% if product_obj == nil %}
+              {% assign product_obj = block.settings.product %}
+            {% endif %}
+
+            <button type="button" class="gg-grid__card" data-product-handle="{{ product_handle }}" data-gg-block-id="{{ block.id }}" aria-haspopup="dialog">
+              {% if product_obj != nil and product_obj.featured_image != blank %}
+                <img class="gg-grid__image" src="{{ product_obj.featured_image | image_url: width: 1200 }}" alt="{{ product_obj.title | escape }}" loading="lazy">
+              {% else %}
+                <img class="gg-grid__image" src="{{ 'gift-guide-banner.svg' | asset_url }}" alt="Placeholder" loading="lazy">
+              {% endif %}
+              <span class="gg-grid__hotspot" aria-label="Quick view">+</span>
+            </button>
+          {% else %}
+            <div class="gg-grid__card gg-grid__card--empty">
+              <span>Select a product in the section settings</span>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="gg-modal gg-modal--closed" id="gg-quickview" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="gg-quickview-title" data-gg-modal>
+    <div class="gg-modal__overlay" data-gg-close></div>
+    <div class="gg-modal__content">
+      <button type="button" class="gg-modal__close" aria-label="Close" data-gg-close>✕</button>
+      <div class="gg-modal__panel">
+        <div class="gg-modal__image-wrap">
+          <img class="gg-modal__image" src="" alt="" loading="lazy">
+        </div>
+        <div class="gg-modal__info">
+          <h2 id="gg-quickview-title" class="gg-modal__title"></h2>
+          <div class="gg-modal__price"></div>
+          <p class="gg-modal__description"></p>
+          <div class="gg-modal__options" data-gg-options></div>
+          <button type="button" class="gg-button gg-button--black gg-modal__add" data-gg-add-to-cart disabled>
+            <span>ADD TO CART</span>
+            <span class="gg-button__arrow" aria-hidden="true">→</span>
+          </button>
+          <p class="gg-modal__notice" data-gg-notice aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Tisso Product Grid",
+  "settings": [
+    { "type": "text", "id": "grid_heading", "label": "Grid heading", "default": "Tisso vison in the wild" }
+  ],
+  "blocks": [
+    {
+      "type": "product_block",
+      "name": "Product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Tisso Product Grid",
+      "blocks": [
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" }
+      ]
+    }
+  ]
+}
+{% endschema %}
