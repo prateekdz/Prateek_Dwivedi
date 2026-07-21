@@ -7,13 +7,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ 'gift-guide.css' | asset_url }}">
+    {% if page_template == 'gift-guide' %}
+      <link rel="stylesheet" href="{{ 'gift-guide.css' | asset_url }}">
+    {% endif %}
     {{ content_for_header }}
   </head>
   <body class="gift-guide-page" data-template="page.gift-guide">
     <main id="MainContent" role="main" data-template="page.gift-guide">
       {{ content_for_layout }}
     </main>
-    <script src="{{ 'gift-guide.js' | asset_url }}" defer></script>
+    {% if page_template == 'gift-guide' %}
+      <script src="{{ 'gift-guide-quickview.js' | asset_url }}" defer></script>
+    {% endif %}
   </body>
 </html>

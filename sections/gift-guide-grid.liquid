@@ -1,96 +1,96 @@
-<section id="gift-guide-grid" class="gift-guide-grid" aria-label="Gift guide products" data-gift-guide-grid data-auto-add-product="{{ section.settings.auto_add_product.handle | default: '' }}" data-currency="{{ shop.currency }}">
-  <div class="gift-guide-grid__container">
-    <h2 class="gift-guide-grid__title">{{ section.settings.grid_heading }}</h2>
-    <div class="gift-guide-grid__cards">
-      {% if section.blocks.size > 0 %}
-        {% for block in section.blocks %}
+<section id="gift-guide-grid" class="gg-grid" aria-label="Gift Guide Products" data-gg-grid>
+  <div class="gg-grid__container">
+    <h2 class="gg-grid__heading">{{ section.settings.section_heading }}</h2>
+    <div class="gg-grid__cards">
+      {% for block in section.blocks %}
+        <div class="gg-grid__card-wrapper {% if block.settings.hotspot_position == 'top-left' %}gg-grid__card--hotspot-left{% elsif block.settings.hotspot_position == 'center-right' %}gg-grid__card--hotspot-center-right{% elsif block.settings.hotspot_position == 'center' %}gg-grid__card--hotspot-center{% else %}gg-grid__card--hotspot-right{% endif %}">
           {% if block.settings.product != blank %}
-            {% assign card_product = block.settings.product %}
-            <button type="button" class="gift-guide-card" data-product-handle="{{ card_product.handle }}" {{ block.shopify_attributes }}>
-              {% if card_product.featured_image != blank %}
-                <img class="gift-guide-card__media" src="{{ card_product.featured_image | image_url: width: 900 }}" alt="{{ card_product.title | escape }}" loading="lazy" width="900" height="900">
+            {% assign product = block.settings.product %}
+            <button type="button" class="gg-grid__card" data-gg-product-handle="{{ product.handle }}" data-gg-block-id="{{ block.id }}" aria-haspopup="dialog">
+              {% if product.featured_image != blank %}
+                <img class="gg-grid__image" src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" loading="lazy">
               {% else %}
-                <span class="gift-guide-card--empty">{{ card_product.title }}</span>
+                <span class="gg-grid__empty">{{ product.title }}</span>
               {% endif %}
-              <span class="gift-guide-card__hotspot">+</span>
+              <span class="gg-grid__hotspot" aria-label="Quick view">+</span>
+              {% if block.settings.show_dot_markers %}
+                <span class="gg-grid__dot gg-grid__dot--a"></span>
+                <span class="gg-grid__dot gg-grid__dot--b"></span>
+              {% endif %}
             </button>
           {% else %}
-            <div class="gift-guide-card gift-guide-card--empty" {{ block.shopify_attributes }}>
-              Select a product in the section settings
+            <div class="gg-grid__card gg-grid__card--empty">
+              <span>Select a product in the section settings</span>
             </div>
           {% endif %}
-        {% endfor %}
-      {% else %}
-        <div class="gift-guide-grid__empty">Add up to six products in the theme customizer to populate this grid.</div>
-      {% endif %}
+        </div>
+      {% endfor %}
     </div>
   </div>
 
-  <div class="gift-guide-popup" id="gift-guide-popup" aria-hidden="true">
-    <div class="gift-guide-popup__overlay" data-popup-close></div>
-    <div class="gift-guide-popup__dialog" role="dialog" aria-modal="true" aria-labelledby="gift-guide-popup-title">
-      <button type="button" class="gift-guide-popup__close" data-popup-close aria-label="Close">×</button>
-      <div class="gift-guide-popup__panel">
-        <div class="gift-guide-popup__image-wrap">
-          <img class="gift-guide-popup__image" src="" alt="">
+  <div class="gg-modal" id="gg-quickview" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="gg-quickview-title">
+    <div class="gg-modal__overlay" data-gg-close></div>
+    <div class="gg-modal__content">
+      <button type="button" class="gg-modal__close" aria-label="Close" data-gg-close>✕</button>
+      <div class="gg-modal__panel">
+        <div class="gg-modal__image-wrap">
+          <img class="gg-modal__image" src="" alt="" loading="lazy">
         </div>
-        <div class="gift-guide-popup__info">
-          <h2 id="gift-guide-popup-title" class="gift-guide-popup__title"></h2>
-          <div class="gift-guide-popup__price"></div>
-          <p class="gift-guide-popup__description"></p>
+        <div class="gg-modal__info">
+          <h2 id="gg-quickview-title" class="gg-modal__title"></h2>
+          <div class="gg-modal__price"></div>
+          <p class="gg-modal__description"></p>
+          <div class="gg-modal__options" data-gg-options></div>
+          <button type="button" class="gg-button gg-button--black gg-modal__add" data-gg-add-to-cart disabled>
+            <span>ADD TO CART</span>
+            <span class="gg-button__arrow" aria-hidden="true">→</span>
+          </button>
+          <p class="gg-modal__notice" data-gg-notice aria-live="polite"></p>
         </div>
       </div>
-      <form class="gift-guide-popup__form" novalidate>
-        <div class="gift-guide-popup__options" data-popup-options></div>
-        <button type="button" class="gift-guide-popup__add-to-cart" data-add-to-cart>Add to cart</button>
-        <p class="gift-guide-popup__message" data-popup-message aria-live="polite"></p>
-      </form>
     </div>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Gift Guide Grid",
+  "name": "Gift Guide Product Grid",
   "settings": [
-    {
-      "type": "text",
-      "id": "grid_heading",
-      "label": "Grid heading",
-      "default": "Tisso vison in the wild"
-    },
-    {
-      "type": "product",
-      "id": "auto_add_product",
-      "label": "Auto add product",
-      "info": "Automatically add this product when Black + Medium is selected. Defaults to Soft Winter Jacket if left blank."
-    }
+    { "type": "text", "id": "section_heading", "label": "Heading", "default": "Tisso vison in the wild" }
   ],
   "blocks": [
     {
-      "type": "product_card",
-      "name": "Product card",
+      "type": "product_block",
+      "name": "Product",
       "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
         {
-          "type": "product",
-          "id": "product",
-          "label": "Product"
-        }
+          "type": "select",
+          "id": "hotspot_position",
+          "label": "Hotspot position",
+          "options": [
+            { "value": "top-right", "label": "Top right" },
+            { "value": "top-left", "label": "Top left" },
+            { "value": "center-right", "label": "Center right" },
+            { "value": "center", "label": "Center" }
+          ],
+          "default": "top-right"
+        },
+        { "type": "checkbox", "id": "show_dot_markers", "label": "Show extra dot markers (e.g. jacket variant callouts)", "default": false }
       ]
     }
   ],
   "max_blocks": 6,
   "presets": [
     {
-      "name": "Gift Guide Grid",
-      "category": "Custom",
+      "name": "Gift Guide Product Grid",
       "blocks": [
-        { "type": "product_card" },
-        { "type": "product_card" },
-        { "type": "product_card" },
-        { "type": "product_card" },
-        { "type": "product_card" },
-        { "type": "product_card" }
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" }
       ]
     }
   ]
