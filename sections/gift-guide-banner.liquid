@@ -22,11 +22,8 @@
 
   <div class="gg-banner__hero">
     <div class="gg-banner__illustration-frame" aria-hidden="true">
-      {% if section.settings.illustration != blank %}
-        <img class="gg-banner__illustration" src="{{ section.settings.illustration | image_url: width: 2400 }}" alt="" loading="lazy">
-      {% else %}
-        <img class="gg-banner__illustration" src="{{ 'gift-guide-banner.svg' | asset_url }}" alt="" loading="lazy">
-      {% endif %}
+      <img class="gg-banner__illustration-tile" src="{{ 'Frame.svg' | asset_url }}" alt="" loading="lazy">
+      <img class="gg-banner__illustration-tile" src="{{ 'Frame.svg' | asset_url }}" alt="" loading="lazy">
     </div>
 
     <div class="gg-banner__content">
