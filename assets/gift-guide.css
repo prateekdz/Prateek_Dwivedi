@@ -148,8 +148,12 @@ button, a {
 
 .gg-banner__hero {
   position: relative;
-  min-height: 840px;
+  min-height: 820px;
   overflow: hidden;
+}
+
+.gg-banner__hero {
+  --frame-offset: 2%; /* positive nudges right frame right, left frame left */
 }
 
 .gg-banner__illustration-frame {
@@ -161,26 +165,35 @@ button, a {
 }
 
 .gg-banner__illustration {
-  width: 120%;
+  width: 150%;
   height: 100%;
   object-fit: cover;
   object-position: center top;
   display: block;
   transform-origin: center;
+  transition: transform 0.4s ease, opacity 0.3s ease;
 }
 
 .gg-banner__illustration-frame--left {
-  left: -8%;
+  left: -18%;
   right: 50%;
   z-index: 0;
 }
 
 .gg-banner__illustration-frame--right {
   left: 50%;
-  right: -8%;
+  right: -18%;
   z-index: 0;
   transform: rotateY(180deg);
-  opacity: 0.96;
+  opacity: 0.97;
+}
+
+.gg-banner__illustration-frame--left .gg-banner__illustration {
+  transform: translateX(calc(-1 * var(--frame-offset))) translateX(-8%);
+}
+
+.gg-banner__illustration-frame--right .gg-banner__illustration {
+  transform: translateX(calc(var(--frame-offset))) translateX(8%) rotateY(180deg);
 }
 
 @media (max-width: 1100px) {
@@ -216,6 +229,25 @@ button, a {
     bottom: 48px;
     max-width: calc(100% - 48px);
   }
+}
+
+@media (min-width: 2000px) {
+  :root, .gg-banner__hero {
+    --frame-offset: 10%;
+  }
+  .gg-banner__illustration {
+    width: 180%;
+  }
+  .gg-banner__illustration-frame--left {
+    left: -30%;
+    right: 50%;
+  }
+  .gg-banner__illustration-frame--right {
+    left: 50%;
+    right: -30%;
+  }
+  .gg-banner__illustration-frame--left .gg-banner__illustration { transform: translateX(calc(-1 * var(--frame-offset))) translateX(-12%); }
+  .gg-banner__illustration-frame--right .gg-banner__illustration { transform: translateX(calc(var(--frame-offset))) translateX(12%) rotateY(180deg); }
 }
 
 .gg-banner__content {
