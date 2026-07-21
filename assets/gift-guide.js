@@ -1,367 +1,210 @@
-/**
- * Gift Guide Modal and Cart Management
- * Handles product selection, variant rendering, and add-to-cart functionality
- * with bonus product auto-add for specific variant combinations
+﻿/**
+ * gift-guide.js
+ * Handles the Gift Guide Grid modal, variant selection, and cart behavior.
  */
 
-class GiftGuideModal {
-  constructor() {
-    // Get required elements
-    this.gridSection = document.querySelector('[data-gg-grid]');
-    this.modal = document.getElementById('gg-quickview');
-    
-    // Validate elements exist
-    if (!this.gridSection || !this.modal) {
-      console.error('Gift Guide: Required elements not found');
-      return;
-    }
-
-    // Cache modal elements
-    this.modalOverlay = this.modal.querySelector('[data-gg-close]');
-    this.modalClose = this.modal.querySelector('.gg-modal__close');
-    this.modalImage = this.modal.querySelector('.gg-modal__image');
-    this.modalTitle = this.modal.querySelector('.gg-modal__title');
-    this.modalPrice = this.modal.querySelector('.gg-modal__price');
-    this.modalDescription = this.modal.querySelector('.gg-modal__description');
-    this.modalOptions = this.modal.querySelector('[data-gg-options]');
-    this.modalNotice = this.modal.querySelector('[data-gg-notice]');
-    this.addToCartBtn = this.modal.querySelector('[data-gg-add-to-cart]');
-
-    // State variables
-    this.currentProduct = null;
-    this.currentVariant = null;
-    this.selectedOptions = {};
-    this.autoAddProductHandle = 'soft-winter-jacket';
-
-    // Initialize
-    this.init();
+document.addEventListener('DOMContentLoaded', function () {
+  var gridSection = document.querySelector('[data-gg-grid]');
+  var modal = document.querySelector('[data-gg-modal]');
+  
+  if (!gridSection || !modal) {
+    console.log('Gift Guide: Required elements not found');
+    return;
   }
 
-  /**
-   * Initialize event listeners
-   */
-  init() {
-    console.log('GiftGuideModal initializing...');
-    
-    // Product card clicks
-    const productCards = this.gridSection.querySelectorAll('.gg-grid__card[data-product-handle]');
-    console.log(`Found ${productCards.length} product cards`);
-    
-    productCards.forEach(card => {
-      card.addEventListener('click', () => this.handleCardClick(card));
+  var modalTitle = modal.querySelector('.gg-modal__title');
+  var modalImage = modal.querySelector('.gg-modal__image');
+  var modalPrice = modal.querySelector('.gg-modal__price');
+  var modalDescription = modal.querySelector('.gg-modal__description');
+  var modalOptions = modal.querySelector('[data-gg-options]');
+  var addToCartBtn = modal.querySelector('[data-gg-add-to-cart]');
+  var modalNotice = modal.querySelector('[data-gg-notice]');
+  var closeButtons = modal.querySelectorAll('[data-gg-close]');
+
+  if (!modalTitle || !modalImage || !modalPrice || !modalDescription || !modalOptions || !addToCartBtn || !modalNotice) {
+    console.log('Gift Guide: Required modal elements not found');
+    return;
+  }
+
+  var currentProduct = null;
+  var currentVariant = null;
+
+  function closeModal() {
+    modal.classList.add('gg-modal--closed');
+    modal.setAttribute('aria-hidden', 'true');
+    modalNotice.textContent = '';
+    addToCartBtn.disabled = false;
+  }
+
+  function openModal() {
+    modal.classList.remove('gg-modal--closed');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function formatPrice(amount) {
+    var formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'EUR'
     });
+    return formatter.format(amount / 100);
+  }
 
-    // Modal close handlers
-    this.modalOverlay.addEventListener('click', () => this.closeModal());
-    this.modalClose.addEventListener('click', () => this.closeModal());
-    this.addToCartBtn.addEventListener('click', () => this.handleAddToCart());
-
-    // Keyboard handling
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && this.isModalOpen()) {
-        this.closeModal();
-      }
+  function findMatchingVariant(selectedOptions) {
+    if (!currentProduct || !currentProduct.variants) return null;
+    return currentProduct.variants.find(function(variant) {
+      return variant.options && variant.options.every(function(option, idx) {
+        return option === selectedOptions[idx];
+      });
     });
-    
-    console.log('GiftGuideModal initialized successfully');
   }
 
-  /**
-   * Check if modal is currently open
-   */
-  isModalOpen() {
-    return !this.modal.classList.contains('gg-modal--closed');
-  }
+  function renderOptions(product) {
+    modalOptions.innerHTML = '';
+    if (!product.options) return;
 
-  /**
-   * Open modal and set focus
-   */
-  openModal() {
-    this.modal.classList.remove('gg-modal--closed');
-    this.modal.setAttribute('aria-hidden', 'false');
-    this.modal.focus();
-  }
+    product.options.forEach(function(optionName, optionIdx) {
+      var values = [];
+      product.variants.forEach(function(variant) {
+        if (variant.options && variant.options[optionIdx] && !values.includes(variant.options[optionIdx])) {
+          values.push(variant.options[optionIdx]);
+        }
+      });
 
-  /**
-   * Close modal and reset state
-   */
-  closeModal() {
-    this.modal.classList.add('gg-modal--closed');
-    this.modal.setAttribute('aria-hidden', 'true');
-    this.clearNotice();
-    this.currentProduct = null;
-    this.currentVariant = null;
-    this.selectedOptions = {};
-    this.modalOptions.innerHTML = '';
-  }
+      var wrapper = document.createElement('div');
+      wrapper.className = 'gg-modal__option';
 
-  /**
-   * Fetch product data from Shopify
-   */
-  async fetchProduct(handle) {
-    try {
-      const response = await fetch(`/products/${handle}.js`);
-      if (!response.ok) throw new Error('Product not found');
-      return await response.json();
-    } catch (error) {
-      this.showNotice('Unable to load product details.');
-      throw error;
-    }
-  }
+      var label = document.createElement('label');
+      label.textContent = optionName;
+      label.className = 'gg-modal__option-label';
+      wrapper.appendChild(label);
 
-  /**
-   * Handle product card click
-   */
-  async handleCardClick(card) {
-    const handle = card.dataset.productHandle;
-    try {
-      const product = await this.fetchProduct(handle);
-      this.currentProduct = product;
-      this.currentVariant = product.variants[0];
-      this.selectedOptions = {};
-      this.renderOptions(product);
-      this.openModal();
-    } catch (error) {
-      console.error('Error loading product:', error);
-    }
-  }
-
-  /**
-   * Render variant options dynamically based on product
-   */
-  renderOptions(product) {
-    this.selectedOptions = {};
-    this.modalOptions.innerHTML = '';
-
-    product.options.forEach((optionName, index) => {
-      // Get unique values for this option
-      const optionValues = [...new Set(product.variants.map(v => v.options[index]))];
-
-      const fieldset = document.createElement('fieldset');
-      fieldset.className = 'gg-modal__option';
-
-      const legend = document.createElement('legend');
-      legend.textContent = optionName;
-      fieldset.appendChild(legend);
-
-      // Render color options as buttons
-      if (optionName.toLowerCase().includes('color')) {
-        const container = document.createElement('div');
-        container.className = 'gg-modal__option-row';
-
-        optionValues.forEach(value => {
-          const button = document.createElement('button');
-          button.type = 'button';
-          button.className = 'gg-modal__option-button';
-          button.textContent = value;
-          button.addEventListener('click', () => this.selectOption(optionName, value));
-          container.appendChild(button);
-        });
-
-        fieldset.appendChild(container);
-      }
-      // Render other options (size, etc.) as dropdown
-      else {
-        const select = document.createElement('select');
+      if (values.length > 4) {
+        var select = document.createElement('select');
         select.className = 'gg-modal__option-select';
-        select.innerHTML = `<option value="">Choose your ${optionName.toLowerCase()}</option>`;
+        select.dataset.optionIndex = optionIdx;
 
-        optionValues.forEach(value => {
-          const option = document.createElement('option');
+        values.forEach(function(value) {
+          var option = document.createElement('option');
           option.value = value;
           option.textContent = value;
           select.appendChild(option);
         });
 
-        select.addEventListener('change', () => {
-          this.selectOption(optionName, select.value);
+        select.addEventListener('change', function() {
+          var selected = Array.from(modalOptions.querySelectorAll('select, [data-selected-value]')).map(function(el) {
+            if (el.tagName === 'SELECT') return el.value;
+            return el.dataset.selectedValue || '';
+          });
+          currentVariant = findMatchingVariant(selected);
+          updatePrice();
         });
 
-        fieldset.appendChild(select);
+        wrapper.appendChild(select);
+      } else {
+        var buttonGroup = document.createElement('div');
+        buttonGroup.className = 'gg-modal__option-buttons';
+
+        values.forEach(function(value) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.textContent = value;
+          btn.className = 'gg-modal__option-button';
+          btn.dataset.optionValue = value;
+          btn.dataset.optionIndex = optionIdx;
+
+          btn.addEventListener('click', function() {
+            var siblings = buttonGroup.querySelectorAll('button');
+            siblings.forEach(function(b) { b.classList.remove('is-selected'); });
+            btn.classList.add('is-selected');
+
+            var selected = Array.from(modalOptions.querySelectorAll('[data-option-index]')).map(function(el, idx) {
+              if (el.dataset.optionIndex == optionIdx) return value;
+              var sibling = modalOptions.querySelector('[data-option-index="' + idx + '"].is-active');
+              return sibling ? sibling.dataset.optionValue : '';
+            });
+            currentVariant = findMatchingVariant(selected);
+            updatePrice();
+          });
+
+          buttonGroup.appendChild(btn);
+        });
+
+        wrapper.appendChild(buttonGroup);
       }
 
-      this.modalOptions.appendChild(fieldset);
-      // Set default selection
-      this.selectedOptions[optionName] = optionValues[0] || '';
-    });
-
-    // Update with initial variant
-    this.currentVariant = this.getMatchingVariant(product, this.selectedOptions) || product.variants[0];
-    this.updateModalDisplay(product, this.currentVariant);
-    this.markSelectedOptions();
-  }
-
-  /**
-   * Find variant matching current selections
-   */
-  getMatchingVariant(product, optionSelections) {
-    return product.variants.find(variant => {
-      return variant.options.every((value, index) => {
-        const optionName = product.options[index];
-        return String(optionSelections[optionName] || '').trim() === String(value).trim();
-      });
+      modalOptions.appendChild(wrapper);
     });
   }
 
-  /**
-   * Update selected option and find matching variant
-   */
-  selectOption(optionName, value) {
-    this.selectedOptions[optionName] = value;
-    this.currentVariant = this.getMatchingVariant(this.currentProduct, this.selectedOptions) || this.currentVariant;
-    this.updateModalDisplay(this.currentProduct, this.currentVariant);
-    this.markSelectedOptions();
-  }
-
-  /**
-   * Mark visually selected options in UI
-   */
-  markSelectedOptions() {
-    const optionSets = this.modalOptions.querySelectorAll('.gg-modal__option');
-    optionSets.forEach(fieldset => {
-      const legend = fieldset.querySelector('legend');
-      const optionName = legend.textContent;
-      const selectedValue = this.selectedOptions[optionName];
-
-      // Mark button selections
-      fieldset.querySelectorAll('.gg-modal__option-button').forEach(button => {
-        if (button.textContent === selectedValue) {
-          button.classList.add('is-selected');
-        } else {
-          button.classList.remove('is-selected');
-        }
-      });
-
-      // Mark select value
-      const select = fieldset.querySelector('select');
-      if (select) {
-        select.value = selectedValue || '';
-      }
-    });
-  }
-
-  /**
-   * Update modal display with product/variant info
-   */
-  updateModalDisplay(product, variant) {
-    if (!variant) return;
-
-    this.modalTitle.textContent = product.title;
-    this.modalPrice.textContent = this.formatPrice(variant.price);
-    this.modalDescription.textContent = product.description || '';
-    this.modalImage.src = product.featured_image?.src || '';
-    this.modalImage.alt = product.title;
-    this.addToCartBtn.disabled = !variant.available;
-
-    this.clearNotice();
-  }
-
-  /**
-   * Format price with currency
-   */
-  formatPrice(amount) {
-    try {
-      return new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'EUR',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      }).format(amount / 100);
-    } catch {
-      return `€${(amount / 100).toFixed(0)}`;
+  function updatePrice() {
+    if (currentVariant) {
+      modalPrice.textContent = formatPrice(currentVariant.price);
+      addToCartBtn.disabled = !currentVariant.available;
+    } else {
+      addToCartBtn.disabled = true;
     }
   }
 
-  /**
-   * Add item to cart via Shopify API
-   */
-  async addItemToCart(variantId, quantity = 1) {
-    const response = await fetch('/cart/add.js', {
+  function fetchProduct(handle) {
+    return fetch('/products/' + encodeURIComponent(handle) + '.js')
+      .then(function(res) { return res.json(); });
+  }
+
+  function renderModal(product) {
+    currentProduct = product;
+    currentVariant = product.variants && product.variants.find(function(v) { return v.available; }) || product.variants[0];
+
+    modalTitle.textContent = product.title;
+    modalDescription.textContent = product.description;
+    modalImage.src = (product.featured_image && product.featured_image.src) || '';
+    modalImage.alt = product.title;
+
+    renderOptions(product);
+    updatePrice();
+    openModal();
+  }
+
+  function addToCart(variantId) {
+    return fetch('/cart/add.js', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({ id: variantId, quantity })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: variantId, quantity: 1 })
+    }).then(function(res) { return res.json(); });
+  }
+
+  addToCartBtn.addEventListener('click', function() {
+    if (!currentVariant) return;
+    addToCartBtn.disabled = true;
+    modalNotice.textContent = 'Adding to cart...';
+    addToCart(currentVariant.id)
+      .then(function() {
+        modalNotice.textContent = 'Added to cart!';
+        setTimeout(closeModal, 1500);
+      })
+      .catch(function(err) {
+        modalNotice.textContent = 'Error adding to cart';
+        addToCartBtn.disabled = false;
+      });
+  });
+
+  closeButtons.forEach(function(btn) {
+    btn.addEventListener('click', closeModal);
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  var productCards = gridSection.querySelectorAll('[data-product-handle]');
+  productCards.forEach(function(card) {
+    card.addEventListener('click', function(e) {
+      e.preventDefault();
+      var handle = card.dataset.productHandle;
+      modalNotice.textContent = 'Loading...';
+      fetchProduct(handle)
+        .then(renderModal)
+        .catch(function() { modalNotice.textContent = 'Error loading product'; });
     });
+  });
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.description || 'Unable to add to cart');
-    }
-
-    return await response.json();
-  }
-
-  /**
-   * Check if we should auto-add bonus product
-   * Adds "Soft Winter Jacket" when product has Color: Black AND Size: Medium
-   */
-  async maybeAddBonusProduct() {
-    if (!this.currentProduct || !this.selectedOptions) {
-      return;
-    }
-
-    const color = String(this.selectedOptions.Color || this.selectedOptions.color || '').trim().toLowerCase();
-    const size = String(this.selectedOptions.Size || this.selectedOptions.size || '').trim().toLowerCase();
-
-    // Trigger bonus product add only for Black + Medium combination
-    if (color === 'black' && size === 'medium') {
-      try {
-        const product = await this.fetchProduct(this.autoAddProductHandle);
-        const variant = product.variants.find(v => v.available);
-        if (variant) {
-          await this.addItemToCart(variant.id, 1);
-        }
-      } catch (error) {
-        // Silently fail if bonus product can't be added
-        console.log('Bonus product auto-add failed:', error);
-      }
-    }
-  }
-
-  /**
-   * Handle add to cart button click
-   */
-  async handleAddToCart() {
-    if (!this.currentVariant) {
-      this.showNotice('Please select valid options.');
-      return;
-    }
-
-    this.addToCartBtn.disabled = true;
-    this.showNotice('Adding to cart…');
-
-    try {
-      await this.addItemToCart(this.currentVariant.id, 1);
-      await this.maybeAddBonusProduct();
-      this.showNotice('Product added to cart.');
-
-      // Close modal after successful add
-      setTimeout(() => this.closeModal(), 800);
-    } catch (error) {
-      this.showNotice(error.message || 'Could not add to cart.');
-      this.addToCartBtn.disabled = false;
-    }
-  }
-
-  /**
-   * Show notice message
-   */
-  showNotice(message) {
-    this.modalNotice.textContent = message;
-  }
-
-  /**
-   * Clear notice message
-   */
-  clearNotice() {
-    this.modalNotice.textContent = '';
-  }
-}
-
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  const modal = new GiftGuideModal();
 });
-

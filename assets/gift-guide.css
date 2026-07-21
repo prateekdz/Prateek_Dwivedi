@@ -6,12 +6,12 @@
 html, body {
   margin: 0;
   min-height: 100%;
-  background: #fff;
 }
 
 body.gift-guide-page {
   background: #fff;
   line-height: 1.5;
+  overflow-x: hidden;
 }
 
 *, *::before, *::after {
@@ -22,14 +22,9 @@ button, a {
   font: inherit;
 }
 
-main {
-  width: 100%;
-}
-
 .gg-banner,
 .gg-grid {
   width: 100%;
-  display: block;
 }
 
 .gg-banner {
@@ -41,12 +36,12 @@ main {
 .gg-banner__topbar {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 24px 56px 0;
+  padding: 18px 56px 0;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 20px;
-  min-height: auto;
+  gap: 14px;
+  min-height: 72px;
 }
 
 .gg-banner__hamburger {
@@ -67,11 +62,12 @@ main {
 
 .gg-banner__topbar-message {
   margin: 0;
-  font-size: 0.94rem;
+  font-size: 0.86rem;
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.1em;
   line-height: 1.4;
   text-align: center;
+  text-transform: uppercase;
 }
 
 .gg-banner__topbar-cta,
@@ -79,16 +75,16 @@ main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  min-height: 52px;
-  padding: 0 30px;
+  gap: 10px;
+  min-height: 56px;
+  padding: 0 32px;
   border: none;
   background: #111;
   color: #fff;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   cursor: pointer;
 }
@@ -96,20 +92,12 @@ main {
 .gg-button--black {
   background: #111;
   color: #fff;
+  min-height: 58px;
+  padding: 0 32px;
 }
 
 .gg-button__arrow {
   display: inline-block;
-  transition: transform 0.3s ease;
-}
-
-.gg-button:hover .gg-button__arrow {
-  transform: translateX(4px);
-}
-
-.gg-banner__topbar-cta:hover .gg-button__arrow,
-.gg-button:hover .gg-button__arrow {
-  transform: translateX(4px);
 }
 
 .gg-banner__topbar-cta {
@@ -160,65 +148,68 @@ main {
 
 .gg-banner__hero {
   position: relative;
-  min-height: 860px;
-  background: #f5f5f5;
-  display: flex;
-  align-items: flex-end;
-  padding: 60px 64px;
+  min-height: 840px;
+  overflow: hidden;
 }
 
 .gg-banner__illustration-frame {
   position: absolute;
   inset: 0;
   overflow: hidden;
+  transform: scale(1.02);
 }
 
 .gg-banner__illustration {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
   display: block;
 }
 
 .gg-banner__content {
-  position: relative;
-  left: auto;
-  bottom: auto;
+  position: absolute;
+  left: 64px;
+  bottom: 88px;
   z-index: 1;
   max-width: 560px;
   width: clamp(320px, 40vw, 560px);
 }
 
 .gg-banner__heading {
-  margin: 0 0 18px;
+  margin: 0 0 16px;
   font-family: 'Playfair Display', serif;
-  font-size: 5.2rem;
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  font-size: 4.8rem;
+  line-height: 0.96;
+  letter-spacing: -0.02em;
   font-weight: 700;
 }
 
 .gg-banner__copy {
-  margin: 0 0 24px;
+  margin: 0 0 20px;
   max-width: 420px;
-  font-size: 1rem;
-  line-height: 1.7;
+  font-size: 0.98rem;
+  line-height: 1.76;
   letter-spacing: -0.02em;
 }
 
 .gg-banner__hero-cta {
   background: #111;
   color: #fff;
+  min-height: 58px;
+  padding: 0 34px;
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
 }
 
 .gg-banner__footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 18px 56px;
+  padding: 14px 56px;
   background: #f7f7f7;
   color: #111;
-  font-size: 0.76rem;
+  font-size: 0.82rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
@@ -226,11 +217,12 @@ main {
 
 .gg-banner__footer-copy {
   margin: 0;
+  font-weight: 700;
 }
 
 .gg-grid {
   background: #fff;
-  padding: 78px 56px 92px;
+  padding: 72px 56px 92px;
 }
 
 .gg-grid__container {
@@ -239,9 +231,9 @@ main {
 }
 
 .gg-grid__heading {
-  margin: 0 0 28px;
+  margin: 0 0 24px;
   font-family: 'Playfair Display', serif;
-  font-size: 2.2rem;
+  font-size: 2.05rem;
   line-height: 1.05;
   letter-spacing: -0.03em;
   font-weight: 700;
@@ -250,7 +242,7 @@ main {
 .gg-grid__cards {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 22px;
+  gap: 20px;
 }
 
 .gg-grid__card-wrapper {
@@ -260,18 +252,20 @@ main {
 .gg-grid__card {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 5;
   overflow: hidden;
-  background: #f2f2f2;
+  background: #f9f9f9;
   border: none;
   padding: 0;
   cursor: pointer;
-  border-radius: 2px;
-  transition: transform 0.3s ease;
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(17, 17, 17, 0.06);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
 .gg-grid__card:hover {
-  transform: scale(1.02);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(17, 17, 17, 0.12);
 }
 
 .gg-grid__card:focus-visible {
@@ -284,28 +278,26 @@ main {
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.5s ease;
+}
+
+.gg-grid__card:hover .gg-grid__image {
+  transform: scale(1.04);
 }
 
 .gg-grid__hotspot {
   position: absolute;
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: 1px solid #111;
   background: #fff;
   color: #111;
   display: grid;
   place-items: center;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-}
-
-.gg-grid__card:hover .gg-grid__hotspot {
-  transform: scale(1.1);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
 }
 
 .gg-grid__card-wrapper.gg-grid__card--hotspot-right .gg-grid__hotspot {
@@ -356,17 +348,12 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-}
-
-.gg-modal:not(.gg-modal--closed) {
   opacity: 1;
+  transition: opacity 0.18s ease;
   pointer-events: auto;
 }
 
-.gg-modal--closed {
+.gg-modal.gg-modal--closed {
   opacity: 0;
   pointer-events: none;
 }
@@ -379,51 +366,42 @@ main {
 
 .gg-modal__content {
   position: relative;
-  width: min(960px, calc(100vw - 32px));
+  width: min(980px, calc(100vw - 32px));
   background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  box-shadow: 0 50px 110px rgba(0, 0, 0, 0.18);
   overflow: hidden;
 }
 
 .gg-modal__close {
   position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 36px;
-  height: 36px;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
   border: none;
   background: transparent;
   color: #111;
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   cursor: pointer;
   z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.2s ease;
-}
-
-.gg-modal__close:hover {
-  opacity: 0.7;
 }
 
 .gg-modal__panel {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  padding: 28px 28px 32px;
+  gap: 26px;
+  padding: 32px 32px 36px;
 }
 
 .gg-modal__image-wrap {
-  min-width: 148px;
-  min-height: 148px;
+  min-width: 190px;
+  min-height: 190px;
   border: 1px solid #e7e7e7;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #fff;
-  border-radius: 4px;
 }
 
 .gg-modal__image {
@@ -431,7 +409,6 @@ main {
   height: 100%;
   object-fit: cover;
   display: block;
-  border-radius: 2px;
 }
 
 .gg-modal__info {
@@ -445,7 +422,6 @@ main {
   font-size: 1.35rem;
   line-height: 1.14;
   font-weight: 700;
-  font-family: 'Playfair Display', serif;
 }
 
 .gg-modal__price {
@@ -468,9 +444,6 @@ main {
 .gg-modal__option {
   display: grid;
   gap: 10px;
-  border: none;
-  padding: 0;
-  margin: 0;
 }
 
 .gg-modal__option legend {
@@ -479,7 +452,6 @@ main {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   margin: 0;
-  padding: 0;
 }
 
 .gg-modal__option-row {
@@ -496,11 +468,6 @@ main {
   font-size: 0.95rem;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
-  font-weight: 600;
-}
-
-.gg-modal__option-button:hover {
-  background: #f0f0f0;
 }
 
 .gg-modal__option-button.is-selected {
@@ -516,13 +483,6 @@ main {
   background: #fff;
   color: #111;
   font-size: 0.95rem;
-  font-family: inherit;
-  cursor: pointer;
-}
-
-.gg-modal__option-select:focus {
-  outline: 2px solid #111;
-  outline-offset: -1px;
 }
 
 .gg-modal__add {
@@ -536,20 +496,6 @@ main {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  transition: opacity 0.2s ease;
-}
-
-.gg-modal__add:hover:not(:disabled) {
-  opacity: 0.92;
-}
-
-.gg-modal__add:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
 
 .gg-modal__notice {
@@ -557,7 +503,6 @@ main {
   font-size: 0.88rem;
   color: #111;
   min-height: 1.2em;
-  line-height: 1.4;
 }
 
 @media (max-width: 1100px) {
@@ -587,10 +532,6 @@ main {
     min-height: auto;
   }
 
-  .gg-banner__hamburger {
-    display: block;
-  }
-
   .gg-banner__content {
     left: 24px;
     bottom: 48px;
@@ -603,20 +544,6 @@ main {
 
   .gg-grid__cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .gg-modal__content {
-    width: calc(100vw - 24px);
-    border-radius: 12px;
-  }
-
-  .gg-modal__panel {
-    padding: 20px 20px 24px;
-    gap: 20px;
-  }
-
-  .gg-modal__title {
-    font-size: 1.15rem;
   }
 }
 
@@ -631,9 +558,5 @@ main {
 
   .gg-modal__content {
     width: calc(100vw - 24px);
-  }
-
-  .gg-grid__cards {
-    grid-template-columns: 1fr;
   }
 }
