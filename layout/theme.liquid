@@ -7,16 +7,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    {% if page_template == 'gift-guide' %}
+    {% assign is_gift_guide = false %}
+    {% if template == 'page.gift-guide' or template.suffix == 'gift-guide' or template.name == 'gift-guide' or page_template == 'gift-guide' %}
+      {% assign is_gift_guide = true %}
+    {% endif %}
+    {% if is_gift_guide %}
       <link rel="stylesheet" href="{{ 'gift-guide.css' | asset_url }}">
     {% endif %}
     {{ content_for_header }}
   </head>
-  <body class="gift-guide-page" data-template="page.gift-guide">
-    <main id="MainContent" role="main" data-template="page.gift-guide">
+  <body{% if is_gift_guide %} class="gift-guide-page" data-template="page.gift-guide"{% endif %}>
+    <main id="MainContent" role="main"{% if is_gift_guide %} data-template="page.gift-guide"{% endif %}>
       {{ content_for_layout }}
     </main>
-    {% if page_template == 'gift-guide' %}
+    {% if is_gift_guide %}
       <script src="{{ 'gift-guide-quickview.js' | asset_url }}" defer></script>
     {% endif %}
   </body>

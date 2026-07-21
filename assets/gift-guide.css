@@ -20,18 +20,18 @@ button, a {
   font: inherit;
 }
 
-.gift-guide-banner,
-.gift-guide-grid {
+.gg-banner,
+.gg-grid {
   width: 100%;
 }
 
-.gift-guide-banner {
+.gg-banner {
   position: relative;
   overflow: hidden;
   background: #fff;
 }
 
-.gift-guide-banner__header {
+.gg-banner__topbar {
   max-width: 1432px;
   margin: 0 auto;
   padding: 28px 56px 0;
@@ -42,94 +42,37 @@ button, a {
   min-height: 96px;
 }
 
-.gift-guide-banner__brand {
+.gg-banner__hamburger {
+  display: none;
+  border: none;
+  background: transparent;
+  color: #111;
+  font-size: 1.45rem;
+  cursor: pointer;
+}
+
+.gg-banner__topbar-logo {
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.32em;
   text-transform: uppercase;
 }
 
-.gift-guide-banner__headline {
+.gg-banner__topbar-message {
   margin: 0;
   font-size: 0.95rem;
   font-weight: 500;
   letter-spacing: 0.02em;
-  text-align: center;
-  line-height: 1.2;
+  line-height: 1.4;
 }
 
-.gift-guide-banner__top-button {
+.gg-banner__topbar-cta,
+.gg-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
   min-height: 56px;
-  padding: 0 34px;
-  border: none;
-  background: #f5e626;
-  color: #111;
-  text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-.gift-guide-banner__top-button:hover {
-  opacity: 0.94;
-}
-
-.gift-guide-banner__hero {
-  position: relative;
-  min-height: 900px;
-}
-
-.gift-guide-banner__illustration {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-
-.gift-guide-banner__illustration-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.gift-guide-banner__content {
-  position: absolute;
-  left: 64px;
-  bottom: 96px;
-  z-index: 1;
-  max-width: 540px;
-  width: clamp(320px, 40vw, 540px);
-}
-
-.gift-guide-banner__title {
-  margin: 0 0 20px;
-  font-family: 'Playfair Display', serif;
-  font-size: 5.4rem;
-  line-height: 0.94;
-  letter-spacing: -0.04em;
-  font-weight: 700;
-}
-
-.gift-guide-banner__copy {
-  margin: 0 0 28px;
-  max-width: 410px;
-  font-size: 1rem;
-  line-height: 1.65;
-  letter-spacing: -0.02em;
-}
-
-.gift-guide-banner__cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  min-height: 58px;
   padding: 0 34px;
   border: none;
   background: #111;
@@ -142,11 +85,111 @@ button, a {
   cursor: pointer;
 }
 
-.gift-guide-banner__cta:hover {
+.gg-button--black {
+  background: #111;
+  color: #fff;
+}
+
+.gg-button__arrow {
+  display: inline-block;
+}
+
+.gg-banner__topbar-cta {
+  background: #f5e626;
+  color: #111;
+}
+
+.gg-banner__topbar-cta:hover,
+.gg-button:hover {
   opacity: 0.92;
 }
 
-.gift-guide-banner__strip {
+.gg-banner__mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  background: rgba(255, 255, 255, 0.98);
+  padding: 32px 24px;
+}
+
+.gg-banner__mobile-menu-inner {
+  max-width: 520px;
+  margin: 0 auto;
+  display: grid;
+  gap: 20px;
+}
+
+.gg-banner__mobile-close {
+  justify-self: end;
+  border: none;
+  background: transparent;
+  color: #111;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.gg-banner__mobile-message {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.gg-banner__mobile-cta {
+  background: #f5e626;
+  color: #111;
+}
+
+.gg-banner__hero {
+  position: relative;
+  min-height: 900px;
+}
+
+.gg-banner__illustration-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.gg-banner__illustration {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gg-banner__content {
+  position: absolute;
+  left: 64px;
+  bottom: 96px;
+  z-index: 1;
+  max-width: 540px;
+  width: clamp(320px, 40vw, 540px);
+}
+
+.gg-banner__heading {
+  margin: 0 0 20px;
+  font-family: 'Playfair Display', serif;
+  font-size: 5.4rem;
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+}
+
+.gg-banner__copy {
+  margin: 0 0 28px;
+  max-width: 410px;
+  font-size: 1rem;
+  line-height: 1.65;
+  letter-spacing: -0.02em;
+}
+
+.gg-banner__hero-cta {
+  background: #111;
+  color: #fff;
+}
+
+.gg-banner__footer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -159,26 +202,22 @@ button, a {
   border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.gift-guide-grid {
+.gg-banner__footer-copy {
+  margin: 0;
+}
+
+.gg-grid {
   background: #fff;
   padding: 86px 56px 92px;
 }
 
-.gift-guide-grid__container {
+.gg-grid__container {
   max-width: 1432px;
   margin: 0 auto;
 }
 
-.gift-guide-grid__heading-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 28px;
-}
-
-.gift-guide-grid__title {
-  margin: 0;
+.gg-grid__heading {
+  margin: 0 0 32px;
   font-family: 'Playfair Display', serif;
   font-size: 2.4rem;
   line-height: 1.05;
@@ -186,22 +225,17 @@ button, a {
   font-weight: 700;
 }
 
-.gift-guide-grid__cta {
-  color: #111;
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-
-.gift-guide-grid__cards {
+.gg-grid__cards {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 24px;
 }
 
-.gift-guide-card {
+.gg-grid__card-wrapper {
+  position: relative;
+}
+
+.gg-grid__card {
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -212,52 +246,19 @@ button, a {
   cursor: pointer;
 }
 
-.gift-guide-card:focus-visible {
+.gg-grid__card:focus-visible {
   outline: 3px solid #111;
   outline-offset: 4px;
 }
 
-.gift-guide-card__media {
+.gg-grid__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.gift-guide-card__details {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255,255,255,0.88);
-  padding: 16px;
-  display: grid;
-  gap: 4px;
-}
-
-.gift-guide-card__title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #111;
-  text-align: left;
-}
-
-.gift-guide-card__price {
-  font-size: 0.95rem;
-  color: #111;
-}
-
-.gift-guide-card--empty {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 24px;
-  font-size: 0.95rem;
-  color: #444;
-  text-align: center;
-}
-
-.gift-guide-card__hotspot {
+.gg-grid__hotspot {
   position: absolute;
   width: 36px;
   height: 36px;
@@ -272,37 +273,48 @@ button, a {
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 }
 
-.gift-guide-grid__cards > *:nth-child(1) .gift-guide-card__hotspot {
+.gg-grid__card-wrapper.gg-grid__card--hotspot-right .gg-grid__hotspot {
   top: 22%;
   right: 20%;
 }
 
-.gift-guide-grid__cards > *:nth-child(2) .gift-guide-card__hotspot {
-  top: 16%;
+.gg-grid__card-wrapper.gg-grid__card--hotspot-left .gg-grid__hotspot {
+  top: 22%;
+  left: 20%;
+}
+
+.gg-grid__card-wrapper.gg-grid__card--hotspot-center-right .gg-grid__hotspot {
+  top: 50%;
+  right: 20%;
+  transform: translateY(-50%);
+}
+
+.gg-grid__card-wrapper.gg-grid__card--hotspot-center .gg-grid__hotspot {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.gg-grid__dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #111;
+  opacity: 0.18;
+}
+
+.gg-grid__dot--a {
+  top: 12%;
+  left: 12%;
+}
+
+.gg-grid__dot--b {
+  bottom: 16%;
   right: 14%;
 }
 
-.gift-guide-grid__cards > *:nth-child(3) .gift-guide-card__hotspot {
-  top: 18%;
-  right: 18%;
-}
-
-.gift-guide-grid__cards > *:nth-child(4) .gift-guide-card__hotspot {
-  top: 54%;
-  right: 20%;
-}
-
-.gift-guide-grid__cards > *:nth-child(5) .gift-guide-card__hotspot {
-  top: 28%;
-  right: 12%;
-}
-
-.gift-guide-grid__cards > *:nth-child(6) .gift-guide-card__hotspot {
-  top: 18%;
-  right: 22%;
-}
-
-.gift-guide-popup {
+.gg-modal {
   position: fixed;
   inset: 0;
   z-index: 2000;
@@ -312,30 +324,31 @@ button, a {
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.18s ease;
+  pointer-events: none;
 }
 
-.gift-guide-popup.is-open {
+.gg-modal.gg-modal--open {
   visibility: visible;
   opacity: 1;
+  pointer-events: auto;
 }
 
-.gift-guide-popup__overlay {
+.gg-modal__overlay {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.34);
 }
 
-.gift-guide-popup__dialog {
+.gg-modal__content {
   position: relative;
-  width: min(520px, calc(100vw - 32px));
-  margin: 0 16px;
+  width: min(980px, calc(100vw - 32px));
   background: #fff;
-  border-radius: 8px;
+  border-radius: 16px;
   box-shadow: 0 40px 90px rgba(0, 0, 0, 0.15);
   overflow: hidden;
 }
 
-.gift-guide-popup__close {
+.gg-modal__close {
   position: absolute;
   top: 18px;
   right: 18px;
@@ -349,14 +362,14 @@ button, a {
   z-index: 1;
 }
 
-.gift-guide-popup__panel {
+.gg-modal__panel {
   display: grid;
-  grid-template-columns: 164px 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 18px;
   padding: 26px 24px 28px;
 }
 
-.gift-guide-popup__image-wrap {
+.gg-modal__image-wrap {
   min-width: 148px;
   min-height: 148px;
   border: 1px solid #e7e7e7;
@@ -366,54 +379,49 @@ button, a {
   background: #fff;
 }
 
-.gift-guide-popup__image {
+.gg-modal__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.gift-guide-popup__info {
+.gg-modal__info {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-.gift-guide-popup__title {
+.gg-modal__title {
   margin: 0;
   font-size: 1.35rem;
   line-height: 1.14;
   font-weight: 700;
 }
 
-.gift-guide-popup__price {
+.gg-modal__price {
   font-size: 1.15rem;
   font-weight: 700;
 }
 
-.gift-guide-popup__description {
+.gg-modal__description {
   margin: 0;
   color: #333;
   font-size: 0.95rem;
   line-height: 1.7;
 }
 
-.gift-guide-popup__form {
+.gg-modal__options {
   display: grid;
   gap: 16px;
 }
 
-.gift-guide-popup__options {
-  display: grid;
-  gap: 16px;
-}
-
-.gift-guide-popup__option {
+.gg-modal__option {
   display: grid;
   gap: 10px;
 }
 
-.gift-guide-popup__option legend {
+.gg-modal__option legend {
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -421,13 +429,13 @@ button, a {
   margin: 0;
 }
 
-.gift-guide-popup__option-values {
+.gg-modal__option-row {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
 }
 
-.gift-guide-popup__option-button {
+.gg-modal__option-button {
   border: 1px solid #111;
   background: #fff;
   color: #111;
@@ -437,12 +445,12 @@ button, a {
   transition: background 0.15s ease, color 0.15s ease;
 }
 
-.gift-guide-popup__option-button.is-selected {
+.gg-modal__option-button.is-selected {
   background: #111;
   color: #fff;
 }
 
-.gift-guide-popup__option-select {
+.gg-modal__option-select {
   width: 100%;
   min-height: 50px;
   padding: 0 16px;
@@ -452,7 +460,7 @@ button, a {
   font-size: 0.95rem;
 }
 
-.gift-guide-popup__add-to-cart {
+.gg-modal__add {
   width: 100%;
   min-height: 54px;
   border: none;
@@ -465,7 +473,7 @@ button, a {
   cursor: pointer;
 }
 
-.gift-guide-popup__message {
+.gg-modal__notice {
   margin: 0;
   font-size: 0.88rem;
   color: #111;
@@ -473,57 +481,57 @@ button, a {
 }
 
 @media (max-width: 1100px) {
-  .gift-guide-popup__panel {
+  .gg-modal__panel {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 980px) {
-  .gift-guide-grid__cards {
+  .gg-grid__cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 760px) {
-  .gift-guide-banner__header,
-  .gift-guide-banner__strip,
-  .gift-guide-grid {
+  .gg-banner__topbar,
+  .gg-banner__footer,
+  .gg-grid {
     padding-left: 24px;
     padding-right: 24px;
   }
 
-  .gift-guide-banner__header {
+  .gg-banner__topbar {
     grid-template-columns: 1fr;
     gap: 16px;
     text-align: center;
     min-height: auto;
   }
 
-  .gift-guide-banner__content {
+  .gg-banner__content {
     left: 24px;
     bottom: 48px;
     width: calc(100% - 48px);
   }
 
-  .gift-guide-banner__title {
+  .gg-banner__heading {
     font-size: 3.2rem;
   }
 
-  .gift-guide-grid__cards {
+  .gg-grid__cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 560px) {
-  .gift-guide-banner__title {
+  .gg-banner__heading {
     font-size: 2.6rem;
   }
 
-  .gift-guide-banner__headline {
+  .gg-banner__topbar-message {
     font-size: 0.88rem;
   }
 
-  .gift-guide-popup__dialog {
+  .gg-modal__content {
     width: calc(100vw - 24px);
   }
 }
