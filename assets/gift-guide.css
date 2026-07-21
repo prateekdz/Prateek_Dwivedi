@@ -589,7 +589,7 @@ button, a {
 .tisso-banner__content {
   position: absolute;
   z-index: 2;
-  bottom: 18%;
+  bottom: 24%;
   left: 64px;
   width: clamp(420px, 28vw, 420px);
   max-width: 420px;
