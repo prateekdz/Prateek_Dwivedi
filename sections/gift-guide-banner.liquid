@@ -1,28 +1,13 @@
-{% comment %}
-  Gift Guide — Banner section.
-  All copy fields below are editable via the theme customizer (see schema).
-  Structure: topbar -> hero (illustration + heading/copy/CTA) -> sustainability strip.
-{% endcomment %}
-<link rel="stylesheet" href="{{ 'gift-guide.css' | asset_url }}">
-
 <section class="gift-guide-banner" aria-label="Gift guide banner">
-
-  {%- comment -%} Top utility bar: hamburger (mobile only) + brand | promo text | CTA {%- endcomment -%}
-  <div class="gift-guide-banner__topbar">
-    <div class="gift-guide-banner__topbar-left">
-      <button type="button" class="gift-guide-banner__menu" aria-hidden="true" tabindex="-1">
-        <span></span><span></span><span></span>
-      </button>
-      <span class="gift-guide-banner__brand">{{ section.settings.brand_text }}</span>
-    </div>
-    <p class="gift-guide-banner__headline">{{ section.settings.top_text }}</p>
+  <div class="gift-guide-banner__header">
+    <span class="gift-guide-banner__brand">{{ section.settings.logo_text }}</span>
+    <p class="gift-guide-banner__headline">{{ section.settings.header_text }}</p>
     <a class="gift-guide-banner__top-button" href="{{ section.settings.top_button_url }}">
-      <span class="gift-guide-btn__label">{{ section.settings.top_button_text }}</span>
+      <span>{{ section.settings.top_button_text }}</span>
       <span class="gift-guide-btn__arrow" aria-hidden="true">→</span>
     </a>
   </div>
 
-  {%- comment -%} Hero: illustration collage behind the heading/copy/CTA {%- endcomment -%}
   <div class="gift-guide-banner__hero">
     {% render 'gift-guide-illustration' %}
 
@@ -30,16 +15,14 @@
       <h1 class="gift-guide-banner__title">{{ section.settings.hero_heading }}</h1>
       <div class="gift-guide-banner__copy">{{ section.settings.hero_copy | newline_to_br }}</div>
       <a class="gift-guide-banner__cta" href="{{ section.settings.hero_cta_url }}">
-        <span class="gift-guide-btn__label">{{ section.settings.hero_cta_text }}</span>
+        <span>{{ section.settings.hero_cta_text }}</span>
         <span class="gift-guide-btn__arrow" aria-hidden="true">→</span>
       </a>
     </div>
   </div>
 
-  {%- comment -%} Sustainability strip: shorter copy on mobile, full copy on desktop {%- endcomment -%}
   <div class="gift-guide-banner__strip">
-    <span class="gg-desktop-only">{{ section.settings.strip_text_desktop }}</span>
-    <span class="gg-mobile-only">{{ section.settings.strip_text_mobile }}</span>
+    <span>{{ section.settings.strip_text }}</span>
   </div>
 </section>
 
@@ -49,27 +32,27 @@
   "settings": [
     {
       "type": "text",
-      "id": "brand_text",
-      "label": "Brand name",
+      "id": "logo_text",
+      "label": "Logo text",
       "default": "TISSO VISON"
     },
     {
       "type": "text",
-      "id": "top_text",
-      "label": "Top message",
+      "id": "header_text",
+      "label": "Header text",
       "default": "Find the ideal gift for your loved ones."
-    },
-    {
-      "type": "text",
-      "id": "top_button_text",
-      "label": "Top button label",
-      "default": "CHOOSE GIFT"
     },
     {
       "type": "url",
       "id": "top_button_url",
-      "label": "Top button link",
+      "label": "Top button URL",
       "default": "#gift-guide-grid"
+    },
+    {
+      "type": "text",
+      "id": "top_button_text",
+      "label": "Top button text",
+      "default": "CHOOSE GIFT"
     },
     {
       "type": "text",
@@ -84,28 +67,22 @@
       "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season."
     },
     {
-      "type": "text",
-      "id": "hero_cta_text",
-      "label": "Hero CTA label",
-      "default": "SHOP NOW"
-    },
-    {
       "type": "url",
       "id": "hero_cta_url",
-      "label": "Hero CTA link",
+      "label": "Hero CTA URL",
       "default": "#gift-guide-grid"
     },
     {
       "type": "text",
-      "id": "strip_text_desktop",
-      "label": "Sustainability strip (desktop)",
-      "default": "Sustainable, ethically made clothes in sizes XXS to 6XL"
+      "id": "hero_cta_text",
+      "label": "Hero CTA text",
+      "default": "SHOP NOW"
     },
     {
       "type": "text",
-      "id": "strip_text_mobile",
-      "label": "Sustainability strip (mobile)",
-      "default": "Sustainable, ethically made activewear"
+      "id": "strip_text",
+      "label": "Bottom strip text",
+      "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
     }
   ],
   "presets": [
