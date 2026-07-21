@@ -10,6 +10,7 @@ html, body {
 
 body.gift-guide-page {
   background: #fff;
+  line-height: 1.5;
 }
 
 *, *::before, *::after {
@@ -32,14 +33,14 @@ button, a {
 }
 
 .gg-banner__topbar {
-  max-width: 1432px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 28px 56px 0;
+  padding: 24px 56px 0;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 20px;
-  min-height: 96px;
+  min-height: 84px;
 }
 
 .gg-banner__hamburger {
@@ -52,7 +53,7 @@ button, a {
 }
 
 .gg-banner__topbar-logo {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: 0.32em;
   text-transform: uppercase;
@@ -60,10 +61,11 @@ button, a {
 
 .gg-banner__topbar-message {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 0.94rem;
   font-weight: 500;
   letter-spacing: 0.02em;
   line-height: 1.4;
+  text-align: center;
 }
 
 .gg-banner__topbar-cta,
@@ -72,13 +74,13 @@ button, a {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  min-height: 56px;
-  padding: 0 34px;
+  min-height: 52px;
+  padding: 0 30px;
   border: none;
   background: #111;
   color: #fff;
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -142,7 +144,7 @@ button, a {
 
 .gg-banner__hero {
   position: relative;
-  min-height: 900px;
+  min-height: 860px;
 }
 
 .gg-banner__illustration-frame {
@@ -161,26 +163,26 @@ button, a {
 .gg-banner__content {
   position: absolute;
   left: 64px;
-  bottom: 96px;
+  bottom: 92px;
   z-index: 1;
-  max-width: 540px;
-  width: clamp(320px, 40vw, 540px);
+  max-width: 560px;
+  width: clamp(320px, 40vw, 560px);
 }
 
 .gg-banner__heading {
-  margin: 0 0 20px;
+  margin: 0 0 18px;
   font-family: 'Playfair Display', serif;
-  font-size: 5.4rem;
-  line-height: 0.94;
+  font-size: 5.2rem;
+  line-height: 0.95;
   letter-spacing: -0.04em;
   font-weight: 700;
 }
 
 .gg-banner__copy {
-  margin: 0 0 28px;
-  max-width: 410px;
+  margin: 0 0 24px;
+  max-width: 420px;
   font-size: 1rem;
-  line-height: 1.65;
+  line-height: 1.7;
   letter-spacing: -0.02em;
 }
 
@@ -193,10 +195,10 @@ button, a {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 56px;
+  padding: 18px 56px;
   background: #f7f7f7;
   color: #111;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
@@ -208,7 +210,7 @@ button, a {
 
 .gg-grid {
   background: #fff;
-  padding: 86px 56px 92px;
+  padding: 78px 56px 92px;
 }
 
 .gg-grid__container {
@@ -217,9 +219,9 @@ button, a {
 }
 
 .gg-grid__heading {
-  margin: 0 0 32px;
+  margin: 0 0 28px;
   font-family: 'Playfair Display', serif;
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   line-height: 1.05;
   letter-spacing: -0.03em;
   font-weight: 700;
@@ -228,7 +230,7 @@ button, a {
 .gg-grid__cards {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
+  gap: 22px;
 }
 
 .gg-grid__card-wrapper {
@@ -244,6 +246,7 @@ button, a {
   border: none;
   padding: 0;
   cursor: pointer;
+  border-radius: 2px;
 }
 
 .gg-grid__card:focus-visible {
@@ -260,8 +263,8 @@ button, a {
 
 .gg-grid__hotspot {
   position: absolute;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   border: 1px solid #111;
   background: #fff;
@@ -301,7 +304,7 @@ button, a {
   height: 10px;
   border-radius: 50%;
   background: #111;
-  opacity: 0.18;
+  opacity: 0.2;
 }
 
 .gg-grid__dot--a {
@@ -341,9 +344,9 @@ button, a {
 
 .gg-modal__content {
   position: relative;
-  width: min(980px, calc(100vw - 32px));
+  width: min(960px, calc(100vw - 32px));
   background: #fff;
-  border-radius: 16px;
+  border-radius: 18px;
   box-shadow: 0 40px 90px rgba(0, 0, 0, 0.15);
   overflow: hidden;
 }
@@ -365,8 +368,8 @@ button, a {
 .gg-modal__panel {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  padding: 26px 24px 28px;
+  gap: 24px;
+  padding: 28px 28px 32px;
 }
 
 .gg-modal__image-wrap {
