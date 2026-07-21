@@ -36,16 +36,15 @@ button, a {
 .gg-banner__topbar {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 18px 56px;
+  padding: 22px 56px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  min-height: 72px;
-  background: #F2F2F2;
+  background: #fff;
   position: relative;
   z-index: 3;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.08);
 }
 
 .gg-banner__hamburger {
@@ -58,17 +57,17 @@ button, a {
 }
 
 .gg-banner__topbar-logo {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
 }
 
 .gg-banner__topbar-message {
   margin: 0;
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
   line-height: 1.4;
   text-align: center;
   text-transform: uppercase;
@@ -82,7 +81,7 @@ button, a {
   justify-content: center;
   gap: 10px;
   min-height: 56px;
-  padding: 0 32px;
+  padding: 0 34px;
   border: none;
   background: #111;
   color: #fff;
@@ -153,41 +152,48 @@ button, a {
 
 .gg-banner__hero {
   position: relative;
-  min-height: 400px;
+  min-height: 820px;
   overflow: hidden;
+  background: #fff;
 }
 
 .gg-banner__illustration-frame {
   display: flex;
   width: 100%;
-  align-items: flex-start;
+  min-height: 820px;
+  max-width: 1440px;
+  margin: 0 auto;
+  align-items: stretch;
   overflow: hidden;
   position: relative;
   z-index: 1;
 }
 
 .gg-banner__illustration-tile {
-  flex: 1 1 50%;
+  flex: 0 0 50%;
   width: 50%;
-  height: auto;
+  height: 100%;
   display: block;
   object-fit: cover;
-  aspect-ratio: 1052 / 400;
 }
 
 .gg-banner__content {
   position: absolute;
-  left: 5%;
-  bottom: 8%;
+  top: 18%;
+  left: 6%;
   z-index: 2;
-  max-width: 480px;
-  width: clamp(320px, 40vw, 480px);
-  padding: 24px;
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 12px;
+  max-width: 560px;
+  width: clamp(340px, 40vw, 560px);
+  padding: 44px;
+  background: rgba(255, 255, 255, 0.94);
+  border-radius: 28px;
+  box-shadow: 0 36px 90px rgba(17, 17, 17, 0.08);
 }
 
 @media (max-width: 749px) {
+  .gg-banner__illustration-frame {
+    min-height: 520px;
+  }
   .gg-banner__illustration-tile:last-child {
     display: none;
   }
@@ -196,35 +202,39 @@ button, a {
     flex-basis: 100%;
   }
   .gg-banner__content {
+    top: auto;
     left: 24px;
     right: 24px;
-    bottom: 24px;
-    max-width: calc(100% - 48px);
+    bottom: 28px;
+    width: calc(100% - 48px);
+    padding: 28px;
+    border-radius: 22px;
   }
 }
 
 .gg-banner__heading {
-  margin: 0 0 16px;
+  margin: 0 0 24px;
   font-family: 'Playfair Display', serif;
-  font-size: 4.8rem;
-  line-height: 0.96;
-  letter-spacing: -0.02em;
+  font-size: clamp(4rem, 7.5vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
   font-weight: 700;
 }
 
 .gg-banner__copy {
-  margin: 0 0 20px;
-  max-width: 420px;
-  font-size: 0.98rem;
-  line-height: 1.76;
+  margin: 0 0 28px;
+  max-width: 38rem;
+  font-size: 1rem;
+  line-height: 1.85;
   letter-spacing: -0.02em;
+  color: #1d1d1d;
 }
 
 .gg-banner__hero-cta {
   background: #111;
   color: #fff;
-  min-height: 58px;
-  padding: 0 34px;
+  min-height: 64px;
+  padding: 0 36px;
   font-size: 0.95rem;
   letter-spacing: 0.18em;
 }
