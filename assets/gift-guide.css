@@ -36,12 +36,16 @@ button, a {
 .gg-banner__topbar {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 18px 56px 0;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  padding: 18px 56px;
+  display: flex;
   align-items: center;
-  gap: 14px;
+  justify-content: space-between;
+  gap: 24px;
   min-height: 72px;
+  background: #fff;
+  position: relative;
+  z-index: 2;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .gg-banner__hamburger {
@@ -54,20 +58,21 @@ button, a {
 }
 
 .gg-banner__topbar-logo {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
 }
 
 .gg-banner__topbar-message {
   margin: 0;
-  font-size: 0.86rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   line-height: 1.4;
   text-align: center;
   text-transform: uppercase;
+  flex: 1;
 }
 
 .gg-banner__topbar-cta,
@@ -152,48 +157,35 @@ button, a {
   overflow: hidden;
 }
 
-.gg-banner__hero {
-  --frame-offset: 2%; /* positive nudges right frame right, left frame left */
-}
-
 .gg-banner__illustration-frame {
   position: absolute;
-  top: 0;
-  bottom: 0;
+  inset: 0;
   overflow: hidden;
   pointer-events: none;
+  z-index: 0;
 }
 
 .gg-banner__illustration {
-  width: 150%;
+  display: block;
+  width: 100%;
   height: 100%;
+  max-height: 820px;
   object-fit: cover;
   object-position: center top;
-  display: block;
-  transform-origin: center;
-  transition: transform 0.4s ease, opacity 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
-.gg-banner__illustration-frame--left {
-  left: -18%;
-  right: 50%;
-  z-index: 0;
-}
-
-.gg-banner__illustration-frame--right {
-  left: 50%;
-  right: -18%;
-  z-index: 0;
-  transform: rotateY(180deg);
-  opacity: 0.97;
-}
-
-.gg-banner__illustration-frame--left .gg-banner__illustration {
-  transform: translateX(calc(-1 * var(--frame-offset))) translateX(-8%);
-}
-
-.gg-banner__illustration-frame--right .gg-banner__illustration {
-  transform: translateX(calc(var(--frame-offset))) translateX(8%) rotateY(180deg);
+.gg-banner__content {
+  position: absolute;
+  left: 56px;
+  bottom: 56px;
+  z-index: 1;
+  max-width: 520px;
+  width: clamp(320px, 40vw, 520px);
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 12px;
+  box-shadow: 0 28px 80px rgba(17, 17, 17, 0.08);
 }
 
 @media (max-width: 1100px) {
@@ -324,8 +316,20 @@ button, a {
 
 .gg-grid__cards {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
+}
+
+@media (max-width: 1100px) {
+  .gg-grid__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .gg-grid__cards {
+    grid-template-columns: 1fr;
+  }
 }
 
 .gg-grid__card-wrapper {
