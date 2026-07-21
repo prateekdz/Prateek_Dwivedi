@@ -60,7 +60,7 @@
 
     <div class="page-wrapper">
       <div id="header-group">
-        {% unless template == 'index' or template contains 'gift-guide' %}
+        {% unless template == 'index' or template == 'collection' or template contains 'gift-guide' %}
           {% sections 'header-group' %}
         {% endunless %}
       </div>
@@ -144,7 +144,7 @@
         {{ content_for_layout }}
       </main>
 
-      {% unless template == 'index' or template contains 'gift-guide' %}
+      {% unless template == 'index' or template == 'collection' or template contains 'gift-guide' %}
         <footer>
           {% sections 'footer-group' %}
         </footer>
