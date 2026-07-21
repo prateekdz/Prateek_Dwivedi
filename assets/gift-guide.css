@@ -147,45 +147,45 @@ button, a {
 
 .gg-banner__hero {
   position: relative;
-  min-height: 820px;
+  min-height: 780px;
 }
 
 .gg-banner__illustration-frame {
   position: absolute;
   inset: 0;
-  overflow: hidden;
-  background-repeat: repeat-y;
+  background-repeat: repeat;
   background-position: center top;
   background-size: 1400px auto;
 }
 
 .gg-banner__content {
   position: absolute;
-  left: 72px;
-  bottom: 96px;
-  z-index: 1;
-  max-width: 560px;
-  width: clamp(320px, 40vw, 560px);
+  left: 64px;
+  bottom: 88px;
+  z-index: 2;
+  max-width: 440px;
+  width: clamp(340px, 32vw, 440px);
   background: #fff;
-  padding: 32px;
-  box-shadow: 0 24px 64px rgba(17, 17, 17, 0.08);
-  border-radius: 16px;
+  padding: 42px 40px 46px;
+  box-shadow: 0 40px 96px rgba(17, 17, 17, 0.12);
+  border-radius: 24px;
 }
 
 .gg-banner__heading {
   margin: 0 0 18px;
+  max-width: 320px;
   font-family: 'Playfair Display', serif;
-  font-size: 5.2rem;
-  line-height: 0.95;
+  font-size: clamp(3.8rem, 5.8vw, 5.4rem);
+  line-height: 1.02;
   letter-spacing: -0.04em;
   font-weight: 700;
 }
 
 .gg-banner__copy {
-  margin: 0 0 24px;
-  max-width: 420px;
+  margin: 0 0 28px;
+  max-width: 360px;
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.8;
   letter-spacing: -0.02em;
 }
 
@@ -194,8 +194,8 @@ button, a {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 56px;
-  padding: 0 32px;
+  min-height: 60px;
+  padding: 0 34px;
   border: none;
   background: #111;
   color: #fff;
