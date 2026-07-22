@@ -122,13 +122,14 @@ body.gift-guide-page header-component {
   height: 100%;
   object-fit: cover;
   display: block;
+  z-index: 1;
 }
 
 .gift-guide-banner__card {
   position: absolute;
-  top: 52%;
   left: 72px;
-  transform: translateY(-50%);
+  top: 180px;
+  z-index: 5;
   width: min(620px, 46vw);
   max-width: 620px;
   padding: 48px 48px 42px;
@@ -190,6 +191,8 @@ body.gift-guide-page header-component {
   letter-spacing: 0.22em;
   text-transform: uppercase;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
+  position: relative;
+  z-index: 1;
 }
 
 .gift-guide-banner__footer p {

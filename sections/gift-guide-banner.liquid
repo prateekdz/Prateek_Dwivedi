@@ -21,18 +21,18 @@
   <div class="gift-guide-banner__hero">
     <img class="gift-guide-banner__background-image" src="{{ banner_background }}" alt="" aria-hidden="true" loading="eager">
 
-    <article class="gift-guide-banner__card">
-      <div class="gift-guide-banner__card-inner">
-        <h1 class="gift-guide-banner__title">{{ section.settings.heading }}</h1>
-        <p class="gift-guide-banner__description">{{ banner_description | newline_to_br }}</p>
-        <a class="gift-guide-banner__shop-now gift-guide-button gift-guide-button--black" href="{{ shop_link }}">
-          <span>{{ shop_label }}</span>
-          <span class="gift-guide-button__arrow" aria-hidden="true">→</span>
-        </a>
-      </div>
-    </article>
+    <div class="gift-guide-banner__card">
+      <h1 class="gift-guide-banner__title">{{ section.settings.heading }}</h1>
+      <p class="gift-guide-banner__description">{{ banner_description | newline_to_br }}</p>
+      <a class="gift-guide-banner__shop-now gift-guide-button gift-guide-button--black" href="{{ shop_link }}">
+        <span>{{ shop_label }}</span>
+        <span class="gift-guide-button__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
 
-    <p class="gift-guide-banner__footer">{{ footer_text }}</p>
+  <div class="gift-guide-banner__footer">
+    <p>{{ footer_text }}</p>
   </div>
 </section>
 
