@@ -95,7 +95,7 @@
             </button>
           </div>
           <div class="gift-product-card-wrapper gift-product-card--hotspot-center-right">
-            <button type="button" class="gift-product-card">
+            <button type="button" class="gift-product-card" data-product-handle="mock-product-1">
               <img class="gift-product-card__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
               <span class="gift-product-card__hotspot" aria-label="Quick view">+</span>
             </button>
@@ -103,5 +103,32 @@
         </div>
       </div>
     </section>
+
+    <div class="gift-product-modal gift-product-modal--closed" id="gift-product-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="gift-product-modal-title" data-gp-modal>
+      <div class="gift-product-modal__overlay" data-gp-close></div>
+      <div class="gift-product-modal__content">
+        <button type="button" class="gift-product-modal__close" aria-label="Close" data-gp-close>✕</button>
+        <div class="gift-product-modal__panel">
+          <div class="gift-product-modal__image-area">
+            <img class="gift-product-modal__image" src="" alt="" loading="lazy">
+          </div>
+          <div class="gift-product-modal__details">
+            <p class="gift-product-modal__eyebrow">Quick view</p>
+            <h2 id="gift-product-modal-title" class="gift-product-modal__title"></h2>
+            <p class="gift-product-modal__price"></p>
+            <p class="gift-product-modal__description"></p>
+            <div class="gift-product-modal__options" data-gp-options></div>
+            <button type="button" class="gift-product-button gift-product-button--black gift-product-modal__add" data-gp-add-to-cart disabled>
+              <span>ADD TO CART</span>
+              <span class="gift-product-button__arrow" aria-hidden="true">→</span>
+            </button>
+            <p class="gift-product-modal__notice" data-gp-notice aria-live="polite"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./assets/gift-banner.js" defer></script>
+    <script src="./assets/gift-product-grid.js" defer></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+function initGiftProductGrid() {
   var gridSection = document.querySelector('[data-gp-grid]');
   var modal = document.querySelector('[data-gp-modal]');
 
@@ -284,4 +284,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
   });
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initGiftProductGrid);
+} else {
+  initGiftProductGrid();
+}
