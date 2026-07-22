@@ -44,9 +44,11 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function formatPrice(amount) {
-    var formatter = new Intl.NumberFormat('en-US', {
+    var currency = window.Shopify && Shopify.currency && Shopify.currency.active || 'USD';
+    var locale = window.navigator.language || 'en-US';
+    var formatter = new Intl.NumberFormat(locale, {
       style: 'currency',
-      currency: 'EUR'
+      currency: currency
     });
     return formatter.format(amount / 100);
   }
