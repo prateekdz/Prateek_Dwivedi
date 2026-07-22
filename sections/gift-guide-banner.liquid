@@ -1,40 +1,44 @@
-<section class="gift-guide-banner" aria-label="Gift Guide Banner" data-section-id="{{ section.id }}">
-  {% assign banner_background = section.settings.background | default: section.settings.illustration | image_url: width: 2400 %}
-  {% if banner_background == blank %}
-    {% assign banner_background = 'gift-guide-banner.svg' | asset_url %}
-  {% endif %}
-
-  {% assign banner_description = section.settings.description | default: section.settings.subheading %}
-  {% assign shop_label = section.settings.shop_now_label | default: section.settings.cta_label %}
-  {% assign shop_link = section.settings.shop_now_link | default: section.settings.cta_link %}
-  {% assign footer_text = section.settings.bottom_text | default: section.settings.bottom_bar_text %}
-
-  <div class="gift-guide-banner__topbar">
-    <div class="gift-guide-banner__logo">{{ section.settings.logo_text }}</div>
-    <div class="gift-guide-banner__headline">{{ section.settings.topbar_text }}</div>
-    <a class="gift-guide-banner__topbar-cta gift-guide-button" href="{{ section.settings.topbar_button_link }}">
+<section class="gg-banner" aria-label="Gift Guide Banner">
+  <div class="gg-banner__topbar">
+    <button type="button" class="gg-banner__hamburger" aria-controls="gg-mobile-menu" aria-expanded="false" aria-label="Open menu">☰</button>
+    <div class="gg-banner__topbar-logo">{{ section.settings.logo_text }}</div>
+    <p class="gg-banner__topbar-message">{{ section.settings.topbar_text }}</p>
+    <a class="gg-banner__topbar-cta gg-button" href="{{ section.settings.topbar_button_link }}">
       <span>{{ section.settings.topbar_button_label }}</span>
-      <span class="gift-guide-button__arrow" aria-hidden="true">→</span>
+      <span class="gg-button__arrow" aria-hidden="true">→</span>
     </a>
   </div>
 
-  <div class="gift-guide-banner__hero">
-    <img class="gift-guide-banner__background-image" src="{{ banner_background }}" alt="" aria-hidden="true" loading="eager">
-
-    <div class="gift-guide-banner__card">
-      <div class="gift-guide-banner__card-inner">
-        <h1 class="gift-guide-banner__title">{{ section.settings.heading }}</h1>
-        <p class="gift-guide-banner__description">{{ banner_description | newline_to_br }}</p>
-        <a class="gift-guide-banner__shop-now gift-guide-button gift-guide-button--black" href="{{ shop_link }}">
-          <span>{{ shop_label }}</span>
-          <span class="gift-guide-button__arrow" aria-hidden="true">→</span>
-        </a>
-      </div>
+  <div id="gg-mobile-menu" class="gg-banner__mobile-menu" aria-hidden="true">
+    <div class="gg-banner__mobile-menu-inner">
+      <button type="button" class="gg-banner__mobile-close" aria-label="Close menu">✕</button>
+      <p class="gg-banner__mobile-message">{{ section.settings.topbar_text }}</p>
+      <a class="gg-banner__mobile-cta gg-button" href="{{ section.settings.topbar_button_link }}">
+        <span>{{ section.settings.topbar_button_label }}</span>
+        <span class="gg-button__arrow" aria-hidden="true">→</span>
+      </a>
     </div>
   </div>
 
-  <div class="gift-guide-banner__footer">
-    <p>{{ footer_text }}</p>
+  <div class="gg-banner__hero">
+    {% if section.settings.illustration != blank %}
+      <div class="gg-banner__illustration-frame" aria-hidden="true">
+        <img class="gg-banner__illustration" src="{{ section.settings.illustration | image_url: width: 2400 }}" alt="" loading="lazy">
+      </div>
+    {% endif %}
+
+    <div class="gg-banner__content">
+      <h1 class="gg-banner__heading">{{ section.settings.heading }}</h1>
+      <p class="gg-banner__copy">{{ section.settings.subheading | newline_to_br }}</p>
+      <a class="gg-banner__hero-cta gg-button gg-button--black" href="{{ section.settings.cta_link }}">
+        <span>{{ section.settings.cta_label }}</span>
+        <span class="gg-button__arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="gg-banner__footer">
+    <p class="gg-banner__footer-copy">{{ section.settings.bottom_bar_text }}</p>
   </div>
 </section>
 
@@ -43,14 +47,14 @@
   "name": "Gift Guide Banner",
   "settings": [
     { "type": "text", "id": "logo_text", "label": "Logo text", "default": "TISSO VISON" },
-    { "type": "text", "id": "topbar_text", "label": "Topbar text", "default": "Find the ideal gift for your loved ones." },
-    { "type": "text", "id": "topbar_button_label", "label": "Topbar CTA label", "default": "CHOOSE GIFT" },
-    { "type": "url", "id": "topbar_button_link", "label": "Topbar CTA link", "default": "#gift-guide-grid" },
+    { "type": "text", "id": "topbar_text", "label": "Top bar message", "default": "Find the ideal gift for your loved ones." },
+    { "type": "text", "id": "topbar_button_label", "label": "Top bar button label", "default": "Choose Gift" },
+    { "type": "url", "id": "topbar_button_link", "label": "Top bar button link", "default": "#gift-guide-grid" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "The Gift Guide" },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season." },
-    { "type": "text", "id": "cta_label", "label": "CTA button label", "default": "SHOP NOW" },
+    { "type": "text", "id": "cta_label", "label": "CTA button label", "default": "Shop Now" },
     { "type": "url", "id": "cta_link", "label": "CTA button link", "default": "#gift-guide-grid" },
-    { "type": "text", "id": "bottom_bar_text", "label": "Bottom strip text", "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL" },
+    { "type": "text", "id": "bottom_bar_text", "label": "Bottom strip text", "default": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR" },
     { "type": "image_picker", "id": "illustration", "label": "Line art illustration" }
   ],
   "presets": [
