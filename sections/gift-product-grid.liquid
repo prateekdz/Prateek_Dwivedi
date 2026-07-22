@@ -1,9 +1,7 @@
 <section id="gift-product-grid" class="gift-product-grid" aria-label="Gift Product Grid" data-gp-grid>
   <div class="gift-product-grid__container">
     <div class="gift-product-grid__intro">
-      <p class="gift-product-grid__eyebrow">Gift Guide</p>
       <h2 class="gift-product-grid__heading">{{ section.settings.section_heading }}</h2>
-      <p class="gift-product-grid__description">{{ section.settings.section_description | newline_to_br }}</p>
     </div>
 
     <div class="gift-product-grid__cards">
@@ -23,10 +21,19 @@
           {% if block.settings.product != blank %}
             {% assign product_handle = block.settings.product.handle | default: block.settings.product %}
             {% assign product_obj = all_products[product_handle] %}
+            {% assign product_image = '' %}
+
+            {% if product_obj != nil %}
+              {% if product_obj.featured_image != blank %}
+                {% assign product_image = product_obj.featured_image | image_url: width: 1200 %}
+              {% elsif product_obj.images != blank %}
+                {% assign product_image = product_obj.images | first | image_url: width: 1200 %}
+              {% endif %}
+            {% endif %}
 
             <button type="button" class="gift-product-card" data-product-handle="{{ product_handle }}" aria-haspopup="dialog">
-              {% if product_obj != nil and product_obj.featured_image != blank %}
-                <img class="gift-product-card__image" src="{{ product_obj.featured_image | image_url: width: 1200 }}" alt="{{ product_obj.title | escape }}" loading="lazy">
+              {% if product_image != blank %}
+                <img class="gift-product-card__image" src="{{ product_image }}" alt="{{ product_obj.title | escape }}" loading="lazy">
               {% else %}
                 <img class="gift-product-card__image" src="{{ 'Frame.svg' | asset_url }}" alt="Placeholder" loading="lazy">
               {% endif %}
@@ -80,8 +87,7 @@
 {
   "name": "Gift Product Grid",
   "settings": [
-    { "type": "text", "id": "section_heading", "label": "Heading", "default": "Tisso vison in the wild" },
-    { "type": "textarea", "id": "section_description", "label": "Section description", "default": "Explore our handpicked collection of gifts, styled for every taste and occasion." }
+    { "type": "text", "id": "section_heading", "label": "Heading", "default": "Tisso vison in the wild" }
   ],
   "blocks": [
     {

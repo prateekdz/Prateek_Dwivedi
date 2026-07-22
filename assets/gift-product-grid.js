@@ -181,7 +181,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     modalTitle.textContent = product.title || '';
     modalDescription.textContent = product.description || '';
-    modalImage.src = (product.featured_image && product.featured_image.src) || (product.images && product.images[0]) || '';
+    var featuredImage = typeof product.featured_image === 'string'
+      ? product.featured_image
+      : product.featured_image && product.featured_image.src;
+    modalImage.src = featuredImage || (product.images && product.images[0]) || '';
     modalImage.alt = product.title || '';
 
     renderOptions(product);

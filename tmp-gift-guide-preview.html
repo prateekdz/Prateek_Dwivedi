@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gift Guide Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Playfair+Display:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/gift-banner.css">
+    <link rel="stylesheet" href="./assets/gift-product-grid.css">
+    <style>
+      body { margin: 0; background: #fff; }
+      .preview-grid { padding-top: 0; }
+      .gift-product-grid { padding-top: 0; }
+      .gift-product-grid__container { padding: 0 64px 120px; }
+      .gift-product-card { min-height: 320px; }
+      .gift-product-card-wrapper { min-height: 320px; }
+      .gift-banner__hero { min-height: 980px; }
+      .gift-product-grid { padding: 96px 64px 120px; }
+      .gift-product-grid__cards { margin-top: 0; }
+      section { box-sizing: border-box; }
+    </style>
+  </head>
+  <body>
+    <section class="gift-banner" aria-label="Gift Banner">
+      <div class="gift-banner__topbar">
+        <div class="gift-banner__logo">TISSO VISON</div>
+        <p class="gift-banner__tagline">Find the ideal gift for your loved ones.</p>
+        <a class="gift-banner__button" href="#gift-product-grid">
+          <span>CHOOSE GIFT</span>
+          <span class="gift-banner__button-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <div class="gift-banner__hero">
+        <img
+          class="gift-banner__background-image"
+          src="./assets/gift-guide-banner.svg"
+          alt=""
+          loading="lazy"
+        >
+
+        <div class="gift-banner__card">
+          <div class="gift-banner__card-inner">
+            <h1 class="gift-banner__title">The Gift Guide</h1>
+            <p class="gift-banner__description">Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.</p>
+            <a class="gift-banner__shop-now" href="#gift-product-grid">
+              <span>SHOP NOW</span>
+              <span class="gift-banner__button-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="gift-banner__footer">
+        <p>SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL</p>
+      </div>
+    </section>
+
+    <section id="gift-product-grid" class="gift-product-grid" aria-label="Gift Product Grid" data-gp-grid>
+      <div class="gift-product-grid__container">
+        <div class="gift-product-grid__intro">
+          <h2 class="gift-product-grid__heading">Tisso vison in the wild</h2>
+        </div>
+        <div class="gift-product-grid__cards">
+          <div class="gift-product-card-wrapper gift-product-card--hotspot-right">
+            <button type="button" class="gift-product-card">
+              <img class="gift-product-card__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
+              <span class="gift-product-card__hotspot" aria-label="Quick view">+</span>
+            </button>
+          </div>
+          <div class="gift-product-card-wrapper gift-product-card--hotspot-center-right">
+            <button type="button" class="gift-product-card">
+              <img class="gift-product-card__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
+              <span class="gift-product-card__hotspot" aria-label="Quick view">+</span>
+            </button>
+          </div>
+          <div class="gift-product-card-wrapper gift-product-card--hotspot-left">
+            <button type="button" class="gift-product-card">
+              <img class="gift-product-card__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
+              <span class="gift-product-card__hotspot" aria-label="Quick view">+</span>
+            </button>
+          </div>
+          <div class="gift-product-card-wrapper gift-product-card--hotspot-center">
+            <button type="button" class="gift-product-card">
+              <img class="gift-product-card__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
+              <span class="gift-product-card__hotspot" aria-label="Quick view">+</span>
+            </button>
+          </div>
+          <div class="gift-product-card-wrapper gift-product-card--hotspot-right">
+            <button type="button" class="gift-product-card">
+              <img class="gift-product-card__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
+              <span class="gift-product-card__hotspot" aria-label="Quick view">+</span>
+            </button>
+          </div>
+          <div class="gift-product-card-wrapper gift-product-card--hotspot-center-right">
+            <button type="button" class="gift-product-card">
+              <img class="gift-product-card__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
+              <span class="gift-product-card__hotspot" aria-label="Quick view">+</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
