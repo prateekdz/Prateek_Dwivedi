@@ -1,6 +1,5 @@
 <section class="gg-banner" aria-label="Gift Guide Banner">
   <div class="gg-banner__topbar">
-    <button type="button" class="gg-banner__hamburger" aria-controls="gg-mobile-menu" aria-expanded="false" aria-label="Open menu">☰</button>
     <div class="gg-banner__topbar-logo">{{ section.settings.logo_text }}</div>
     <p class="gg-banner__topbar-message">{{ section.settings.topbar_text }}</p>
     <a class="gg-banner__topbar-cta gg-button" href="{{ section.settings.topbar_button_link }}">
@@ -9,34 +8,13 @@
     </a>
   </div>
 
-  <div id="gg-mobile-menu" class="gg-banner__mobile-menu" aria-hidden="true">
-    <div class="gg-banner__mobile-menu-inner">
-      <button type="button" class="gg-banner__mobile-close" aria-label="Close menu">✕</button>
-      <p class="gg-banner__mobile-message">{{ section.settings.topbar_text }}</p>
-      <a class="gg-banner__mobile-cta gg-button" href="{{ section.settings.topbar_button_link }}">
-        <span>{{ section.settings.topbar_button_label }}</span>
-        <span class="gg-button__arrow" aria-hidden="true">→</span>
-      </a>
-    </div>
-  </div>
-
   <div class="gg-banner__hero">
-    {% if section.settings.illustration != blank %}
-      {%- comment -%}
-        The illustration is a repeating strip of line-art icons (not a single
-        hero photo), so it is rendered as a tiled CSS background rather than
-        an <img> with object-fit: cover. Using object-fit: cover here forces
-        the artwork into an arbitrary fixed-height box, stretching/cropping
-        it unpredictably. A tiled background preserves the artwork's native
-        aspect ratio at every viewport width and lets it repeat down the
-        hero exactly as designed in Figma.
-      {%- endcomment -%}
-      <div
-        class="gg-banner__illustration-frame"
-        aria-hidden="true"
-        style="background-image: url('{{ section.settings.illustration | image_url: width: 2400 }}');"
-      ></div>
+    {% assign illustration_url = section.settings.illustration | image_url: width: 2400 %}
+    {% if section.settings.illustration == blank %}
+      {% assign illustration_url = 'gift-guide-banner.svg' | asset_url %}
     {% endif %}
+
+    <div class="gg-banner__illustration-frame" aria-hidden="true" style="background-image: url('{{ illustration_url }}');"></div>
 
     <div class="gg-banner__content">
       <h1 class="gg-banner__heading">{{ section.settings.heading }}</h1>
@@ -59,13 +37,13 @@
   "settings": [
     { "type": "text", "id": "logo_text", "label": "Logo text", "default": "TISSO VISON" },
     { "type": "text", "id": "topbar_text", "label": "Top bar message", "default": "Find the ideal gift for your loved ones." },
-    { "type": "text", "id": "topbar_button_label", "label": "Top bar button label", "default": "Choose Gift" },
+    { "type": "text", "id": "topbar_button_label", "label": "Top bar button label", "default": "CHOOSE GIFT" },
     { "type": "url", "id": "topbar_button_link", "label": "Top bar button link", "default": "#gift-guide-grid" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "The Gift Guide" },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season." },
-    { "type": "text", "id": "cta_label", "label": "CTA button label", "default": "Shop Now" },
+    { "type": "text", "id": "cta_label", "label": "CTA button label", "default": "SHOP NOW" },
     { "type": "url", "id": "cta_link", "label": "CTA button link", "default": "#gift-guide-grid" },
-    { "type": "text", "id": "bottom_bar_text", "label": "Bottom strip text", "default": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR" },
+    { "type": "text", "id": "bottom_bar_text", "label": "Bottom strip text", "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL" },
     { "type": "image_picker", "id": "illustration", "label": "Line art illustration" }
   ],
   "presets": [

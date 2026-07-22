@@ -43,16 +43,6 @@ button, a {
   gap: 20px;
   min-height: 84px;
   background: #fff;
-  border-bottom: 1px solid rgba(17, 17, 17, 0.08);
-}
-
-.gg-banner__hamburger {
-  display: none;
-  border: none;
-  background: transparent;
-  color: #111;
-  font-size: 1.45rem;
-  cursor: pointer;
 }
 
 .gg-banner__topbar-logo {
@@ -109,47 +99,6 @@ button, a {
   opacity: 0.92;
 }
 
-.gg-banner__mobile-menu {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 1500;
-  background: rgba(255, 255, 255, 0.98);
-  padding: 32px 24px;
-  overflow-y: auto;
-}
-
-.gg-banner__mobile-menu.gg-banner__mobile-menu--open {
-  display: block;
-}
-
-.gg-banner__mobile-menu-inner {
-  max-width: 520px;
-  margin: 0 auto;
-  display: grid;
-  gap: 20px;
-}
-
-.gg-banner__mobile-close {
-  justify-self: end;
-  border: none;
-  background: transparent;
-  color: #111;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-.gg-banner__mobile-message {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.5;
-}
-
-.gg-banner__mobile-cta {
-  background: #f5e626;
-  color: #111;
-}
-
 .gg-banner__hero {
   position: relative;
   min-height: 840px;
@@ -159,7 +108,7 @@ button, a {
   position: absolute;
   inset: 0;
   background-repeat: repeat;
-  background-position: center top;
+  background-position: top center;
   background-size: 1320px auto;
 }
 
@@ -168,8 +117,7 @@ button, a {
   left: 64px;
   bottom: 112px;
   z-index: 2;
-  max-width: 420px;
-  width: clamp(320px, 32vw, 420px);
+  width: 420px;
   background: #fff;
   padding: 44px 40px 48px;
   box-shadow: 0 36px 84px rgba(17, 17, 17, 0.14);
@@ -178,9 +126,9 @@ button, a {
 
 .gg-banner__heading {
   margin: 0 0 18px;
-  max-width: 280px;
+  width: 280px;
   font-family: 'Playfair Display', serif;
-  font-size: clamp(3.8rem, 6vw, 5rem);
+  font-size: 5rem;
   line-height: 1.02;
   letter-spacing: -0.04em;
   font-weight: 700;
@@ -188,7 +136,7 @@ button, a {
 
 .gg-banner__copy {
   margin: 0 0 30px;
-  max-width: 360px;
+  width: 360px;
   font-size: 1rem;
   line-height: 1.8;
   letter-spacing: -0.02em;
@@ -199,14 +147,18 @@ button, a {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-height: 60px;
-  padding: 0 36px;
+  width: 192px;
+  height: 60px;
   border: none;
   background: #111;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 0.18em;
   border-radius: 999px;
+}
+
+.gg-banner__hero-cta:hover {
+  opacity: 0.95;
 }
 
 .gg-banner__footer {
@@ -277,6 +229,18 @@ button, a {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+.gg-grid__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .gg-grid__hotspot {
@@ -442,15 +406,14 @@ button, a {
   gap: 10px;
 }
 
-.gg-modal__option legend {
+.gg-modal__option-label {
   font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin: 0;
 }
 
-.gg-modal__option-row {
+.gg-modal__option-buttons {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
@@ -499,6 +462,51 @@ button, a {
   font-size: 0.88rem;
   color: #111;
   min-height: 1.2em;
+}
+
+@media (max-width: 980px) {
+  .gg-banner__topbar {
+    padding: 24px 28px 0;
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .gg-banner__hero {
+    min-height: 700px;
+  }
+
+  .gg-banner__content {
+    left: 50%;
+    bottom: 64px;
+    transform: translateX(-50%);
+    width: min(88vw, 420px);
+    padding: 32px 28px 36px;
+  }
+
+  .gg-grid {
+    padding: 56px 24px 72px;
+  }
+
+  .gg-grid__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .gg-banner__topbar {
+    padding: 20px 20px 0;
+  }
+
+  .gg-banner__content {
+    bottom: 40px;
+    padding: 24px 20px 28px;
+  }
+
+  .gg-grid__cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 }
 
 .tisso-banner {
@@ -688,8 +696,6 @@ button, a {
   gap: 12px;
   border-radius: 6px;
   transition: background 0.2s ease, transform 0.2s ease;
-}
-  gap: 0;
 }
 
 .tisso-product-grid .gg-grid__card-wrapper {

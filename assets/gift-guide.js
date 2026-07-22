@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var currentVariant = null;
 
   function closeModal() {
+    modal.classList.remove('gg-modal--open');
     modal.classList.add('gg-modal--closed');
     modal.setAttribute('aria-hidden', 'true');
     modalNotice.textContent = '';
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function openModal() {
     modal.classList.remove('gg-modal--closed');
+    modal.classList.add('gg-modal--open');
     modal.setAttribute('aria-hidden', 'false');
   }
 
@@ -69,6 +71,24 @@ document.addEventListener('DOMContentLoaded', function () {
       });
   }
 
+  function getSelectedOptionPairs() {
+    return Array.from(modalOptions.querySelectorAll('.gg-modal__option-label')).map(function(label) {
+      var optionName = label.textContent.trim();
+      var control = label.nextElementSibling;
+      var value = '';
+
+      if (!control) return { name: optionName, value: value };
+      if (control.tagName === 'SELECT') {
+        value = control.value;
+      } else {
+        var selected = control.querySelector('.gg-modal__option-button.is-selected');
+        value = selected ? selected.dataset.optionValue : '';
+      }
+
+      return { name: optionName, value: value };
+    });
+  }
+
   function renderOptions(product) {
     modalOptions.innerHTML = '';
     if (!product.options) return;
@@ -89,6 +109,8 @@ document.addEventListener('DOMContentLoaded', function () {
       label.className = 'gg-modal__option-label';
       wrapper.appendChild(label);
 
+      var selectedValue = currentVariant && currentVariant.options && currentVariant.options[optionIdx] ? currentVariant.options[optionIdx] : values[0];
+
       if (values.length > 4) {
         var select = document.createElement('select');
         select.className = 'gg-modal__option-select';
@@ -98,6 +120,9 @@ document.addEventListener('DOMContentLoaded', function () {
           var option = document.createElement('option');
           option.value = value;
           option.textContent = value;
+          if (value === selectedValue) {
+            option.selected = true;
+          }
           select.appendChild(option);
         });
 
@@ -118,6 +143,10 @@ document.addEventListener('DOMContentLoaded', function () {
           btn.className = 'gg-modal__option-button';
           btn.dataset.optionValue = value;
           btn.dataset.optionIndex = optionIdx;
+
+          if (value === selectedValue) {
+            btn.classList.add('is-selected');
+          }
 
           btn.addEventListener('click', function() {
             var siblings = buttonGroup.querySelectorAll('button');
@@ -143,8 +172,39 @@ document.addEventListener('DOMContentLoaded', function () {
       modalPrice.textContent = formatPrice(currentVariant.price);
       addToCartBtn.disabled = !currentVariant.available;
     } else {
+      modalPrice.textContent = '';
       addToCartBtn.disabled = true;
     }
+  }
+
+  function matchesBlackMediumRule(optionPairs) {
+    var color = '';
+    var size = '';
+
+    optionPairs.forEach(function(pair) {
+      if (pair.name.toLowerCase().includes('color')) {
+        color = pair.value.toLowerCase();
+      }
+      if (pair.name.toLowerCase().includes('size')) {
+        size = pair.value.toLowerCase();
+      }
+    });
+
+    return color === 'black' && size === 'medium';
+  }
+
+  function addMultipleItemsToCart(items) {
+    return fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: items })
+    }).then(function(res) { return res.json(); });
+  }
+
+  function loadSupportingProduct(handle) {
+    return fetch('/products/' + encodeURIComponent(handle) + '.js').then(function(res) {
+      return res.json();
+    });
   }
 
   function fetchProduct(handle) {
@@ -178,15 +238,38 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!currentVariant) return;
     addToCartBtn.disabled = true;
     modalNotice.textContent = 'Adding to cart...';
-    addToCart(currentVariant.id)
-      .then(function() {
-        modalNotice.textContent = 'Added to cart!';
-        setTimeout(closeModal, 1500);
-      })
-      .catch(function(err) {
-        modalNotice.textContent = 'Error adding to cart';
-        addToCartBtn.disabled = false;
-      });
+
+    var selectedOptionPairs = getSelectedOptionPairs();
+    var addItems = [{ id: currentVariant.id, quantity: 1 }];
+
+    if (matchesBlackMediumRule(selectedOptionPairs)) {
+      loadSupportingProduct('soft-winter-jacket')
+        .then(function(product) {
+          var variant = product.variants.find(function(v) { return v.available; });
+          if (variant) {
+            addItems.push({ id: variant.id, quantity: 1 });
+          }
+          return addMultipleItemsToCart(addItems);
+        })
+        .then(function() {
+          modalNotice.textContent = 'Added to cart!';
+          setTimeout(closeModal, 1500);
+        })
+        .catch(function(err) {
+          modalNotice.textContent = 'Error adding to cart';
+          addToCartBtn.disabled = false;
+        });
+    } else {
+      addMultipleItemsToCart(addItems)
+        .then(function() {
+          modalNotice.textContent = 'Added to cart!';
+          setTimeout(closeModal, 1500);
+        })
+        .catch(function(err) {
+          modalNotice.textContent = 'Error adding to cart';
+          addToCartBtn.disabled = false;
+        });
+    }
   });
 
   closeButtons.forEach(function(btn) {

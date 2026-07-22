@@ -31,6 +31,9 @@
                 <img class="gg-grid__image" src="{{ 'Frame.svg' | asset_url }}" alt="Placeholder" loading="lazy">
               {% endif %}
 
+              {% if product_obj != nil %}
+                <span class="gg-grid__sr-only">{{ product_obj.title | escape }} • {{ product_obj.price | money }}</span>
+              {% endif %}
               <span class="gg-grid__hotspot" aria-label="Quick view">+</span>
               {% if block.settings.show_dot_markers %}
                 <span class="gg-grid__dot gg-grid__dot--a"></span>
