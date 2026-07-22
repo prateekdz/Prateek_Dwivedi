@@ -27,6 +27,11 @@ button, a {
   width: 100%;
 }
 
+body.gift-guide-page #header-group,
+body.gift-guide-page header-component {
+  display: none !important;
+}
+
 .gg-banner {
   position: relative;
   overflow: hidden;
