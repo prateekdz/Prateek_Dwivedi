@@ -38,7 +38,8 @@ button, a {
   margin: 0 auto;
   padding: 24px 64px 0;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: min-content 1fr min-content;
+  justify-items: center;
   align-items: center;
   gap: 20px;
   min-height: 96px;
@@ -50,15 +51,18 @@ button, a {
   font-weight: 700;
   letter-spacing: 0.32em;
   text-transform: uppercase;
+  justify-self: start;
 }
 
 .gg-banner__topbar-message {
   margin: 0;
-  font-size: 0.94rem;
+  font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.08em;
-  line-height: 1.4;
+  line-height: 1.3;
   text-align: center;
+  width: 100%;
+  max-width: 600px;
 }
 
 .gg-banner__topbar-cta,
@@ -67,8 +71,8 @@ button, a {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  min-height: 56px;
-  padding: 0 36px;
+  min-height: 64px;
+  padding: 0 40px;
   border: none;
   background: #111;
   color: #fff;
@@ -93,8 +97,9 @@ button, a {
   background: #f5e626;
   color: #111;
   min-height: 72px;
-  padding: 0 40px;
+  padding: 0 46px;
   border-radius: 999px;
+  justify-self: end;
 }
 
 .gg-banner__topbar-cta:hover,
@@ -104,7 +109,7 @@ button, a {
 
 .gg-banner__hero {
   position: relative;
-  min-height: 900px;
+  min-height: 980px;
   overflow: hidden;
 }
 
@@ -113,17 +118,17 @@ button, a {
   inset: 0;
   background-repeat: no-repeat;
   background-position: top center;
-  background-size: contain;
+  background-size: cover;
   background-color: #fff;
 }
 
 .gg-banner__content {
   position: absolute;
-  top: 260px;
+  top: 220px;
   left: 72px;
   z-index: 2;
-  width: clamp(360px, 32vw, 520px);
-  max-width: 520px;
+  width: clamp(380px, 34vw, 540px);
+  max-width: 540px;
   background: transparent;
   padding: 0;
 }
@@ -131,18 +136,18 @@ button, a {
 .gg-banner__heading {
   margin: 0 0 18px;
   max-width: 720px;
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(4.8rem, 6vw, 5.6rem);
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(4.8rem, 6vw, 6rem);
   line-height: 1.02;
-  letter-spacing: -0.04em;
-  font-weight: 700;
+  letter-spacing: -0.05em;
+  font-weight: 800;
 }
 
 .gg-banner__copy {
-  margin: 0 0 30px;
+  margin: 0 0 28px;
   max-width: 520px;
   font-size: 1rem;
-  line-height: 1.8;
+  line-height: 1.7;
   letter-spacing: -0.02em;
 }
 
@@ -151,9 +156,9 @@ button, a {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  min-width: 192px;
-  height: 60px;
-  padding: 0 30px;
+  min-width: 190px;
+  min-height: 64px;
+  padding: 0 36px;
   border: none;
   background: #111;
   color: #fff;

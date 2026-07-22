@@ -27,7 +27,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Playfair+Display:wght@400;500&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     {% assign is_gift_guide = false %}
-    {% if template == 'index' or template == 'page.gift-guide' or template.suffix == 'gift-guide' or template.name == 'gift-guide' or page_template == 'gift-guide' %}
+    {% if template == 'index' or template == 'page.gift-guide' or template contains 'gift-guide' or page_template == 'gift-guide' or request.path contains 'gift-guide' %}
       {% assign is_gift_guide = true %}
     {% endif %}
     {% if is_gift_guide %}
@@ -46,7 +46,7 @@
 
     <div class="page-wrapper">
       <div id="header-group">
-        {% unless template == 'index' or template contains 'gift-guide' %}
+        {% unless is_gift_guide %}
           {% sections 'header-group' %}
         {% endunless %}
       </div>
