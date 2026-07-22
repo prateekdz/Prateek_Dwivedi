@@ -1,49 +1,53 @@
-<section class="tisso-banner" aria-label="Tisso Banner">
-  <div class="tisso-banner__hero">
-    <div class="tisso-banner__illustration-frame" aria-hidden="true">
-      <img class="tisso-banner__illustration-image" src="{{ 'Frame.svg' | asset_url }}" alt="" loading="lazy">
-    </div>
+<section class="gg-banner" aria-label="Gift Guide Banner">
+  <div class="gg-banner__topbar">
+    <div class="gg-banner__topbar-logo">{{ section.settings.logo_text }}</div>
+    <p class="gg-banner__topbar-message">{{ section.settings.topbar_text }}</p>
+    <a class="gg-banner__topbar-cta gg-button" href="{{ section.settings.topbar_button_link }}">
+      <span>{{ section.settings.topbar_button_label }}</span>
+      <span class="gg-button__arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
 
-    <div class="tisso-banner__topbar">
-      <div class="tisso-banner__topbar-logo">{{ section.settings.logo_text }}</div>
-      <p class="tisso-banner__topbar-tagline">{{ section.settings.tagline_text }}</p>
-      <a class="tisso-banner__topbar-cta gg-button" href="{{ section.settings.button_1_link }}">
-        <span>{{ section.settings.button_1_label }}</span>
+  <div class="gg-banner__hero">
+    {% assign illustration_url = section.settings.illustration | image_url: width: 2400 %}
+    {% if section.settings.illustration == blank %}
+      {% assign illustration_url = 'gift-guide-banner.svg' | asset_url %}
+    {% endif %}
+
+    <div class="gg-banner__illustration-frame" aria-hidden="true" style="background-image: url('{{ illustration_url }}');"></div>
+
+    <div class="gg-banner__content">
+      <h1 class="gg-banner__heading">{{ section.settings.heading }}</h1>
+      <p class="gg-banner__copy">{{ section.settings.subheading | newline_to_br }}</p>
+      <a class="gg-banner__hero-cta gg-button gg-button--black" href="{{ section.settings.cta_link }}">
+        <span>{{ section.settings.cta_label }}</span>
         <span class="gg-button__arrow" aria-hidden="true">→</span>
       </a>
     </div>
+  </div>
 
-    <div class="tisso-banner__content">
-      <h1 class="tisso-banner__heading">{{ section.settings.heading }}</h1>
-      <p class="tisso-banner__copy">{{ section.settings.subheading | newline_to_br }}</p>
-      <a class="tisso-banner__hero-cta gg-button gg-button--black" href="{{ section.settings.button_2_link }}">
-        <span>{{ section.settings.button_2_label }}</span>
-        <span class="gg-button__arrow" aria-hidden="true">→</span>
-      </a>
-    </div>
-
-    <div class="tisso-banner__strip">
-      <p>{{ section.settings.strip_text }}</p>
-    </div>
+  <div class="gg-banner__footer">
+    <p class="gg-banner__footer-copy">{{ section.settings.bottom_bar_text }}</p>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Tisso Banner",
+  "name": "Gift Guide Banner",
   "settings": [
     { "type": "text", "id": "logo_text", "label": "Logo text", "default": "TISSO VISON" },
-    { "type": "text", "id": "tagline_text", "label": "Tagline text", "default": "Find the ideal gift for your loved ones." },
-    { "type": "text", "id": "button_1_label", "label": "Top bar button label", "default": "CHOOSE GIFT" },
-    { "type": "url", "id": "button_1_link", "label": "Top bar button link", "default": "#gift-guide-grid" },
+    { "type": "text", "id": "topbar_text", "label": "Top bar message", "default": "Find the ideal gift for your loved ones." },
+    { "type": "text", "id": "topbar_button_label", "label": "Top bar button label", "default": "CHOOSE GIFT" },
+    { "type": "url", "id": "topbar_button_link", "label": "Top bar button link", "default": "#gift-guide-grid" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "The Gift Guide" },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season." },
-    { "type": "text", "id": "button_2_label", "label": "Hero button label", "default": "SHOP NOW" },
-    { "type": "url", "id": "button_2_link", "label": "Hero button link", "default": "#gift-guide-grid" },
-    { "type": "text", "id": "strip_text", "label": "Bottom strip text", "default": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR" }
+    { "type": "text", "id": "cta_label", "label": "CTA button label", "default": "SHOP NOW" },
+    { "type": "url", "id": "cta_link", "label": "CTA button link", "default": "#gift-guide-grid" },
+    { "type": "text", "id": "bottom_bar_text", "label": "Bottom strip text", "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL" },
+    { "type": "image_picker", "id": "illustration", "label": "Line art illustration" }
   ],
   "presets": [
-    { "name": "Tisso Banner" }
+    { "name": "Gift Guide Banner" }
   ]
 }
 {% endschema %}

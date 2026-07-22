@@ -70,6 +70,9 @@ document.addEventListener('DOMContentLoaded', function () {
       .map(function(el) {
         if (el.tagName === 'SELECT') return el.value;
         return el.dataset.optionValue;
+      })
+      .filter(function(value) {
+        return value != null && value !== '';
       });
   }
 
@@ -93,15 +96,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function renderOptions(product) {
     modalOptions.innerHTML = '';
-    if (!product.options) return;
+    if (!product.options || product.options.length === 0) return;
 
     product.options.forEach(function(optionName, optionIdx) {
       var values = [];
       product.variants.forEach(function(variant) {
-        if (variant.options && variant.options[optionIdx] && !values.includes(variant.options[optionIdx])) {
-          values.push(variant.options[optionIdx]);
+        if (!variant.options || variant.options.length <= optionIdx) return;
+        var optionValue = variant.options[optionIdx];
+        if (optionValue == null) return;
+        if (typeof optionValue === 'object') {
+          optionValue = optionValue.value || optionValue.name || String(optionValue);
+        }
+        optionValue = String(optionValue);
+        if (optionValue && !values.includes(optionValue)) {
+          values.push(optionValue);
         }
       });
+
+      if (values.length === 0) return;
 
       var wrapper = document.createElement('div');
       wrapper.className = 'gg-modal__option';
@@ -216,12 +228,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function renderModal(product) {
     currentProduct = product;
-    currentVariant = product.variants && product.variants.find(function(v) { return v.available; }) || product.variants[0];
+    currentVariant = product.variants && product.variants.find(function(v) { return v.available; }) || (product.variants && product.variants[0]) || null;
 
-    modalTitle.textContent = product.title;
-    modalDescription.textContent = product.description;
-    modalImage.src = (product.featured_image && product.featured_image.src) || '';
-    modalImage.alt = product.title;
+    modalTitle.textContent = product.title || '';
+    modalDescription.textContent = product.description || '';
+    modalImage.src = (product.featured_image && product.featured_image.src) || (product.images && product.images[0]) || '';
+    modalImage.alt = product.title || '';
 
     renderOptions(product);
     updatePrice();
