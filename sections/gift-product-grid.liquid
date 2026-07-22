@@ -1,0 +1,123 @@
+<section id="gift-product-grid" class="gift-product-grid" aria-label="Gift Product Grid" data-gp-grid>
+  <div class="gift-product-grid__container">
+    <div class="gift-product-grid__intro">
+      <p class="gift-product-grid__eyebrow">Gift Guide</p>
+      <h2 class="gift-product-grid__heading">{{ section.settings.section_heading }}</h2>
+      <p class="gift-product-grid__description">{{ section.settings.section_description | newline_to_br }}</p>
+    </div>
+
+    <div class="gift-product-grid__cards">
+      {% for block in section.blocks %}
+        {% assign hotspot_class = '' %}
+        {% if block.settings.hotspot_position == 'top-left' %}
+          {% assign hotspot_class = 'gift-product-card--hotspot-left' %}
+        {% elsif block.settings.hotspot_position == 'center-right' %}
+          {% assign hotspot_class = 'gift-product-card--hotspot-center-right' %}
+        {% elsif block.settings.hotspot_position == 'center' %}
+          {% assign hotspot_class = 'gift-product-card--hotspot-center' %}
+        {% else %}
+          {% assign hotspot_class = 'gift-product-card--hotspot-right' %}
+        {% endif %}
+
+        <div class="gift-product-card-wrapper {{ hotspot_class }}">
+          {% if block.settings.product != blank %}
+            {% assign product_handle = block.settings.product.handle | default: block.settings.product %}
+            {% assign product_obj = all_products[product_handle] %}
+
+            <button type="button" class="gift-product-card" data-product-handle="{{ product_handle }}" aria-haspopup="dialog">
+              {% if product_obj != nil and product_obj.featured_image != blank %}
+                <img class="gift-product-card__image" src="{{ product_obj.featured_image | image_url: width: 1200 }}" alt="{{ product_obj.title | escape }}" loading="lazy">
+              {% else %}
+                <img class="gift-product-card__image" src="{{ 'Frame.svg' | asset_url }}" alt="Placeholder" loading="lazy">
+              {% endif %}
+
+              {% if product_obj != nil %}
+                <span class="gift-product-card__sr-only">{{ product_obj.title | escape }} • {{ product_obj.price | money }}</span>
+              {% endif %}
+
+              <span class="gift-product-card__hotspot" aria-label="Quick view">+</span>
+              {% if block.settings.show_dot_markers %}
+                <span class="gift-product-card__dot gift-product-card__dot--a"></span>
+                <span class="gift-product-card__dot gift-product-card__dot--b"></span>
+              {% endif %}
+            </button>
+          {% else %}
+            <div class="gift-product-card gift-product-card--empty">
+              <span>Select a product in the section settings</span>
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="gift-product-modal gift-product-modal--closed" id="gift-product-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="gift-product-modal-title" data-gp-modal>
+    <div class="gift-product-modal__overlay" data-gp-close></div>
+    <div class="gift-product-modal__content">
+      <button type="button" class="gift-product-modal__close" aria-label="Close" data-gp-close>✕</button>
+      <div class="gift-product-modal__panel">
+        <div class="gift-product-modal__image-area">
+          <img class="gift-product-modal__image" src="" alt="" loading="lazy">
+        </div>
+        <div class="gift-product-modal__details">
+          <p class="gift-product-modal__eyebrow">Quick view</p>
+          <h2 id="gift-product-modal-title" class="gift-product-modal__title"></h2>
+          <p class="gift-product-modal__price"></p>
+          <p class="gift-product-modal__description"></p>
+          <div class="gift-product-modal__options" data-gp-options></div>
+          <button type="button" class="gift-product-button gift-product-button--black gift-product-modal__add" data-gp-add-to-cart disabled>
+            <span>ADD TO CART</span>
+            <span class="gift-product-button__arrow" aria-hidden="true">→</span>
+          </button>
+          <p class="gift-product-modal__notice" data-gp-notice aria-live="polite"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Gift Product Grid",
+  "settings": [
+    { "type": "text", "id": "section_heading", "label": "Heading", "default": "Tisso vison in the wild" },
+    { "type": "textarea", "id": "section_description", "label": "Section description", "default": "Explore our handpicked collection of gifts, styled for every taste and occasion." }
+  ],
+  "blocks": [
+    {
+      "type": "product_block",
+      "name": "Product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        {
+          "type": "select",
+          "id": "hotspot_position",
+          "label": "Hotspot position",
+          "options": [
+            { "value": "top-right", "label": "Top right" },
+            { "value": "top-left", "label": "Top left" },
+            { "value": "center-right", "label": "Center right" },
+            { "value": "center", "label": "Center" }
+          ],
+          "default": "top-right"
+        },
+        { "type": "checkbox", "id": "show_dot_markers", "label": "Show extra overlay markers", "default": false }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Gift Product Grid",
+      "blocks": [
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" },
+        { "type": "product_block" }
+      ]
+    }
+  ]
+}
+{% endschema %}

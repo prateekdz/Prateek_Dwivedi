@@ -1,22 +1,21 @@
 {
   "sections": {
-    "gift_guide_banner": {
-      "type": "gift-guide-banner",
+    "gift_banner": {
+      "type": "gift-banner",
       "settings": {
         "logo_text": "TISSO VISON",
         "topbar_text": "Find the ideal gift for your loved ones.",
         "topbar_button_label": "CHOOSE GIFT",
-        "topbar_button_link": "#gift-guide-grid",
+        "topbar_button_link": "#gift-product-grid",
         "heading": "The Gift Guide",
-        "subheading": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+        "description": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
         "cta_label": "SHOP NOW",
-        "cta_link": "#gift-guide-grid",
-        "bottom_bar_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL",
-        "illustration": ""
+        "cta_link": "#gift-product-grid",
+        "bottom_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
       }
     },
-    "gift_guide_grid": {
-      "type": "gift-guide-grid",
+    "gift_product_grid": {
+      "type": "gift-product-grid",
       "settings": {
         "section_heading": "Tisso vison in the wild"
       },
@@ -39,7 +38,7 @@
     }
   },
   "order": [
-    "gift_guide_banner",
-    "gift_guide_grid"
+    "gift_banner",
+    "gift_product_grid"
   ]
 }
