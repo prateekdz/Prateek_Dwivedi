@@ -1,28 +1,28 @@
 ﻿/**
  * gift-guide.js
- * Handles the Gift Guide Grid modal, variant selection, and cart behavior.
+ * Handles the Gift Guide Grid modal, variant selection, and add-to-cart behavior.
  */
 
 document.addEventListener('DOMContentLoaded', function () {
   var gridSection = document.querySelector('[data-gg-grid]');
   var modal = document.querySelector('[data-gg-modal]');
-  
+
   if (!gridSection || !modal) {
-    console.log('Gift Guide: Required elements not found');
+    console.log('Gift Guide: required elements not found');
     return;
   }
 
-  var modalTitle = modal.querySelector('.gg-modal__title');
-  var modalImage = modal.querySelector('.gg-modal__image');
-  var modalPrice = modal.querySelector('.gg-modal__price');
-  var modalDescription = modal.querySelector('.gg-modal__description');
+  var modalTitle = modal.querySelector('.gift-guide-modal__title');
+  var modalImage = modal.querySelector('.gift-guide-modal__image');
+  var modalPrice = modal.querySelector('.gift-guide-modal__price');
+  var modalDescription = modal.querySelector('.gift-guide-modal__description');
   var modalOptions = modal.querySelector('[data-gg-options]');
   var addToCartBtn = modal.querySelector('[data-gg-add-to-cart]');
   var modalNotice = modal.querySelector('[data-gg-notice]');
   var closeButtons = modal.querySelectorAll('[data-gg-close]');
 
   if (!modalTitle || !modalImage || !modalPrice || !modalDescription || !modalOptions || !addToCartBtn || !modalNotice) {
-    console.log('Gift Guide: Required modal elements not found');
+    console.log('Gift Guide: required modal elements not found');
     return;
   }
 
@@ -30,85 +30,66 @@ document.addEventListener('DOMContentLoaded', function () {
   var currentVariant = null;
 
   function closeModal() {
-    modal.classList.remove('gg-modal--open');
-    modal.classList.add('gg-modal--closed');
+    modal.classList.remove('gift-guide-modal--open');
+    modal.classList.add('gift-guide-modal--closed');
     modal.setAttribute('aria-hidden', 'true');
     modalNotice.textContent = '';
     addToCartBtn.disabled = false;
   }
 
   function openModal() {
-    modal.classList.remove('gg-modal--closed');
-    modal.classList.add('gg-modal--open');
+    modal.classList.remove('gift-guide-modal--closed');
+    modal.classList.add('gift-guide-modal--open');
     modal.setAttribute('aria-hidden', 'false');
   }
 
   function formatPrice(amount) {
     var currency = window.Shopify && Shopify.currency && Shopify.currency.active || 'USD';
     var locale = window.navigator.language || 'en-US';
-    var formatter = new Intl.NumberFormat(locale, {
+    return new Intl.NumberFormat(locale, {
       style: 'currency',
       currency: currency
-    });
-    return formatter.format(amount / 100);
+    }).format(amount / 100);
   }
 
   function findMatchingVariant(selectedOptions) {
     if (!currentProduct || !currentProduct.variants) return null;
-    return currentProduct.variants.find(function(variant) {
-      return variant.options && variant.options.every(function(option, idx) {
+    return currentProduct.variants.find(function (variant) {
+      return variant.options && variant.options.every(function (option, idx) {
         return option === selectedOptions[idx];
       });
     });
   }
 
   function getSelectedOptions() {
-    return Array.from(modalOptions.querySelectorAll('select, .gg-modal__option-button.is-selected'))
-      .sort(function(a, b) {
+    return Array.from(modalOptions.querySelectorAll('select, .gift-guide-modal__option-button.is-selected'))
+      .sort(function (a, b) {
         return Number(a.dataset.optionIndex) - Number(b.dataset.optionIndex);
       })
-      .map(function(el) {
-        if (el.tagName === 'SELECT') return el.value;
-        return el.dataset.optionValue;
+      .map(function (el) {
+        return el.tagName === 'SELECT' ? el.value : el.dataset.optionValue;
       })
-      .filter(function(value) {
+      .filter(function (value) {
         return value != null && value !== '';
       });
   }
 
-  function getSelectedOptionPairs() {
-    return Array.from(modalOptions.querySelectorAll('.gg-modal__option-label')).map(function(label) {
-      var optionName = label.textContent.trim();
-      var control = label.nextElementSibling;
-      var value = '';
-
-      if (!control) return { name: optionName, value: value };
-      if (control.tagName === 'SELECT') {
-        value = control.value;
-      } else {
-        var selected = control.querySelector('.gg-modal__option-button.is-selected');
-        value = selected ? selected.dataset.optionValue : '';
-      }
-
-      return { name: optionName, value: value };
-    });
-  }
-
   function renderOptions(product) {
     modalOptions.innerHTML = '';
+
     if (!product.options || product.options.length === 0) return;
 
-    product.options.forEach(function(optionName, optionIdx) {
+    product.options.forEach(function (optionName, optionIdx) {
       var values = [];
-      product.variants.forEach(function(variant) {
-        if (!variant.options || variant.options.length <= optionIdx) return;
-        var optionValue = variant.options[optionIdx];
+
+      product.variants.forEach(function (variant) {
+        var optionValue = variant.options && variant.options[optionIdx];
         if (optionValue == null) return;
         if (typeof optionValue === 'object') {
           optionValue = optionValue.value || optionValue.name || String(optionValue);
         }
         optionValue = String(optionValue);
-        if (optionValue && !values.includes(optionValue)) {
+        if (optionValue && values.indexOf(optionValue) === -1) {
           values.push(optionValue);
         }
       });
@@ -116,21 +97,21 @@ document.addEventListener('DOMContentLoaded', function () {
       if (values.length === 0) return;
 
       var wrapper = document.createElement('div');
-      wrapper.className = 'gg-modal__option';
+      wrapper.className = 'gift-guide-modal__option';
 
       var label = document.createElement('label');
       label.textContent = optionName;
-      label.className = 'gg-modal__option-label';
+      label.className = 'gift-guide-modal__option-label';
       wrapper.appendChild(label);
 
       var selectedValue = currentVariant && currentVariant.options && currentVariant.options[optionIdx] ? currentVariant.options[optionIdx] : values[0];
 
       if (values.length > 4) {
         var select = document.createElement('select');
-        select.className = 'gg-modal__option-select';
+        select.className = 'gift-guide-modal__option-select';
         select.dataset.optionIndex = optionIdx;
 
-        values.forEach(function(value) {
+        values.forEach(function (value) {
           var option = document.createElement('option');
           option.value = value;
           option.textContent = value;
@@ -140,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
           select.appendChild(option);
         });
 
-        select.addEventListener('change', function() {
+        select.addEventListener('change', function () {
           currentVariant = findMatchingVariant(getSelectedOptions());
           updatePrice();
         });
@@ -148,30 +129,31 @@ document.addEventListener('DOMContentLoaded', function () {
         wrapper.appendChild(select);
       } else {
         var buttonGroup = document.createElement('div');
-        buttonGroup.className = 'gg-modal__option-buttons';
+        buttonGroup.className = 'gift-guide-modal__option-buttons';
 
-        values.forEach(function(value) {
-          var btn = document.createElement('button');
-          btn.type = 'button';
-          btn.textContent = value;
-          btn.className = 'gg-modal__option-button';
-          btn.dataset.optionValue = value;
-          btn.dataset.optionIndex = optionIdx;
+        values.forEach(function (value) {
+          var button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = value;
+          button.className = 'gift-guide-modal__option-button';
+          button.dataset.optionValue = value;
+          button.dataset.optionIndex = optionIdx;
 
           if (value === selectedValue) {
-            btn.classList.add('is-selected');
+            button.classList.add('is-selected');
           }
 
-          btn.addEventListener('click', function() {
-            var siblings = buttonGroup.querySelectorAll('button');
-            siblings.forEach(function(b) { b.classList.remove('is-selected'); });
-            btn.classList.add('is-selected');
+          button.addEventListener('click', function () {
+            buttonGroup.querySelectorAll('button').forEach(function (btn) {
+              btn.classList.remove('is-selected');
+            });
+            button.classList.add('is-selected');
 
             currentVariant = findMatchingVariant(getSelectedOptions());
             updatePrice();
           });
 
-          buttonGroup.appendChild(btn);
+          buttonGroup.appendChild(button);
         });
 
         wrapper.appendChild(buttonGroup);
@@ -191,44 +173,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  function matchesBlackMediumRule(optionPairs) {
-    var color = '';
-    var size = '';
-
-    optionPairs.forEach(function(pair) {
-      if (pair.name.toLowerCase().includes('color')) {
-        color = pair.value.toLowerCase();
+  function fetchProduct(handle) {
+    return fetch('/products/' + encodeURIComponent(handle) + '.js').then(function (res) {
+      if (!res.ok) {
+        throw new Error('Product fetch failed');
       }
-      if (pair.name.toLowerCase().includes('size')) {
-        size = pair.value.toLowerCase();
-      }
-    });
-
-    return color === 'black' && size === 'medium';
-  }
-
-  function addMultipleItemsToCart(items) {
-    return fetch('/cart/add.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: items })
-    }).then(function(res) { return res.json(); });
-  }
-
-  function loadSupportingProduct(handle) {
-    return fetch('/products/' + encodeURIComponent(handle) + '.js').then(function(res) {
       return res.json();
     });
   }
 
-  function fetchProduct(handle) {
-    return fetch('/products/' + encodeURIComponent(handle) + '.js')
-      .then(function(res) { return res.json(); });
-  }
-
   function renderModal(product) {
     currentProduct = product;
-    currentVariant = product.variants && product.variants.find(function(v) { return v.available; }) || (product.variants && product.variants[0]) || null;
+    currentVariant = (product.variants && product.variants.find(function (variant) {
+      return variant.available;
+    })) || (product.variants && product.variants[0]) || null;
 
     modalTitle.textContent = product.title || '';
     modalDescription.textContent = product.description || '';
@@ -245,65 +203,55 @@ document.addEventListener('DOMContentLoaded', function () {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: variantId, quantity: 1 })
-    }).then(function(res) { return res.json(); });
+    }).then(function (res) {
+      if (!res.ok) {
+        throw new Error('Cart add failed');
+      }
+      return res.json();
+    });
   }
 
-  addToCartBtn.addEventListener('click', function() {
+  addToCartBtn.addEventListener('click', function () {
     if (!currentVariant) return;
     addToCartBtn.disabled = true;
     modalNotice.textContent = 'Adding to cart...';
 
-    var selectedOptionPairs = getSelectedOptionPairs();
-    var addItems = [{ id: currentVariant.id, quantity: 1 }];
-
-    if (matchesBlackMediumRule(selectedOptionPairs)) {
-      loadSupportingProduct('soft-winter-jacket')
-        .then(function(product) {
-          var variant = product.variants.find(function(v) { return v.available; });
-          if (variant) {
-            addItems.push({ id: variant.id, quantity: 1 });
-          }
-          return addMultipleItemsToCart(addItems);
-        })
-        .then(function() {
-          modalNotice.textContent = 'Added to cart!';
-          setTimeout(closeModal, 1500);
-        })
-        .catch(function(err) {
-          modalNotice.textContent = 'Error adding to cart';
-          addToCartBtn.disabled = false;
-        });
-    } else {
-      addMultipleItemsToCart(addItems)
-        .then(function() {
-          modalNotice.textContent = 'Added to cart!';
-          setTimeout(closeModal, 1500);
-        })
-        .catch(function(err) {
-          modalNotice.textContent = 'Error adding to cart';
-          addToCartBtn.disabled = false;
-        });
-    }
+    addToCart(currentVariant.id)
+      .then(function () {
+        modalNotice.textContent = 'Added to cart!';
+        setTimeout(closeModal, 1200);
+      })
+      .catch(function () {
+        modalNotice.textContent = 'Error adding to cart';
+        addToCartBtn.disabled = false;
+      });
   });
 
-  closeButtons.forEach(function(btn) {
-    btn.addEventListener('click', closeModal);
-  });
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeModal();
-  });
-
-  var productCards = gridSection.querySelectorAll('[data-product-handle]');
-  productCards.forEach(function(card) {
-    card.addEventListener('click', function(e) {
-      e.preventDefault();
-      var handle = card.dataset.productHandle;
-      modalNotice.textContent = 'Loading...';
-      fetchProduct(handle)
-        .then(renderModal)
-        .catch(function() { modalNotice.textContent = 'Error loading product'; });
+  closeButtons.forEach(function (button) {
+    button.addEventListener('click', function (event) {
+      event.preventDefault();
+      closeModal();
     });
   });
 
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      closeModal();
+    }
+  });
+
+  var productCards = gridSection.querySelectorAll('[data-product-handle]');
+  productCards.forEach(function (card) {
+    card.addEventListener('click', function (event) {
+      event.preventDefault();
+      var handle = card.dataset.productHandle;
+      modalNotice.textContent = 'Loading...';
+
+      fetchProduct(handle)
+        .then(renderModal)
+        .catch(function () {
+          modalNotice.textContent = 'Error loading product';
+        });
+    });
+  });
 });
