@@ -9,8 +9,9 @@
   </div>
 
   <div class="gift-banner__hero">
-    {% assign background_image_url = section.settings.background_image | image_url: width: 3200 %}
-    {% if background_image_url == blank %}
+    {% if section.settings.background_image != blank %}
+      {% assign background_image_url = section.settings.background_image | image_url: width: 3200 %}
+    {% else %}
       {% assign background_image_url = 'gift-guide-banner.svg' | asset_url %}
     {% endif %}
 
