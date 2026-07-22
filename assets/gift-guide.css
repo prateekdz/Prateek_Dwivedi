@@ -36,12 +36,12 @@ button, a {
 .gg-banner__topbar {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 24px 56px 0;
+  padding: 24px 64px 0;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 20px;
-  min-height: 84px;
+  min-height: 96px;
   background: #fff;
 }
 
@@ -68,7 +68,7 @@ button, a {
   justify-content: center;
   gap: 12px;
   min-height: 56px;
-  padding: 0 34px;
+  padding: 0 36px;
   border: none;
   background: #111;
   color: #fff;
@@ -92,6 +92,9 @@ button, a {
 .gg-banner__topbar-cta {
   background: #f5e626;
   color: #111;
+  min-height: 72px;
+  padding: 0 40px;
+  border-radius: 999px;
 }
 
 .gg-banner__topbar-cta:hover,
@@ -101,34 +104,35 @@ button, a {
 
 .gg-banner__hero {
   position: relative;
-  min-height: 840px;
+  min-height: 900px;
+  overflow: hidden;
 }
 
 .gg-banner__illustration-frame {
   position: absolute;
   inset: 0;
-  background-repeat: repeat;
+  background-repeat: no-repeat;
   background-position: top center;
-  background-size: 1320px auto;
+  background-size: contain;
+  background-color: #fff;
 }
 
 .gg-banner__content {
   position: absolute;
-  left: 64px;
-  bottom: 112px;
+  top: 260px;
+  left: 72px;
   z-index: 2;
-  width: 420px;
-  background: #fff;
-  padding: 44px 40px 48px;
-  box-shadow: 0 36px 84px rgba(17, 17, 17, 0.14);
-  border-radius: 24px;
+  width: clamp(360px, 32vw, 520px);
+  max-width: 520px;
+  background: transparent;
+  padding: 0;
 }
 
 .gg-banner__heading {
   margin: 0 0 18px;
-  width: 280px;
+  max-width: 720px;
   font-family: 'Playfair Display', serif;
-  font-size: 5rem;
+  font-size: clamp(4.8rem, 6vw, 5.6rem);
   line-height: 1.02;
   letter-spacing: -0.04em;
   font-weight: 700;
@@ -136,7 +140,7 @@ button, a {
 
 .gg-banner__copy {
   margin: 0 0 30px;
-  width: 360px;
+  max-width: 520px;
   font-size: 1rem;
   line-height: 1.8;
   letter-spacing: -0.02em;
@@ -147,8 +151,9 @@ button, a {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  width: 192px;
+  min-width: 192px;
   height: 60px;
+  padding: 0 30px;
   border: none;
   background: #111;
   color: #fff;
@@ -466,9 +471,17 @@ button, a {
 
 @media (max-width: 980px) {
   .gg-banner__topbar {
-    padding: 24px 28px 0;
+    padding: 24px 24px 0;
     grid-template-columns: 1fr;
     text-align: center;
+    justify-items: center;
+    gap: 14px;
+  }
+
+  .gg-banner__topbar-message {
+    max-width: 760px;
+    width: min(92vw, 760px);
+    margin: 0 auto;
   }
 
   .gg-banner__hero {
@@ -477,10 +490,17 @@ button, a {
 
   .gg-banner__content {
     left: 50%;
-    bottom: 64px;
+    bottom: 72px;
+    top: auto;
     transform: translateX(-50%);
-    width: min(88vw, 420px);
+    width: min(92vw, 420px);
+    max-width: 420px;
     padding: 32px 28px 36px;
+  }
+
+  .gg-banner__hero-cta {
+    min-width: 180px;
+    padding: 0 26px;
   }
 
   .gg-grid {
@@ -493,14 +513,41 @@ button, a {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 760px) {
+  .gg-banner__topbar,
+  .gg-banner__footer,
+  .gg-grid {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
   .gg-banner__topbar {
-    padding: 20px 20px 0;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    text-align: center;
+    min-height: auto;
+  }
+
+  .gg-banner__topbar-message {
+    width: min(90vw, 640px);
   }
 
   .gg-banner__content {
-    bottom: 40px;
-    padding: 24px 20px 28px;
+    left: 24px;
+    bottom: 48px;
+    top: auto;
+    width: calc(100% - 48px);
+    padding: 24px 24px 0 0;
+  }
+
+  .gg-banner__hero {
+    min-height: 600px;
+  }
+
+  .gg-banner__hero-cta {
+    width: auto;
+    min-width: 180px;
+    padding: 0 24px;
   }
 
   .gg-grid__cards {
@@ -509,351 +556,93 @@ button, a {
   }
 }
 
-.tisso-banner {
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  background: #fff;
-}
-
-.tisso-banner__hero {
-  position: relative;
-  width: 100%;
-  min-height: 900px;
-  padding: 0;
-  overflow: hidden;
-}
-
-.tisso-banner__illustration-frame {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.tisso-banner__illustration-image {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  object-position: center top;
-}
-
-.tisso-banner__topbar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 56px;
-  min-height: 88px;
-  gap: 20px;
-  border-bottom: 1px solid rgba(17, 17, 17, 0.06);
-}
-
-.tisso-banner__topbar-logo {
-  font-family: 'Poppins', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 0.36em;
-  text-transform: uppercase;
-}
-
-.tisso-banner__topbar-tagline {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-align: center;
-  flex: 1;
-  min-width: 0;
-}
-
-.tisso-banner__topbar-cta {
-  background: #F5E400;
-  color: #111;
-  border: none;
-  border-radius: 20px;
-  box-shadow: none;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.24em;
-  padding: 0 40px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  min-width: 220px;
-  height: 72px;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.tisso-banner__content {
-  position: absolute;
-  z-index: 2;
-  bottom: 136px;
-  left: 56px;
-  width: clamp(340px, 30vw, 400px);
-  max-width: 400px;
-  background: #fff;
-  border-radius: 32px;
-  padding: 56px 48px 62px;
-  box-shadow: 0 48px 120px rgba(17, 17, 17, 0.12);
-  color: #111;
-}
-
-.tisso-banner__heading {
-  margin: 0 0 28px;
-  max-width: 250px;
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(4.4rem, 6vw, 5.2rem);
-  line-height: 1.02;
-  letter-spacing: -0.04em;
-  font-weight: 800;
-  word-break: break-word;
-}
-
-.tisso-banner__copy {
-  margin: 0 0 34px;
-  max-width: 340px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 17px;
-  line-height: 1.75;
-  letter-spacing: -0.01em;
-}
-
-.tisso-banner__hero-cta {
-  background: #111;
-  color: #fff;
-  border: none;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  padding: 18px 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  border-radius: 999px;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-/* Make the hero heading sit directly on the illustration (no white card)
-   to match the provided design. */
-.tisso-banner__content {
-  position: absolute;
-  z-index: 2;
-  top: 220px;
-  left: 72px;
-  width: clamp(360px, 34vw, 520px);
-  max-width: 520px;
-  background: transparent;
-  border-radius: 0;
-  padding: 0;
-  box-shadow: none;
-  color: #111;
-}
-
-.tisso-banner__heading {
-  margin: 0 0 18px;
-  max-width: 720px;
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(48px, 6.5vw, 78px);
-  line-height: 0.98;
-  letter-spacing: -0.02em;
-  font-weight: 700;
-  color: #0b0b0b;
-}
-
-.tisso-banner__copy {
-  margin: 28px 0 32px 0;
-  max-width: 420px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 17px;
-  line-height: 1.8;
-  letter-spacing: -0.01em;
-  color: #222;
-}
-
-.tisso-banner__hero-cta {
-  background: #111;
-  color: #fff;
-  border: none;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  padding: 16px 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  border-radius: 6px;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.tisso-product-grid .gg-grid__card-wrapper {
-  position: relative;
-}
-
-.tisso-product-grid .gg-grid__card {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  background: #f2f2f2;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
-
-.tisso-product-grid .gg-grid__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.tisso-product-grid .gg-grid__hotspot {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: #fff;
-  color: #111;
-  border: 1px solid #111;
-  display: grid;
-  place-items: center;
-  font-size: 1rem;
-  font-weight: 700;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
-}
-
-.tisso-product-grid .gg-grid__heading {
-  margin: 0 0 30px;
-  font-family: 'Playfair Display', serif;
-  font-size: 40px;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  font-weight: 400;
-}
-
-@media (max-width: 980px) {
-  .tisso-product-grid .gg-grid__cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 760px) {
-  .tisso-banner__topbar {
-    position: relative;
-    background: #fff;
-    padding: 18px 24px;
-    min-height: auto;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .tisso-banner__topbar-tagline {
-    order: 2;
-    width: 100%;
-    text-align: center;
-    font-size: 14px;
-    font-weight: 700;
-  }
-
-  .tisso-banner__topbar-cta {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .tisso-banner__hero {
-    min-height: 760px;
-  }
-
-  .tisso-banner__content {
-    position: relative;
-    bottom: auto;
-    left: auto;
-    width: calc(100% - 48px);
-    max-width: none;
-    margin: 0 auto;
-    padding: 32px;
-  }
-
-  .tisso-banner__heading {
-    font-size: 44px;
-  }
-
-  .tisso-banner__copy {
-    font-size: 15px;
-  }
-
-  .tisso-banner__hero-cta {
-    padding: 16px 30px;
-  }
-
-  .tisso-banner__strip {
-    position: static;
-    margin: 24px 24px 0;
-    width: auto;
-    border-top: none;
-    padding: 16px 16px;
-  }
-
-  .tisso-banner__strip p {
-    font-size: 11px;
-  }
-
-  .tisso-product-grid .gg-grid__container {
-    padding: 0 24px;
-  }
-
-  .tisso-product-grid .gg-grid__cards {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media (max-width: 560px) {
-  .tisso-banner__topbar {
-    padding: 12px 16px;
+  .gg-banner__topbar {
+    padding: 20px 18px 0;
   }
 
-  .tisso-banner__topbar-tagline {
-    display: none;
+  .gg-banner__footer,
+  .gg-grid {
+    padding-left: 18px;
+    padding-right: 18px;
   }
 
-  .tisso-banner__content {
+  .gg-banner__content {
+    left: 18px;
+    bottom: 40px;
+    width: calc(100% - 36px);
+    padding: 22px 20px 0 0;
+  }
+
+  .gg-banner__heading {
+    font-size: 2.6rem;
+  }
+
+  .gg-banner__copy {
+    font-size: 0.95rem;
+  }
+
+  .gg-banner__hero-cta,
+  .gg-banner__topbar-cta,
+  .gg-button {
+    min-width: 160px;
+    padding: 0 20px;
+  }
+
+  .gg-grid {
+    padding: 48px 18px 72px;
+  }
+
+  .gg-grid__heading {
+    font-size: 1.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gg-banner__topbar {
+    padding: 18px 16px 0;
+  }
+
+  .gg-banner__topbar-message {
+    font-size: 0.86rem;
+    width: 100%;
+  }
+
+  .gg-banner__content {
+    left: 16px;
+    bottom: 34px;
     width: calc(100% - 32px);
-    padding: 24px;
+    padding: 20px 18px 0 0;
   }
 
-  .tisso-banner__heading {
-    font-size: 36px;
+  .gg-banner__heading {
+    font-size: 2.2rem;
+    line-height: 1.05;
   }
 
-  .tisso-banner__copy {
-    font-size: 14px;
+  .gg-banner__copy {
+    font-size: 0.92rem;
+    margin-bottom: 24px;
   }
 
-  .tisso-banner__strip p {
-    font-size: 10px;
+  .gg-grid {
+    padding: 40px 16px 60px;
+  }
+
+  .gg-grid__heading {
+    font-size: 1.75rem;
+  }
+
+  .gg-modal__content {
+    width: calc(100vw - 20px);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tisso-banner__topbar-cta,
-  .tisso-banner__hero-cta,
-  .tisso-banner__topbar-cta .gg-button__arrow,
-  .tisso-banner__hero-cta .gg-button__arrow {
+  .gg-banner__topbar-cta,
+  .gg-banner__hero-cta,
+  .gg-banner__topbar-cta .gg-button__arrow,
+  .gg-banner__hero-cta .gg-button__arrow {
     transition: none;
   }
 }
@@ -888,6 +677,7 @@ button, a {
   .gg-banner__content {
     left: 24px;
     bottom: 48px;
+    top: auto;
     width: calc(100% - 48px);
     padding: 24px 24px 0 0;
   }
@@ -896,8 +686,18 @@ button, a {
     font-size: 3.2rem;
   }
 
+  .gg-banner__hero {
+    min-height: 600px;
+  }
+
+  .gg-banner__hero-cta {
+    width: auto;
+    min-width: 180px;
+    padding: 0 24px;
+  }
+
   .gg-grid__cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 }
 
