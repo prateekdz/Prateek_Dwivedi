@@ -1,8 +1,13 @@
 <section class="gift-guide-banner" aria-label="Gift Guide Banner" data-section-id="{{ section.id }}">
-  {% assign banner_background = section.settings.background | image_url: width: 2400 %}
+  {% assign banner_background = section.settings.background | default: section.settings.illustration | image_url: width: 2400 %}
   {% if banner_background == blank %}
     {% assign banner_background = 'gift-guide-banner.svg' | asset_url %}
   {% endif %}
+
+  {% assign banner_description = section.settings.description | default: section.settings.subheading %}
+  {% assign shop_label = section.settings.shop_now_label | default: section.settings.cta_label %}
+  {% assign shop_link = section.settings.shop_now_link | default: section.settings.cta_link %}
+  {% assign footer_text = section.settings.bottom_text | default: section.settings.bottom_bar_text %}
 
   <div class="gift-guide-banner__topbar">
     <div class="gift-guide-banner__logo">{{ section.settings.logo_text }}</div>
@@ -19,15 +24,15 @@
     <article class="gift-guide-banner__card">
       <div class="gift-guide-banner__card-inner">
         <h1 class="gift-guide-banner__title">{{ section.settings.heading }}</h1>
-        <p class="gift-guide-banner__description">{{ section.settings.description | newline_to_br }}</p>
-        <a class="gift-guide-banner__shop-now gift-guide-button gift-guide-button--black" href="{{ section.settings.shop_now_link }}">
-          <span>{{ section.settings.shop_now_label }}</span>
+        <p class="gift-guide-banner__description">{{ banner_description | newline_to_br }}</p>
+        <a class="gift-guide-banner__shop-now gift-guide-button gift-guide-button--black" href="{{ shop_link }}">
+          <span>{{ shop_label }}</span>
           <span class="gift-guide-button__arrow" aria-hidden="true">→</span>
         </a>
       </div>
     </article>
 
-    <p class="gift-guide-banner__footer">{{ section.settings.bottom_text }}</p>
+    <p class="gift-guide-banner__footer">{{ footer_text }}</p>
   </div>
 </section>
 
@@ -36,15 +41,15 @@
   "name": "Gift Guide Banner",
   "settings": [
     { "type": "text", "id": "logo_text", "label": "Logo text", "default": "TISSO VISON" },
-    { "type": "text", "id": "topbar_text", "label": "Top center text", "default": "Find the ideal gift for your loved ones." },
+    { "type": "text", "id": "topbar_text", "label": "Topbar text", "default": "Find the ideal gift for your loved ones." },
     { "type": "text", "id": "topbar_button_label", "label": "Topbar CTA label", "default": "CHOOSE GIFT" },
     { "type": "url", "id": "topbar_button_link", "label": "Topbar CTA link", "default": "#gift-guide-grid" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "The Gift Guide" },
-    { "type": "textarea", "id": "description", "label": "Description", "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season." },
-    { "type": "text", "id": "shop_now_label", "label": "Shop now label", "default": "SHOP NOW" },
-    { "type": "url", "id": "shop_now_link", "label": "Shop now link", "default": "#gift-guide-grid" },
-    { "type": "text", "id": "bottom_text", "label": "Bottom text", "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL" },
-    { "type": "image_picker", "id": "background", "label": "Background illustration" }
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season." },
+    { "type": "text", "id": "cta_label", "label": "CTA button label", "default": "SHOP NOW" },
+    { "type": "url", "id": "cta_link", "label": "CTA button link", "default": "#gift-guide-grid" },
+    { "type": "text", "id": "bottom_bar_text", "label": "Bottom strip text", "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL" },
+    { "type": "image_picker", "id": "illustration", "label": "Line art illustration" }
   ],
   "presets": [
     { "name": "Gift Guide Banner" }
