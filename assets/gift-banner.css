@@ -80,9 +80,8 @@
   left: 72px;
   top: 180px;
   z-index: 5;
-  width: min(620px, 46vw);
-  max-width: 620px;
-  padding: 48px;
+  width: 620px;
+  padding: 48px 48px 42px;
   border-radius: 40px;
   background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 40px 90px rgba(0, 0, 0, 0.14);

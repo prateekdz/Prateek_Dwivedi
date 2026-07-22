@@ -31,7 +31,6 @@
       {% assign is_gift_guide = true %}
     {% endif %}
     {% if is_gift_guide %}
-      <link rel="stylesheet" href="{{ 'gift-guide.css' | asset_url }}">
       <link rel="stylesheet" href="{{ 'gift-banner.css' | asset_url }}">
       <link rel="stylesheet" href="{{ 'gift-product-grid.css' | asset_url }}">
     {% endif %}
@@ -103,7 +102,6 @@
       </main>
 
       {% if is_gift_guide or template == 'index' %}
-        <script src="{{ 'gift-guide.js' | asset_url }}" defer></script>
         <script src="{{ 'gift-banner.js' | asset_url }}" defer></script>
         <script src="{{ 'gift-product-grid.js' | asset_url }}" defer></script>
       {% endif %}
