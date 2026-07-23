@@ -21,11 +21,14 @@
   </div>
 
   <div class="gg-banner__hero">
-    {% if section.settings.illustration != blank %}
-      <div class="gg-banner__illustration-frame" aria-hidden="true">
-        <img class="gg-banner__illustration" src="{{ section.settings.illustration | image_url: width: 2400 }}" alt="" loading="lazy">
-      </div>
+    {% assign illustration_url = section.settings.illustration | image_url: width: 2400 %}
+    {% if section.settings.illustration == blank %}
+      {% assign illustration_url = 'gift-guide-banner.svg' | asset_url %}
     {% endif %}
+
+    <div class="gg-banner__illustration-frame" aria-hidden="true">
+      <img class="gg-banner__illustration" src="{{ illustration_url }}" alt="" loading="lazy">
+    </div>
 
     <div class="gg-banner__content">
       <h1 class="gg-banner__heading">{{ section.settings.heading }}</h1>

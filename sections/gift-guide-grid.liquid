@@ -3,34 +3,14 @@
     <h2 class="gg-grid__heading">{{ section.settings.section_heading }}</h2>
     <div class="gg-grid__cards">
       {% for block in section.blocks %}
-        {% assign hotspot_class = '' %}
-        {% if block.settings.hotspot_position == 'top-left' %}
-          {% assign hotspot_class = 'gg-grid__card--hotspot-left' %}
-        {% elsif block.settings.hotspot_position == 'center-right' %}
-          {% assign hotspot_class = 'gg-grid__card--hotspot-center-right' %}
-        {% elsif block.settings.hotspot_position == 'center' %}
-          {% assign hotspot_class = 'gg-grid__card--hotspot-center' %}
-        {% else %}
-          {% assign hotspot_class = 'gg-grid__card--hotspot-right' %}
-        {% endif %}
-
-        <div class="gg-grid__card-wrapper {{ hotspot_class }}">
+        <div class="gg-grid__card-wrapper {% if block.settings.hotspot_position == 'top-left' %}gg-grid__card--hotspot-left{% elsif block.settings.hotspot_position == 'center-right' %}gg-grid__card--hotspot-center-right{% elsif block.settings.hotspot_position == 'center' %}gg-grid__card--hotspot-center{% else %}gg-grid__card--hotspot-right{% endif %}">
           {% if block.settings.product != blank %}
-            {% assign product_handle = block.settings.product.handle | default: block.settings.product %}
-            {% assign product_obj = all_products[product_handle] %}
-            {% if product_obj == nil %}
-              {% assign product_obj = block.settings.product %}
-            {% endif %}
-
-            <button type="button" class="gg-grid__card" data-product-handle="{{ product_handle }}" data-gg-block-id="{{ block.id }}" aria-haspopup="dialog">
-              {% if product_obj != nil and product_obj.featured_image != blank %}
-                <img class="gg-grid__image" src="{{ product_obj.featured_image | image_url: width: 1200 }}" alt="{{ product_obj.title | escape }}" loading="lazy">
+            {% assign product = block.settings.product %}
+            <button type="button" class="gg-grid__card" data-gg-product-handle="{{ product.handle }}" data-gg-block-id="{{ block.id }}" aria-haspopup="dialog">
+              {% if product.featured_image != blank %}
+                <img class="gg-grid__image" src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" loading="lazy">
               {% else %}
-                <img class="gg-grid__image" src="{{ 'Frame.svg' | asset_url }}" alt="Placeholder" loading="lazy">
-              {% endif %}
-
-              {% if product_obj != nil %}
-                <span class="gg-grid__sr-only">{{ product_obj.title | escape }} • {{ product_obj.price | money }}</span>
+                <span class="gg-grid__empty">{{ product.title }}</span>
               {% endif %}
               <span class="gg-grid__hotspot" aria-label="Quick view">+</span>
               {% if block.settings.show_dot_markers %}
@@ -48,7 +28,7 @@
     </div>
   </div>
 
-  <div class="gg-modal gg-modal--closed" id="gg-quickview" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="gg-quickview-title" data-gg-modal>
+  <div class="gg-modal" id="gg-quickview" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="gg-quickview-title">
     <div class="gg-modal__overlay" data-gg-close></div>
     <div class="gg-modal__content">
       <button type="button" class="gg-modal__close" aria-label="Close" data-gg-close>✕</button>

@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+﻿document.addEventListener('DOMContentLoaded', function () {
   var gridSection = document.querySelector('[data-gg-grid]');
   if (!gridSection) return;
 
@@ -260,4 +260,149 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
   });
+});
+   */
+  function showMessage(message) {
+    popupMessage.textContent = message;
+  }
+
+  /**
+   * @param {VariantObject|null} variant
+   * @returns {boolean}
+   */
+  function shouldAutoAddSoftJacket(variant) {
+    if (!variant || !variant.options) {
+      return false;
+    }
+    return variant.options.includes('Black') && variant.options.includes('Medium');
+  }
+
+  /**
+   * @param {string} handle
+   * @returns {Promise<ProductObject>}
+   */
+  function fetchProductJson(handle) {
+    return fetch('/products/' + encodeURIComponent(handle) + '.js', {
+      credentials: 'same-origin',
+    }).then(function (response) {
+      if (!response.ok) {
+        throw new Error('Unable to load product data.');
+      }
+      return response.json();
+    });
+  }
+
+  /**
+   * @param {number} variantId
+   * @returns {Promise<any>}
+   */
+  function addProductToCart(variantId) {
+    return fetch('/cart/add.js', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: variantId,
+        quantity: 1,
+      }),
+    }).then(function (response) {
+      if (!response.ok) {
+        return response.json().then(function (error) {
+          throw new Error(error && error.description ? error.description : 'Cart error');
+        });
+      }
+      return response.json();
+    });
+  }
+
+  function addSoftWinterJacketIfRequired() {
+    if (!currentProduct || !autoAddProductHandle || autoAddProductHandle === '' || autoAddProductHandle === currentProduct.handle) {
+      return Promise.resolve();
+    }
+
+    return fetchProductJson(autoAddProductHandle).then(function (softProduct) {
+      var variantToAdd = softProduct.variants.find(function (variant) {
+        return variant.available;
+      }) || softProduct.variants[0];
+
+      if (!variantToAdd) {
+        return Promise.resolve();
+      }
+      return addProductToCart(variantToAdd.id);
+    });
+  }
+
+  function handleAddToCart() {
+    if (!currentVariant) {
+      return;
+    }
+    addToCartButton.disabled = true;
+    showMessage('Adding to cart…');
+
+    addProductToCart(currentVariant.id)
+      .then(function () {
+        if (shouldAutoAddSoftJacket(currentVariant)) {
+          return addSoftWinterJacketIfRequired().then(function () {
+            showMessage('Added gift and Soft Winter Jacket to the cart.');
+          });
+        }
+        showMessage('Added to cart successfully.');
+      })
+      .catch(function (error) {
+        showMessage(error.message || 'Unable to add to cart.');
+      })
+      .finally(function () {
+        addToCartButton.disabled = false;
+      });
+  }
+
+  /**
+   * @param {Event} event
+   */
+  function openProductPopup(event) {
+    var button = /** @type {HTMLElement} */ (event.currentTarget);
+    var handle = /** @type {string} */ (button.dataset.productHandle || '');
+    if (!handle) {
+      return;
+    }
+    showMessage('Loading product...');
+    fetchProductJson(handle)
+      .then(renderPopup)
+      .catch(function (error) {
+        showMessage(error.message || 'Unable to load product.');
+      });
+  }
+
+  function bindCardButtons() {
+    var cards = gridContainer.querySelectorAll('[data-product-handle]');
+    cards.forEach(function (card) {
+      // Expand clickable area for hotspot: delegate click from overlay as well
+      var overlay = /** @type {HTMLElement|null} */ (card.querySelector('.gift-guide-card__overlay'));
+      if (overlay) {
+        overlay.style.pointerEvents = 'auto';
+        overlay.style.cursor = 'pointer';
+        overlay.addEventListener('click', function (e) {
+          e.stopPropagation();
+          openProductPopup.call(card, e);
+        });
+      }
+      card.addEventListener('click', openProductPopup);
+    });
+  }
+
+  popupOverlay.addEventListener('click', closePopup);
+  popupCloseButtons.forEach(function (button) {
+    button.addEventListener('click', closePopup);
+  });
+
+  document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && popup.classList.contains('is-open')) {
+      closePopup();
+    }
+  });
+
+  addToCartButton.addEventListener('click', handleAddToCart);
+  bindCardButtons();
 });
