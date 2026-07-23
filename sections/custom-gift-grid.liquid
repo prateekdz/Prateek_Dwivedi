@@ -1,0 +1,66 @@
+<section class="cg-grid" aria-label="Gift guide products">
+  <div class="cg-grid__inner">
+    <h2 class="cg-grid__heading">Tisso vison in the wild</h2>
+    <div class="cg-grid__cards">
+      {% for block in section.blocks %}
+        <article class="cg-grid__card" data-cg-card="{{ block.id }}">
+          {% if block.settings.image != blank %}
+            <img class="cg-grid__image" src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.alt_text | escape }}" loading="lazy">
+          {% else %}
+            <div class="cg-grid__placeholder">Image coming soon</div>
+          {% endif %}
+          <button type="button" class="cg-grid__hotspot" aria-label="View product details" data-cg-open="{{ block.id }}">+</button>
+          <div class="cg-grid__meta">
+            <p class="cg-grid__title">{{ block.settings.title }}</p>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="cg-grid__overlay" data-cg-overlay aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="cg-grid__overlay-backdrop" data-cg-close></div>
+    <div class="cg-grid__overlay-panel">
+      <button type="button" class="cg-grid__overlay-close" data-cg-close aria-label="Close">✕</button>
+      <img class="cg-grid__overlay-image" src="" alt="" loading="lazy" data-cg-overlay-image>
+      <div class="cg-grid__overlay-info">
+        <h3 class="cg-grid__overlay-title" data-cg-overlay-title></h3>
+        <p class="cg-grid__overlay-copy" data-cg-overlay-copy></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom Gift Grid",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Card",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Product" },
+        { "type": "text", "id": "alt_text", "label": "Alt text", "default": "Product image" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Click the hotspot to view product details." }
+      ]
+    }
+  ],
+  "block_order": [],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Custom Gift Grid",
+      "blocks": [
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" },
+        { "type": "product_card" }
+      ]
+    }
+  ]
+}
+{% endschema %}
