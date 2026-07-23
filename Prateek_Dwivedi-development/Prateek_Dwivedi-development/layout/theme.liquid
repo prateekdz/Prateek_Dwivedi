@@ -55,7 +55,7 @@
       {% assign is_gift_guide = true %}
     {% endif %}
     {% if is_gift_guide %}
-      <link rel="stylesheet" href="{{ 'gift-guide.css' | asset_url }}">
+      <link rel="stylesheet" href="{{ 'custom-gift-guide.css.liquid' | asset_url }}">
     {% endif %}
 
     {{ content_for_header }}
@@ -68,9 +68,7 @@
 
     <div class="page-wrapper">
       <div id="header-group">
-        {% unless template == 'index' or template contains 'gift-guide' %}
-          {% sections 'header-group' %}
-        {% endunless %}
+        {% sections 'header-group' %}
       </div>
 
       <script>

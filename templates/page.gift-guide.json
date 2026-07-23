@@ -6,6 +6,7 @@
     }
   },
   "order": [
-    "custom_gift_guide"
+    "custom_gift_guide",
+    "tisso-product-grid"
   ]
 }
