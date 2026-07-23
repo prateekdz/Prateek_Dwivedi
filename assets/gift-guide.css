@@ -148,7 +148,7 @@ button, a {
 
 .gg-banner__hero {
   position: relative;
-  min-height: 840px;
+  min-height: 980px;
   overflow: hidden;
 }
 
@@ -161,10 +161,10 @@ button, a {
 
 .gg-banner__illustration-copy {
   position: absolute;
-  top: 12%;
+  top: 14%;
   right: 8%;
   left: auto;
-  width: min(36vw, 520px);
+  width: min(38vw, 520px);
   aspect-ratio: 1.4 / 1;
   overflow: hidden;
   border-radius: 28px;
