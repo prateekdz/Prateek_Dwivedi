@@ -1,0 +1,564 @@
+:root {
+  font-family: 'Poppins', sans-serif;
+  color: #111;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body.gift-guide-page {
+  background: #fff;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+button, a {
+  font: inherit;
+}
+
+.gg-banner,
+.gg-grid {
+  width: 100%;
+}
+
+.gg-banner {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+}
+
+.gg-banner__topbar {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 18px 56px 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+  min-height: 72px;
+}
+
+.gg-banner__hamburger {
+  display: none;
+  border: none;
+  background: transparent;
+  color: #111;
+  font-size: 1.45rem;
+  cursor: pointer;
+}
+
+.gg-banner__topbar-logo {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+.gg-banner__topbar-message {
+  margin: 0;
+  font-size: 0.86rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.gg-banner__topbar-cta,
+.gg-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 0 32px;
+  border: none;
+  background: #111;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.gg-button--black {
+  background: #111;
+  color: #fff;
+  min-height: 58px;
+  padding: 0 32px;
+}
+
+.gg-button__arrow {
+  display: inline-block;
+}
+
+.gg-banner__topbar-cta {
+  background: #f5e626;
+  color: #111;
+}
+
+.gg-banner__topbar-cta:hover,
+.gg-button:hover {
+  opacity: 0.92;
+}
+
+.gg-banner__mobile-menu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  background: rgba(255, 255, 255, 0.98);
+  padding: 32px 24px;
+}
+
+.gg-banner__mobile-menu-inner {
+  max-width: 520px;
+  margin: 0 auto;
+  display: grid;
+  gap: 20px;
+}
+
+.gg-banner__mobile-close {
+  justify-self: end;
+  border: none;
+  background: transparent;
+  color: #111;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.gg-banner__mobile-message {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.gg-banner__mobile-cta {
+  background: #f5e626;
+  color: #111;
+}
+
+.gg-banner__hero {
+  position: relative;
+  min-height: 840px;
+  overflow: hidden;
+}
+
+.gg-banner__illustration-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  transform: scale(1.02);
+}
+
+.gg-banner__illustration {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+.gg-banner__content {
+  position: absolute;
+  left: 64px;
+  bottom: 88px;
+  z-index: 1;
+  max-width: 560px;
+  width: clamp(320px, 40vw, 560px);
+}
+
+.gg-banner__heading {
+  margin: 0 0 16px;
+  font-family: 'Playfair Display', serif;
+  font-size: 4.8rem;
+  line-height: 0.96;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.gg-banner__copy {
+  margin: 0 0 20px;
+  max-width: 420px;
+  font-size: 0.98rem;
+  line-height: 1.76;
+  letter-spacing: -0.02em;
+}
+
+.gg-banner__hero-cta {
+  background: #111;
+  color: #fff;
+  min-height: 58px;
+  padding: 0 34px;
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+}
+
+.gg-banner__footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 14px 56px;
+  background: #f7f7f7;
+  color: #111;
+  font-size: 0.82rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.gg-banner__footer-copy {
+  margin: 0;
+  font-weight: 700;
+}
+
+.gg-grid {
+  background: #fff;
+  padding: 72px 56px 92px;
+}
+
+.gg-grid__container {
+  max-width: 1432px;
+  margin: 0 auto;
+}
+
+.gg-grid__heading {
+  margin: 0 0 24px;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.05rem;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+.gg-grid__cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.gg-grid__card-wrapper {
+  position: relative;
+}
+
+.gg-grid__card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #f9f9f9;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(17, 17, 17, 0.06);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.gg-grid__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(17, 17, 17, 0.12);
+}
+
+.gg-grid__card:focus-visible {
+  outline: 3px solid #111;
+  outline-offset: 4px;
+}
+
+.gg-grid__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.gg-grid__card:hover .gg-grid__image {
+  transform: scale(1.04);
+}
+
+.gg-grid__hotspot {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #111;
+  background: #fff;
+  color: #111;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.gg-grid__card-wrapper.gg-grid__card--hotspot-right .gg-grid__hotspot {
+  top: 22%;
+  right: 20%;
+}
+
+.gg-grid__card-wrapper.gg-grid__card--hotspot-left .gg-grid__hotspot {
+  top: 22%;
+  left: 20%;
+}
+
+.gg-grid__card-wrapper.gg-grid__card--hotspot-center-right .gg-grid__hotspot {
+  top: 50%;
+  right: 20%;
+  transform: translateY(-50%);
+}
+
+.gg-grid__card-wrapper.gg-grid__card--hotspot-center .gg-grid__hotspot {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.gg-grid__dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #111;
+  opacity: 0.2;
+}
+
+.gg-grid__dot--a {
+  top: 12%;
+  left: 12%;
+}
+
+.gg-grid__dot--b {
+  bottom: 16%;
+  right: 14%;
+}
+
+.gg-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  pointer-events: none;
+}
+
+.gg-modal.gg-modal--open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.gg-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.34);
+}
+
+.gg-modal__content {
+  position: relative;
+  width: min(980px, calc(100vw - 32px));
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 50px 110px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+
+.gg-modal__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: transparent;
+  color: #111;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.gg-modal__panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+  padding: 32px 32px 36px;
+}
+
+.gg-modal__image-wrap {
+  min-width: 190px;
+  min-height: 190px;
+  border: 1px solid #e7e7e7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+
+.gg-modal__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gg-modal__info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gg-modal__title {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.14;
+  font-weight: 700;
+}
+
+.gg-modal__price {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.gg-modal__description {
+  margin: 0;
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.gg-modal__options {
+  display: grid;
+  gap: 16px;
+}
+
+.gg-modal__option {
+  display: grid;
+  gap: 10px;
+}
+
+.gg-modal__option legend {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.gg-modal__option-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.gg-modal__option-button {
+  border: 1px solid #111;
+  background: #fff;
+  color: #111;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.gg-modal__option-button.is-selected {
+  background: #111;
+  color: #fff;
+}
+
+.gg-modal__option-select {
+  width: 100%;
+  min-height: 50px;
+  padding: 0 16px;
+  border: 1px solid #111;
+  background: #fff;
+  color: #111;
+  font-size: 0.95rem;
+}
+
+.gg-modal__add {
+  width: 100%;
+  min-height: 54px;
+  border: none;
+  background: #111;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.gg-modal__notice {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #111;
+  min-height: 1.2em;
+}
+
+@media (max-width: 1100px) {
+  .gg-modal__panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .gg-grid__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .gg-banner__topbar,
+  .gg-banner__footer,
+  .gg-grid {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .gg-banner__topbar {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    text-align: center;
+    min-height: auto;
+  }
+
+  .gg-banner__content {
+    left: 24px;
+    bottom: 48px;
+    width: calc(100% - 48px);
+  }
+
+  .gg-banner__heading {
+    font-size: 3.2rem;
+  }
+
+  .gg-grid__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .gg-banner__heading {
+    font-size: 2.6rem;
+  }
+
+  .gg-banner__topbar-message {
+    font-size: 0.88rem;
+  }
+
+  .gg-modal__content {
+    width: calc(100vw - 24px);
+  }
+}

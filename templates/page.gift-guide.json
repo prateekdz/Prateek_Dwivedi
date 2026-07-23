@@ -1,31 +1,32 @@
 {
   "sections": {
-    "gift_banner": {
-      "type": "gift-banner",
+    "gift_guide_banner": {
+      "type": "gift-guide-banner",
       "settings": {
         "logo_text": "TISSO VISON",
         "topbar_text": "Find the ideal gift for your loved ones.",
-        "topbar_button_label": "CHOOSE GIFT",
-        "topbar_button_link": "#gift-product-grid",
+        "topbar_button_label": "Choose Gift",
+        "topbar_button_link": "#gift-guide-grid",
         "heading": "The Gift Guide",
-        "description": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
-        "cta_label": "SHOP NOW",
-        "cta_link": "#gift-product-grid",
-        "bottom_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL"
+        "subheading": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+        "cta_label": "Shop Now",
+        "cta_link": "#gift-guide-grid",
+        "bottom_bar_text": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR",
+        "illustration": "gift-guide-banner.svg"
       }
     },
-    "gift_product_grid": {
-      "type": "gift-product-grid",
+    "gift_guide_grid": {
+      "type": "gift-guide-grid",
       "settings": {
         "section_heading": "Tisso vison in the wild"
       },
       "blocks": {
-        "product_block_1": { "type": "product_block", "settings": { "product": "led-high-tops" } },
-        "product_block_2": { "type": "product_block", "settings": { "product": "striped-skirt-and-top" } },
-        "product_block_3": { "type": "product_block", "settings": { "product": "red-sports-tee" } },
-        "product_block_4": { "type": "product_block", "settings": { "product": "blue-silk-tuxedo" } },
-        "product_block_5": { "type": "product_block", "settings": { "product": "olive-green-jacket" } },
-        "product_block_6": { "type": "product_block", "settings": { "product": "white-cotton-shirt" } }
+        "product_block_1": { "type": "product_block", "settings": { "product": "", "hotspot_position": "top-right", "show_dot_markers": false } },
+        "product_block_2": { "type": "product_block", "settings": { "product": "", "hotspot_position": "top-right", "show_dot_markers": false } },
+        "product_block_3": { "type": "product_block", "settings": { "product": "", "hotspot_position": "top-right", "show_dot_markers": false } },
+        "product_block_4": { "type": "product_block", "settings": { "product": "", "hotspot_position": "center-right", "show_dot_markers": true } },
+        "product_block_5": { "type": "product_block", "settings": { "product": "", "hotspot_position": "top-left", "show_dot_markers": false } },
+        "product_block_6": { "type": "product_block", "settings": { "product": "", "hotspot_position": "top-right", "show_dot_markers": false } }
       },
       "block_order": [
         "product_block_1",
@@ -38,7 +39,7 @@
     }
   },
   "order": [
-    "gift_banner",
-    "gift_product_grid"
+    "gift_guide_banner",
+    "gift_guide_grid"
   ]
 }

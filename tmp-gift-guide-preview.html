@@ -7,128 +7,116 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Playfair+Display:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/gift-banner.css">
-    <link rel="stylesheet" href="./assets/gift-product-grid.css">
+    <link rel="stylesheet" href="./assets/gift-guide.css">
     <style>
       body { margin: 0; background: #fff; }
       .preview-grid { padding-top: 0; }
-      .gift-product-grid { padding-top: 0; }
-      .gift-product-grid__container { padding: 0 64px 120px; }
-      .gift-product-card { min-height: 320px; }
-      .gift-product-card-wrapper { min-height: 320px; }
-      .gift-banner__hero { min-height: 980px; }
-      .gift-product-grid { padding: 96px 64px 120px; }
-      .gift-product-grid__cards { margin-top: 0; }
+      .gg-grid { padding-top: 0; }
+      .gg-grid__container { padding: 0 64px 120px; }
+      .gg-grid__card { min-height: 320px; }
+      .gg-grid__card-wrapper { min-height: 320px; }
+      .gg-banner__hero { min-height: 980px; }
+      .gg-grid { padding: 96px 64px 120px; }
+      .gg-grid__cards { margin-top: 0; }
       section { box-sizing: border-box; }
     </style>
   </head>
   <body>
-    <section class="gift-banner" aria-label="Gift Banner">
-      <div class="gift-banner__topbar">
-        <div class="gift-banner__logo">TISSO VISON</div>
-        <p class="gift-banner__tagline">Find the ideal gift for your loved ones.</p>
-        <a class="gift-banner__button" href="#gift-product-grid">
+    <section class="gg-banner" aria-label="Gift Guide Banner">
+      <div class="gg-banner__topbar">
+        <div class="gg-banner__topbar-logo">TISSO VISON</div>
+        <p class="gg-banner__topbar-message">Find the ideal gift for your loved ones.</p>
+        <a class="gg-banner__topbar-cta gg-button" href="#gift-guide-grid">
           <span>CHOOSE GIFT</span>
-          <span class="gift-banner__button-arrow" aria-hidden="true">→</span>
+          <span class="gg-button__arrow" aria-hidden="true">→</span>
         </a>
       </div>
 
-      <div class="gift-banner__hero">
-        <img
-          class="gift-banner__background-image"
-          src="./assets/gift-guide-banner.svg"
-          alt=""
-          loading="lazy"
-        >
+      <div class="gg-banner__hero">
+        <img class="gg-banner__illustration" src="./assets/gift-guide-banner.svg" alt="" loading="lazy">
 
-        <div class="gift-banner__card">
-          <div class="gift-banner__card-inner">
-            <h1 class="gift-banner__title">The Gift Guide</h1>
-            <p class="gift-banner__description">Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.</p>
-            <a class="gift-banner__shop-now" href="#gift-product-grid">
-              <span>SHOP NOW</span>
-              <span class="gift-banner__button-arrow" aria-hidden="true">→</span>
-            </a>
-          </div>
+        <div class="gg-banner__content">
+          <h1 class="gg-banner__heading">The Gift Guide</h1>
+          <p class="gg-banner__copy">Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.</p>
+          <a class="gg-banner__hero-cta gg-button gg-button--black" href="#gift-guide-grid">
+            <span>SHOP NOW</span>
+            <span class="gg-button__arrow" aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
 
-      <div class="gift-banner__footer">
-        <p>SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL</p>
+      <div class="gg-banner__footer">
+        <p class="gg-banner__footer-copy">SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR</p>
       </div>
     </section>
 
-    <section id="gift-product-grid" class="gift-product-grid" aria-label="Gift Product Grid" data-gp-grid>
-      <div class="gift-product-grid__container">
-        <div class="gift-product-grid__intro">
-          <h2 class="gift-product-grid__heading">Tisso vison in the wild</h2>
-        </div>
-        <div class="gift-product-grid__cards">
-          <div class="gift-product-card-wrapper gift-product-card--hotspot-right">
-            <button type="button" class="gift-product-card">
-              <img class="gift-product-card__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
-              <span class="gift-product-card__hotspot" aria-label="Quick view">+</span>
+    <section id="gift-guide-grid" class="gg-grid" aria-label="Gift Guide Products" data-gg-grid>
+      <div class="gg-grid__container">
+        <h2 class="gg-grid__heading">Tisso vison in the wild</h2>
+        <div class="gg-grid__cards">
+          <div class="gg-grid__card-wrapper gg-grid__card--hotspot-right">
+            <button type="button" class="gg-grid__card" data-product-handle="mock-product-1" aria-haspopup="dialog">
+              <img class="gg-grid__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
+              <span class="gg-grid__hotspot" aria-label="Quick view">+</span>
             </button>
           </div>
-          <div class="gift-product-card-wrapper gift-product-card--hotspot-center-right">
-            <button type="button" class="gift-product-card">
-              <img class="gift-product-card__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
-              <span class="gift-product-card__hotspot" aria-label="Quick view">+</span>
+          <div class="gg-grid__card-wrapper gg-grid__card--hotspot-center-right">
+            <button type="button" class="gg-grid__card" data-product-handle="mock-product-2" aria-haspopup="dialog">
+              <img class="gg-grid__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
+              <span class="gg-grid__hotspot" aria-label="Quick view">+</span>
             </button>
           </div>
-          <div class="gift-product-card-wrapper gift-product-card--hotspot-left">
-            <button type="button" class="gift-product-card">
-              <img class="gift-product-card__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
-              <span class="gift-product-card__hotspot" aria-label="Quick view">+</span>
+          <div class="gg-grid__card-wrapper gg-grid__card--hotspot-left">
+            <button type="button" class="gg-grid__card" data-product-handle="mock-product-3" aria-haspopup="dialog">
+              <img class="gg-grid__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
+              <span class="gg-grid__hotspot" aria-label="Quick view">+</span>
             </button>
           </div>
-          <div class="gift-product-card-wrapper gift-product-card--hotspot-center">
-            <button type="button" class="gift-product-card">
-              <img class="gift-product-card__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
-              <span class="gift-product-card__hotspot" aria-label="Quick view">+</span>
+          <div class="gg-grid__card-wrapper gg-grid__card--hotspot-center">
+            <button type="button" class="gg-grid__card" data-product-handle="mock-product-4" aria-haspopup="dialog">
+              <img class="gg-grid__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
+              <span class="gg-grid__hotspot" aria-label="Quick view">+</span>
             </button>
           </div>
-          <div class="gift-product-card-wrapper gift-product-card--hotspot-right">
-            <button type="button" class="gift-product-card">
-              <img class="gift-product-card__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
-              <span class="gift-product-card__hotspot" aria-label="Quick view">+</span>
+          <div class="gg-grid__card-wrapper gg-grid__card--hotspot-right">
+            <button type="button" class="gg-grid__card" data-product-handle="mock-product-5" aria-haspopup="dialog">
+              <img class="gg-grid__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
+              <span class="gg-grid__hotspot" aria-label="Quick view">+</span>
             </button>
           </div>
-          <div class="gift-product-card-wrapper gift-product-card--hotspot-center-right">
-            <button type="button" class="gift-product-card" data-product-handle="mock-product-1">
-              <img class="gift-product-card__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
-              <span class="gift-product-card__hotspot" aria-label="Quick view">+</span>
+          <div class="gg-grid__card-wrapper gg-grid__card--hotspot-center-right">
+            <button type="button" class="gg-grid__card" data-product-handle="mock-product-6" aria-haspopup="dialog">
+              <img class="gg-grid__image" src="./assets/Frame.svg" alt="Placeholder" loading="lazy">
+              <span class="gg-grid__hotspot" aria-label="Quick view">+</span>
             </button>
           </div>
         </div>
       </div>
     </section>
 
-    <div class="gift-product-modal gift-product-modal--closed" id="gift-product-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="gift-product-modal-title" data-gp-modal>
-      <div class="gift-product-modal__overlay" data-gp-close></div>
-      <div class="gift-product-modal__content">
-        <button type="button" class="gift-product-modal__close" aria-label="Close" data-gp-close>✕</button>
-        <div class="gift-product-modal__panel">
-          <div class="gift-product-modal__image-area">
-            <img class="gift-product-modal__image" src="" alt="" loading="lazy">
+    <div class="gg-modal gg-modal--closed" id="gg-quickview" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="gg-quickview-title" data-gg-modal>
+      <div class="gg-modal__overlay" data-gg-close></div>
+      <div class="gg-modal__content">
+        <button type="button" class="gg-modal__close" aria-label="Close" data-gg-close>✕</button>
+        <div class="gg-modal__panel">
+          <div class="gg-modal__image-wrap">
+            <img class="gg-modal__image" src="" alt="" loading="lazy">
           </div>
-          <div class="gift-product-modal__details">
-            <p class="gift-product-modal__eyebrow">Quick view</p>
-            <h2 id="gift-product-modal-title" class="gift-product-modal__title"></h2>
-            <p class="gift-product-modal__price"></p>
-            <p class="gift-product-modal__description"></p>
-            <div class="gift-product-modal__options" data-gp-options></div>
-            <button type="button" class="gift-product-button gift-product-button--black gift-product-modal__add" data-gp-add-to-cart disabled>
+          <div class="gg-modal__info">
+            <h2 id="gg-quickview-title" class="gg-modal__title"></h2>
+            <div class="gg-modal__price"></div>
+            <p class="gg-modal__description"></p>
+            <div class="gg-modal__options" data-gg-options></div>
+            <button type="button" class="gg-button gg-button--black gg-modal__add" data-gg-add-to-cart disabled>
               <span>ADD TO CART</span>
-              <span class="gift-product-button__arrow" aria-hidden="true">→</span>
+              <span class="gg-button__arrow" aria-hidden="true">→</span>
             </button>
-            <p class="gift-product-modal__notice" data-gp-notice aria-live="polite"></p>
+            <p class="gg-modal__notice" data-gg-notice aria-live="polite"></p>
           </div>
         </div>
       </div>
     </div>
 
-    <script src="./assets/gift-banner.js" defer></script>
-    <script src="./assets/gift-product-grid.js" defer></script>
+    <script src="./assets/gift-guide.js" defer></script>
   </body>
 </html>
