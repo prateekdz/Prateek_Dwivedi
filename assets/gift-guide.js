@@ -1,266 +1,263 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
-  var gridSection = document.querySelector('[data-gg-grid]');
-  if (!gridSection) return;
+﻿/**
+ * gift-guide.js
+ * Handles the Gift Guide Grid popup, variant selection, and cart behavior.
+ */
 
-  var popupElement = document.getElementById('gg-quickview');
-  if (!popupElement) return;
-
-  var popupOverlay = popupElement.querySelector('[data-gg-close]');
-  var popupCloseButtons = popupElement.querySelectorAll('[data-gg-close]');
-  var popupTitle = popupElement.querySelector('.gg-modal__title');
-  var popupImage = popupElement.querySelector('.gg-modal__image');
-  var popupPrice = popupElement.querySelector('.gg-modal__price');
-  var popupDescription = popupElement.querySelector('.gg-modal__description');
-  var popupOptions = popupElement.querySelector('[data-gg-options]');
-  var addToCartButton = popupElement.querySelector('[data-gg-add-to-cart]');
-  var popupMessage = popupElement.querySelector('[data-gg-notice]');
-
-  if (!popupOverlay || !popupTitle || !popupImage || !popupPrice || !popupDescription || !popupOptions || !addToCartButton || !popupMessage) {
+document.addEventListener('DOMContentLoaded', function () {
+  /** @type {HTMLElement|null} */
+  var gridSection = /** @type {HTMLElement|null} */ (document.querySelector('[data-gift-guide-grid]'));
+  if (!gridSection) {
     return;
   }
 
-  var currentProduct = null;
-  var currentVariant = null;
-  var selectedOptions = {};
-
-  function lockBodyScroll() {
-    document.body.style.overflow = 'hidden';
+  /** @type {HTMLElement|null} */
+  var popupElement = /** @type {HTMLElement|null} */ (document.getElementById('gift-guide-popup'));
+  if (!popupElement) {
+    return;
   }
 
-  function unlockBodyScroll() {
-    document.body.style.overflow = '';
+  /** @type {HTMLElement|null} */
+  var popupOverlayElement = /** @type {HTMLElement|null} */ (popupElement.querySelector('[data-popup-close]'));
+  /** @type {NodeListOf<HTMLElement>} */
+  var popupCloseButtons = /** @type {NodeListOf<HTMLElement>} */ (popupElement.querySelectorAll('[data-popup-close]'));
+  /** @type {HTMLElement|null} */
+  var popupTitleElement = /** @type {HTMLElement|null} */ (popupElement.querySelector('.gift-guide-popup__title'));
+  /** @type {HTMLImageElement|null} */
+  var popupImageElement = /** @type {HTMLImageElement|null} */ (popupElement.querySelector('.gift-guide-popup__image'));
+  /** @type {HTMLElement|null} */
+  var popupPriceElement = /** @type {HTMLElement|null} */ (popupElement.querySelector('.gift-guide-popup__price'));
+  /** @type {HTMLElement|null} */
+  var popupDescriptionElement = /** @type {HTMLElement|null} */ (popupElement.querySelector('.gift-guide-popup__description'));
+  /** @type {HTMLElement|null} */
+  var popupOptionsElement = /** @type {HTMLElement|null} */ (popupElement.querySelector('[data-popup-options]'));
+  /** @type {HTMLButtonElement|null} */
+  var addToCartButtonElement = /** @type {HTMLButtonElement|null} */ (popupElement.querySelector('[data-add-to-cart]'));
+  /** @type {HTMLElement|null} */
+  var popupMessageElement = /** @type {HTMLElement|null} */ (popupElement.querySelector('[data-popup-message]'));
+
+  if (!popupOverlayElement || !popupTitleElement || !popupImageElement || !popupPriceElement || !popupDescriptionElement || !popupOptionsElement || !addToCartButtonElement || !popupMessageElement) {
+    return;
+  }
+
+  var popup = popupElement;
+  var popupOverlay = popupOverlayElement;
+  var popupTitle = popupTitleElement;
+  var popupImage = popupImageElement;
+  var popupPrice = popupPriceElement;
+  var popupDescription = popupDescriptionElement;
+  var popupOptions = popupOptionsElement;
+  var addToCartButton = addToCartButtonElement;
+  var popupMessage = popupMessageElement;
+  var gridContainer = gridSection;
+  var autoAddProductHandle = /** @type {string} */ (gridContainer.dataset.autoAddProduct || 'soft-winter-jacket');
+  var storeCurrency = /** @type {string} */ (gridContainer.dataset.currency || 'USD');
+
+  /**
+   * @typedef {{ id: number, price: number, available: boolean, options: Array<string> }} VariantObject
+   * @typedef {{
+   *   handle: string,
+   *   title?: string,
+   *   description?: string,
+   *   featured_image?: { src?: string },
+   *   images?: Array<{ src?: string } | string>,
+   *   options: Array<string>,
+   *   variants: Array<VariantObject>
+   * }} ProductObject
+   */
+
+  /** @type {ProductObject|null} */
+  var currentProduct = null;
+  /** @type {VariantObject|null} */
+  var currentVariant = null;
+
+  /**
+   * @param {number} amount
+   * @returns {string}
+   */
+  function formatMoney(amount) {
+    try {
+      return new Intl.NumberFormat(navigator.language || 'en-US', {
+        style: 'currency',
+        currency: storeCurrency,
+      }).format(amount / 100);
+    } catch (error) {
+      return (amount / 100).toFixed(2) + ' ' + storeCurrency;
+    }
   }
 
   function closePopup() {
-    popupElement.classList.remove('gg-modal--open');
-    popupElement.classList.add('gg-modal--closed');
-    popupElement.setAttribute('aria-hidden', 'true');
-    unlockBodyScroll();
+    popup.classList.remove('is-open');
+    popup.setAttribute('aria-hidden', 'true');
     popupMessage.textContent = '';
-    addToCartButton.disabled = true;
-    currentProduct = null;
-    currentVariant = null;
-    selectedOptions = {};
-    popupOptions.innerHTML = '';
+    addToCartButton.disabled = false;
   }
 
   function openPopup() {
-    popupElement.classList.remove('gg-modal--closed');
-    popupElement.classList.add('gg-modal--open');
-    popupElement.setAttribute('aria-hidden', 'false');
-    lockBodyScroll();
+    popup.classList.add('is-open');
+    popup.setAttribute('aria-hidden', 'false');
   }
 
-  function formatMoney(amount, currencyCode) {
-    try {
-      return new Intl.NumberFormat(undefined, {
-        style: 'currency',
-        currency: currencyCode || 'USD',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      }).format(amount / 100);
-    } catch (error) {
-      return '$' + (amount / 100).toFixed(0);
+  /**
+   * @param {Array<string>} selectedOptions
+   * @returns {VariantObject|null}
+   */
+  function findVariant(selectedOptions) {
+    if (!currentProduct) {
+      return null;
     }
-  }
 
-  function getOptionValues(product, index) {
-    if (product.options_with_values && product.options_with_values[index]) {
-      return product.options_with_values[index].values;
-    }
-    return product.variants.reduce(function (values, variant) {
-      var value = variant.options[index];
-      if (!values.includes(value)) values.push(value);
-      return values;
-    }, []);
-  }
-
-  function getMatchingVariant(product, selections) {
-    return product.variants.find(function (variant) {
-      return variant.options.every(function (value, index) {
-        var optionName = product.options[index];
-        return String(selections[optionName] || '').trim() === String(value).trim();
+    return currentProduct.variants.find(function (variant) {
+      return variant.options.every(function (optionValue, idx) {
+        return selectedOptions[idx] === optionValue;
       });
-    });
+    }) || null;
   }
 
-  function updateModalFields(product, variant) {
-    popupTitle.textContent = product.title;
-    popupPrice.textContent = formatMoney(variant.price, gridSection.dataset.ggCurrency || 'USD');
-    popupDescription.textContent = product.description ? product.description.replace(/<[^>]+>/g, '').trim() : '';
-    popupImage.src = product.featured_image ? product.featured_image.src : product.images[0] || '';
-    popupImage.alt = product.title;
-    currentVariant = variant;
-    addToCartButton.disabled = !variant || !variant.available;
-    addToCartButton.textContent = variant && variant.available ? 'ADD TO CART →' : 'SOLD OUT';
-  }
-
-  function markSelectedValues() {
-    popupOptions.querySelectorAll('[data-gg-option-button]').forEach(function (button) {
-      var option = button.dataset.ggOptionName;
-      var value = button.dataset.ggOptionValue;
-      if (selectedOptions[option] === value) {
-        button.classList.add('is-selected');
-      } else {
-        button.classList.remove('is-selected');
-      }
-    });
-    popupOptions.querySelectorAll('select[data-gg-option-name]').forEach(function (select) {
-      var option = select.dataset.ggOptionName;
-      select.value = selectedOptions[option] || '';
-    });
-  }
-
-  function renderOptionFields(product) {
-    selectedOptions = {};
+  function buildOptionSelects() {
     popupOptions.innerHTML = '';
+    if (!currentProduct) {
+      return;
+    }
 
+    var product = currentProduct;
     product.options.forEach(function (optionName, index) {
-      var values = getOptionValues(product, index);
-      var fieldset = document.createElement('fieldset');
-      fieldset.className = 'gg-modal__option';
-      var legend = document.createElement('legend');
-      legend.textContent = optionName;
-      fieldset.appendChild(legend);
+      var optionValues = product.variants
+        .map(function (variant) {
+          return variant.options[index] || '';
+        })
+        .filter(function (value, idx, list) {
+          return value !== '' && list.indexOf(value) === idx;
+        });
 
-      if (optionName.toLowerCase().includes('color')) {
-        var row = document.createElement('div');
-        row.className = 'gg-modal__option-row';
-        values.forEach(function (value) {
+      var optionField = document.createElement('div');
+      optionField.className = 'gift-guide-popup__option';
+
+      var label = document.createElement('label');
+      label.textContent = optionName;
+      optionField.appendChild(label);
+
+      if (optionValues.length > 3) {
+        var select = document.createElement('select');
+        select.dataset.optionIndex = String(index);
+
+        optionValues.forEach(function (value) {
+          var option = document.createElement('option');
+          option.value = value;
+          option.textContent = value;
+          if (currentVariant && currentVariant.options[index] === value) {
+            option.selected = true;
+          }
+          select.appendChild(option);
+        });
+
+        select.addEventListener('change', function () {
+          var selectedOptions = Array.from(
+            /** @type {NodeListOf<HTMLSelectElement>} */ (popupOptions.querySelectorAll('select'))
+          ).map(function (element) {
+            return element.value;
+          });
+
+          var selectedVariant = findVariant(selectedOptions);
+          if (selectedVariant) {
+            currentVariant = selectedVariant;
+            updateVariantDetails();
+          }
+        });
+
+        optionField.appendChild(select);
+      } else {
+        var buttonGroup = document.createElement('div');
+        buttonGroup.className = 'gift-guide-popup__button-group';
+
+        optionValues.forEach(function (value) {
           var button = document.createElement('button');
           button.type = 'button';
-          button.className = 'gg-modal__option-button';
-          button.dataset.ggOptionButton = '';
-          button.dataset.ggOptionName = optionName;
-          button.dataset.ggOptionValue = value;
           button.textContent = value;
+          button.dataset.optionValue = value;
+          if (currentVariant && currentVariant.options[index] === value) {
+            button.classList.add('is-selected');
+          }
+
           button.addEventListener('click', function () {
-            selectedOptions[optionName] = value;
-            var variant = getMatchingVariant(currentProduct, selectedOptions);
-            if (variant) {
-              updateModalFields(currentProduct, variant);
+            var productForEvent = currentProduct;
+            if (!productForEvent) {
+              return;
             }
-            markSelectedValues();
+            var selectedOptions = /** @type {string[]} */ (productForEvent.options.map(function (_, idx) {
+              if (idx === index) {
+                return value;
+              }
+
+              var selectedButton = /** @type {HTMLButtonElement|null} */ (
+                popupOptions.querySelector('.gift-guide-popup__option:nth-child(' + (idx + 1) + ') .gift-guide-popup__button-group button.is-selected')
+              );
+              if (selectedButton) {
+                return selectedButton.dataset.optionValue || '';
+              }
+
+              var selectedSelect = /** @type {HTMLSelectElement|null} */ (
+                popupOptions.querySelector('.gift-guide-popup__option:nth-child(' + (idx + 1) + ') select')
+              );
+              if (selectedSelect) {
+                return selectedSelect.value;
+              }
+
+              return currentVariant ? currentVariant.options[idx] : optionValues[0];
+            }));
+
+            currentVariant = findVariant(selectedOptions);
+            buttonGroup.querySelectorAll('button').forEach(function (btn) {
+              btn.classList.toggle('is-selected', btn === button);
+            });
+            updateVariantDetails();
           });
-          row.appendChild(button);
+
+          buttonGroup.appendChild(button);
         });
-        fieldset.appendChild(row);
-      } else {
-        var select = document.createElement('select');
-        select.dataset.ggOptionName = optionName;
-        select.className = 'gg-modal__option-select';
-        var placeholder = document.createElement('option');
-        placeholder.value = '';
-        placeholder.textContent = 'Choose your ' + optionName.toLowerCase();
-        select.appendChild(placeholder);
-        values.forEach(function (value) {
-          var optionEl = document.createElement('option');
-          optionEl.value = value;
-          optionEl.textContent = value;
-          select.appendChild(optionEl);
-        });
-        select.addEventListener('change', function () {
-          selectedOptions[optionName] = select.value;
-          var variant = getMatchingVariant(currentProduct, selectedOptions);
-          updateModalFields(currentProduct, variant || currentVariant);
-          markSelectedValues();
-        });
-        fieldset.appendChild(select);
+
+        optionField.appendChild(buttonGroup);
       }
 
-      selectedOptions[optionName] = values[0] || '';
-      popupOptions.appendChild(fieldset);
-    });
-
-    currentVariant = getMatchingVariant(product, selectedOptions) || product.variants[0];
-    updateModalFields(product, currentVariant);
-    markSelectedValues();
-  }
-
-  function fetchProduct(handle) {
-    return fetch('/products/' + encodeURIComponent(handle) + '.js').then(function (res) {
-      if (!res.ok) {
-        throw new Error('Product fetch failed');
-      }
-      return res.json();
+      popupOptions.appendChild(optionField);
     });
   }
 
+  function updateVariantDetails() {
+    if (!currentVariant) {
+      popupPrice.textContent = '';
+      addToCartButton.disabled = true;
+      return;
+    }
+
+    popupPrice.textContent = formatMoney(currentVariant.price);
+    addToCartButton.disabled = !currentVariant.available;
+    addToCartButton.textContent = currentVariant.available ? 'Add to cart' : 'Sold out';
+  }
+
+  /**
+   * @param {ProductObject} product
+   */
   function renderPopup(product) {
     currentProduct = product;
-    currentVariant = (product.variants && product.variants.find(function (variant) {
+    currentVariant = product.variants.find(function (variant) {
       return variant.available;
-    })) || (product.variants && product.variants[0]) || null;
+    }) || product.variants[0] || null;
 
-    popupTitle.textContent = product.title || '';
-    popupDescription.textContent = product.description || '';
-    var featuredImage = typeof product.featured_image === 'string'
-      ? product.featured_image
-      : product.featured_image && product.featured_image.src;
-    popupImage.src = featuredImage || (product.images && product.images[0]) || '';
-    popupImage.alt = product.title || '';
+    popupTitle.textContent = product.title || 'Product';
+    popupDescription.textContent = product.description || 'No description available.';
+    popupImage.src =
+      (product.featured_image && product.featured_image.src) ||
+      (product.images && product.images[0] && (typeof product.images[0] === 'string' ? product.images[0] : product.images[0].src)) ||
+      '';
+    popupImage.alt = product.title || 'Product image';
 
-    renderOptionFields(product);
+    buildOptionSelects();
+    updateVariantDetails();
     openPopup();
   }
 
-  function addToCart(item) {
-    return fetch('/cart/add.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(item)
-    }).then(function (res) {
-      if (!res.ok) {
-        throw new Error('Cart add failed');
-      }
-      return res.json();
-    });
-  }
-
-  addToCartButton.addEventListener('click', function () {
-    if (!currentVariant) return;
-    addToCartButton.disabled = true;
-    popupMessage.textContent = 'Adding to cart...';
-
-    addToCart({ id: currentVariant.id, quantity: 1 })
-      .then(function () {
-        popupMessage.textContent = 'Added to cart!';
-        setTimeout(closePopup, 1200);
-      })
-      .catch(function () {
-        popupMessage.textContent = 'Error adding to cart';
-        addToCartButton.disabled = false;
-      });
-  });
-
-  popupCloseButtons.forEach(function (button) {
-    button.addEventListener('click', function (event) {
-      event.preventDefault();
-      closePopup();
-    });
-  });
-
-  popupOverlay.addEventListener('click', closePopup);
-
-  document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape' && popupElement.classList.contains('gg-modal--open')) {
-      closePopup();
-    }
-  });
-
-  gridSection.querySelectorAll('[data-product-handle]').forEach(function (card) {
-    card.addEventListener('click', function (event) {
-      event.preventDefault();
-      var handle = card.dataset.productHandle;
-      popupMessage.textContent = 'Loading...';
-      fetchProduct(handle)
-        .then(renderPopup)
-        .catch(function () {
-          popupMessage.textContent = 'Error loading product';
-        });
-    });
-  });
-});
+  /**
+   * @param {string} message
    */
   function showMessage(message) {
     popupMessage.textContent = message;
