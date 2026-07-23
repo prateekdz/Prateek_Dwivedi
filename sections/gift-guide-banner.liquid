@@ -1,0 +1,61 @@
+<section class="gift-banner" aria-label="Gift Banner">
+  <div class="gift-banner__topbar">
+    <div class="gift-banner__logo">{{ section.settings.logo_text }}</div>
+    <p class="gift-banner__tagline">{{ section.settings.topbar_text }}</p>
+    <a class="gift-banner__button" href="{{ section.settings.topbar_button_link }}">
+      <span>{{ section.settings.topbar_button_label }}</span>
+      <span class="gift-banner__button-arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+
+  <div class="gift-banner__hero">
+    {% if section.settings.background_image != blank %}
+      {% assign background_image_url = section.settings.background_image | image_url: width: 3200 %}
+    {% else %}
+      {% assign background_image_url = 'gift-guide-banner.svg' | asset_url %}
+    {% endif %}
+
+    <img
+      class="gift-banner__background-image"
+      src="{{ background_image_url }}"
+      alt=""
+      loading="lazy"
+    >
+
+    <div class="gift-banner__card">
+      <div class="gift-banner__card-inner">
+        <h1 class="gift-banner__title">{{ section.settings.heading }}</h1>
+        <p class="gift-banner__description">{{ section.settings.description | newline_to_br }}</p>
+        <a class="gift-banner__shop-now" href="{{ section.settings.cta_link }}">
+          <span>{{ section.settings.cta_label }}</span>
+          <span class="gift-banner__button-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="gift-banner__footer">
+    <p>{{ section.settings.bottom_text }}</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Gift Guide Banner",
+  "settings": [
+    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "TISSO VISON" },
+    { "type": "text", "id": "topbar_text", "label": "Top bar text", "default": "Find the ideal gift for your loved ones." },
+    { "type": "text", "id": "topbar_button_label", "label": "Top bar button label", "default": "CHOOSE GIFT" },
+    { "type": "url", "id": "topbar_button_link", "label": "Top bar button link", "default": "#gift-product-grid" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Gift Guide" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season." },
+    { "type": "text", "id": "cta_label", "label": "CTA button label", "default": "SHOP NOW" },
+    { "type": "url", "id": "cta_link", "label": "CTA button link", "default": "#gift-product-grid" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "text", "id": "bottom_text", "label": "Bottom bar text", "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL" }
+  ],
+  "presets": [
+    { "name": "Gift Guide Banner" }
+  ]
+}
+{% endschema %}

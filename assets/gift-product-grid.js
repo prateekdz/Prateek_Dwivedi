@@ -1,9 +1,14 @@
 function initGiftProductGrid() {
+  if (window.__giftProductGridInitialized) {
+    return;
+  }
+
+  window.__giftProductGridInitialized = true;
+
   var gridSection = document.querySelector('[data-gp-grid]');
   var modal = document.querySelector('[data-gp-modal]');
 
   if (!gridSection || !modal) {
-    console.log('Gift Product Grid: required elements not found');
     return;
   }
 
