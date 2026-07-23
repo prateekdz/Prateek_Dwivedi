@@ -161,7 +161,7 @@ button, a {
 
 .gg-banner__illustration-copy {
   position: absolute;
-  top: 14%;
+  top: 12%;
   right: 8%;
   left: auto;
   width: min(36vw, 520px);
@@ -192,13 +192,10 @@ button, a {
   position: absolute;
   left: 64px;
   bottom: 88px;
-  z-index: 2;
+  z-index: 1;
   max-width: 560px;
   width: clamp(320px, 40vw, 560px);
-  padding: 44px 40px;
-  background: rgba(255, 255, 255, 0.96);
-  border-radius: 28px;
-  box-shadow: 0 40px 120px rgba(17, 17, 17, 0.08);
+  color: #111;
 }
 
 .gg-banner__heading {
