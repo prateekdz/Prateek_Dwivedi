@@ -5,7 +5,7 @@
       "settings": {}
     },
     "gift_guide_grid": {
-      "type": "gift-guide-grid",
+      "type": "custom-gift-grid",
       "settings": {
         "section_heading": "Tisso vison in the wild"
       },
