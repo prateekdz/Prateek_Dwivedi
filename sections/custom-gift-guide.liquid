@@ -1,0 +1,75 @@
+{{ 'custom-gift-guide.css.liquid' | asset_url | stylesheet_tag }}
+
+<div class="cgg" data-cgg>
+
+  {%- comment -%} ── HEADER ── {%- endcomment -%}
+  <header class="cgg__header">
+    <span class="cgg__header-logo">{{ section.settings.logo_text }}</span>
+    <p class="cgg__header-tagline">{{ section.settings.header_tagline }}</p>
+    <a class="cgg__header-cta" href="{{ section.settings.header_cta_link }}">
+      {{ section.settings.header_cta_label }}&nbsp;&nbsp;→
+    </a>
+  </header>
+
+  {%- comment -%} ── HERO ── {%- endcomment -%}
+  <section class="cgg__hero" aria-label="Gift Guide Hero">
+
+    {%- comment -%} Full-bleed background pattern {%- endcomment -%}
+    <div class="cgg__hero-bg" aria-hidden="true">
+      {%- if section.settings.bg_image != blank -%}
+        <img
+          class="cgg__hero-bg-img"
+          src="{{ section.settings.bg_image | image_url: width: 2400 }}"
+          alt=""
+          loading="eager"
+          fetchpriority="high"
+        >
+      {%- else -%}
+        <img
+          class="cgg__hero-bg-img"
+          src="{{ 'gift-guide-banner.svg' | asset_url }}"
+          alt=""
+          loading="eager"
+          fetchpriority="high"
+        >
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Overlay card — bottom left {%- endcomment -%}
+    <div class="cgg__card">
+      <h1 class="cgg__card-title">{{ section.settings.card_title }}</h1>
+      <p class="cgg__card-desc">{{ section.settings.card_desc }}</p>
+      <a class="cgg__card-cta" href="{{ section.settings.card_cta_link }}">
+        {{ section.settings.card_cta_label }}&nbsp;&nbsp;→
+      </a>
+    </div>
+
+    {%- comment -%} Bottom strip {%- endcomment -%}
+    <div class="cgg__strip" aria-label="Sustainability note">
+      <span class="cgg__strip-text">{{ section.settings.strip_text }}</span>
+    </div>
+
+  </section>
+
+</div>
+
+{% schema %}
+{
+  "name": "Custom Gift Guide",
+  "settings": [
+    { "type": "text",         "id": "logo_text",        "label": "Logo",                  "default": "TISSO VISION" },
+    { "type": "text",         "id": "header_tagline",   "label": "Header tagline",        "default": "Find the ideal gift for your loved ones." },
+    { "type": "text",         "id": "header_cta_label", "label": "Header CTA label",      "default": "CHOOSE GIFT" },
+    { "type": "url",          "id": "header_cta_link",  "label": "Header CTA link" },
+    { "type": "image_picker", "id": "bg_image",         "label": "Hero background image (leave blank to use default SVG)" },
+    { "type": "text",         "id": "card_title",       "label": "Card title",            "default": "The Gift Guide" },
+    { "type": "textarea",     "id": "card_desc",        "label": "Card description",      "default": "Discover Joy: Your Ultimate Holiday Gift Destination.\nExplore our curated selection and find the perfect gifts to delight your loved ones this holiday season." },
+    { "type": "text",         "id": "card_cta_label",   "label": "Card CTA label",        "default": "SHOP NOW" },
+    { "type": "url",          "id": "card_cta_link",    "label": "Card CTA link" },
+    { "type": "text",         "id": "strip_text",       "label": "Bottom strip text",     "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL" }
+  ],
+  "presets": [
+    { "name": "Custom Gift Guide" }
+  ]
+}
+{% endschema %}
