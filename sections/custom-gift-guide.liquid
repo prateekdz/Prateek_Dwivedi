@@ -1,6 +1,7 @@
 {%- style -%}
 /* ── RESET ── */
-body[data-template="page.gift-guide"] .shopify-section{display:block!important;margin:0!important;padding:0!important}
+body[data-template="page.gift-guide"] .shopify-section,
+body[data-template="index"] .shopify-section{display:block!important;margin:0!important;padding:0!important}
 
 /* ── WRAP ── */
 .cgg-wrap{display:block;width:100%;font-family:'Poppins',sans-serif;color:#000;-webkit-font-smoothing:antialiased;background:#fff}
@@ -127,7 +128,6 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
 {%- endstyle -%}
 
 {%- assign bg_svg = 'gift-guide-banner.svg' | asset_url -%}
-{%- assign default_product_handles = 'led-high-tops,striped-skirt-and-top,red-sports-tee,blue-silk-tuxedo,olive-green-jacket,white-cotton-shirt' | split: ',' -%}
 {%- if section.settings.bg_image != blank -%}
   {%- assign bg_src = section.settings.bg_image | image_url: width: 2400 -%}
   {%- assign use_svg = false -%}
@@ -195,12 +195,6 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
       {%- for block in section.blocks -%}
         {%- if block.type == 'hotspot_image' -%}
           {%- assign grid_product = block.settings.product -%}
-          {%- if grid_product == blank -%}
-            {%- assign default_product_handle = default_product_handles[forloop.index0] -%}
-            {%- if default_product_handle != blank -%}
-              {%- assign grid_product = all_products[default_product_handle] -%}
-            {%- endif -%}
-          {%- endif -%}
           {%- assign grid_image = block.settings.image -%}
           {%- comment -%} Resolve image: block image > product featured_media preview > product image media > fallback collection product. {%- endcomment -%}
           {%- if grid_image != blank -%}
@@ -298,11 +292,6 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
       {%- assign product = block.settings.product -%}
       {%- if product == blank and section.settings.fallback_collection != blank -%}
         {%- assign product = section.settings.fallback_collection.products[forloop.index0] -%}
-      {%- elsif product == blank -%}
-        {%- assign default_product_handle = default_product_handles[forloop.index0] -%}
-        {%- if default_product_handle != blank -%}
-          {%- assign product = all_products[default_product_handle] -%}
-        {%- endif -%}
       {%- endif -%}
       <div class="cgg-popup-overlay" id="cgg-popup-{{ block.id }}" role="dialog" aria-modal="true" aria-label="{{ product.title | default: block.settings.hotspot_label | escape }}">
         <div class="cgg-popup">
@@ -399,11 +388,6 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
       {%- assign debug_product = block.settings.product -%}
       {%- if debug_product == blank and section.settings.fallback_collection != blank -%}
         {%- assign debug_product = section.settings.fallback_collection.products[forloop.index0] -%}
-      {%- elsif debug_product == blank -%}
-        {%- assign default_product_handle = default_product_handles[forloop.index0] -%}
-        {%- if default_product_handle != blank -%}
-          {%- assign debug_product = all_products[default_product_handle] -%}
-        {%- endif -%}
       {%- endif -%}
       {%- assign debug_first_image_url = nil -%}
       {%- if debug_product.featured_media.preview_image != blank -%}

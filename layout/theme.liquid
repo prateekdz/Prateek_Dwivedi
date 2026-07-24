@@ -32,15 +32,24 @@
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
 
-    {% if template == 'page.gift-guide' %}
+    {% if template == 'page.gift-guide' or template == 'index' %}
     <style>
-      html:has(body[data-template="page.gift-guide"]) { height:auto!important; overflow:auto!important; }
-      body[data-template="page.gift-guide"] { overflow-y:auto!important; height:auto!important; }
-      body[data-template="page.gift-guide"] .page-wrapper { height:auto!important; overflow:visible!important; overflow-x:hidden!important; display:block!important; }
-      body[data-template="page.gift-guide"] #MainContent, body[data-template="page.gift-guide"] .content-for-layout { display:block!important; flex:none!important; padding:0!important; margin:0!important; }
-      body[data-template="page.gift-guide"] .shopify-section { margin:0!important; padding:0!important; display:block!important; }
-      body[data-template="page.gift-guide"] #header-group { display:none!important; }
-      body[data-template="page.gift-guide"] footer { display:none!important; }
+      html:has(body[data-template="page.gift-guide"]),
+      html:has(body[data-template="index"]) { height:auto!important; overflow:auto!important; }
+      body[data-template="page.gift-guide"],
+      body[data-template="index"] { overflow-y:auto!important; height:auto!important; }
+      body[data-template="page.gift-guide"] .page-wrapper,
+      body[data-template="index"] .page-wrapper { height:auto!important; overflow:visible!important; overflow-x:hidden!important; display:block!important; }
+      body[data-template="page.gift-guide"] #MainContent,
+      body[data-template="page.gift-guide"] .content-for-layout,
+      body[data-template="index"] #MainContent,
+      body[data-template="index"] .content-for-layout { display:block!important; flex:none!important; padding:0!important; margin:0!important; }
+      body[data-template="page.gift-guide"] .shopify-section,
+      body[data-template="index"] .shopify-section { margin:0!important; padding:0!important; display:block!important; }
+      body[data-template="page.gift-guide"] #header-group,
+      body[data-template="index"] #header-group { display:none!important; }
+      body[data-template="page.gift-guide"] footer,
+      body[data-template="index"] footer { display:none!important; }
     </style>
     {% endif %}
 
