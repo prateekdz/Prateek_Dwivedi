@@ -30,7 +30,7 @@
     {% if template == 'index' or template == 'page.gift-guide' or template contains 'gift-guide' or page_template == 'gift-guide' or request.path contains 'gift-guide' %}
       {% assign is_gift_guide = true %}
     {% endif %}
-    {% if is_gift_guide %}
+    {% if is_gift_guide or content_for_layout contains 'gg-banner' %}
       <link rel="stylesheet" href="{{ 'gift-guide.css' | asset_url }}">
     {% endif %}
 
