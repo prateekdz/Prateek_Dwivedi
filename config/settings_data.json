@@ -1,1 +1,27 @@
-{"current":{"page_width":1200},"presets":{"Default":{"page_width":1200}}}
+{
+  "current": {
+    "page_width": "normal",
+    "colors_text": "#121212",
+    "colors_background_1": "#FFFFFF",
+    "colors_background_2": "#F3F3F3",
+    "colors_solid_button_labels": "#FFFFFF",
+    "colors_button_background_1": "#121212",
+    "colors_button_background_2": "#FFFFFF",
+    "colors_button_border_2": "#121212",
+    "colors_overlay_text": "#FFFFFF",
+    "colors_image_overlay": "#000000",
+    "colors_accent_1": "#121212",
+    "colors_accent_2": "#6D6D6D",
+    "type_header_font": "playfair_display_n4",
+    "type_body_font": "poppins_n4",
+    "heading_scale": 100,
+    "body_scale": 100,
+    "quick_add": false,
+    "mobile_quick_add": false
+  },
+  "presets": {
+    "Default": {
+      "page_width": "normal"
+    }
+  }
+}
