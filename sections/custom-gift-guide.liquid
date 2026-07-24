@@ -39,7 +39,8 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
 .cgg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .cgg-grid-item{position:relative;overflow:hidden;aspect-ratio:290/310;background:#d0d0d0;cursor:pointer}
 .cgg-grid-item img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
-.cgg-grid-item svg.cgg-placeholder{width:100%;height:100%;display:block}
+.cgg-grid-item .cgg-grid-img-hover{position:absolute;inset:0;opacity:0;transition:opacity .2s ease}
+.cgg-grid-item:hover .cgg-grid-img-hover{opacity:1}
 
 /* ── HOTSPOT ── */
 .cgg-hotspot{position:absolute;z-index:10;transform:translate(-50%,-50%);cursor:pointer}
@@ -126,6 +127,7 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
 {%- endstyle -%}
 
 {%- assign bg_svg = 'gift-guide-banner.svg' | asset_url -%}
+{%- assign default_product_handles = 'led-high-tops,striped-skirt-and-top,red-sports-tee,blue-silk-tuxedo,olive-green-jacket,white-cotton-shirt' | split: ',' -%}
 {%- if section.settings.bg_image != blank -%}
   {%- assign bg_src = section.settings.bg_image | image_url: width: 2400 -%}
   {%- assign use_svg = false -%}
@@ -193,14 +195,26 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
       {%- for block in section.blocks -%}
         {%- if block.type == 'hotspot_image' -%}
           {%- assign grid_product = block.settings.product -%}
+          {%- if grid_product == blank -%}
+            {%- assign default_product_handle = default_product_handles[forloop.index0] -%}
+            {%- if default_product_handle != blank -%}
+              {%- assign grid_product = all_products[default_product_handle] -%}
+            {%- endif -%}
+          {%- endif -%}
           {%- assign grid_image = block.settings.image -%}
-          {%- comment -%} Resolve image: block image > product featured_image > product media.first > fallback collection product > placeholder {%- endcomment -%}
+          {%- comment -%} Resolve image: block image > product featured_media preview > product image media > fallback collection product. {%- endcomment -%}
           {%- if grid_image != blank -%}
             {%- assign resolved_img = grid_image -%}
             {%- assign resolved_img_src = grid_image | image_url: width: 900 -%}
             {%- assign resolved_img_alt = grid_image.alt | default: '' -%}
             {%- assign resolved_img_w = grid_image.width -%}
             {%- assign resolved_img_h = grid_image.height -%}
+          {%- elsif grid_product != blank and grid_product.featured_media.preview_image != blank -%}
+            {%- assign resolved_img = grid_product.featured_media.preview_image -%}
+            {%- assign resolved_img_src = grid_product.featured_media.preview_image | image_url: width: 900 -%}
+            {%- assign resolved_img_alt = grid_product.title | escape -%}
+            {%- assign resolved_img_w = grid_product.featured_media.preview_image.width -%}
+            {%- assign resolved_img_h = grid_product.featured_media.preview_image.height -%}
           {%- elsif grid_product != blank and grid_product.featured_image != blank -%}
             {%- assign resolved_img = grid_product.featured_image -%}
             {%- assign resolved_img_src = grid_product.featured_image | image_url: width: 900 -%}
@@ -228,17 +242,39 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
           {%- else -%}
             {%- assign resolved_img = nil -%}
           {%- endif -%}
+          {%- assign hover_img = nil -%}
+          {%- assign hover_img_src = nil -%}
+          {%- if grid_product != blank and resolved_img != nil -%}
+            {%- for media in grid_product.media -%}
+              {%- if media.preview_image != blank and media.preview_image.id != resolved_img.id -%}
+                {%- assign hover_img = media.preview_image -%}
+                {%- assign hover_img_src = media.preview_image | image_url: width: 900 -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
           <div class="cgg-grid-item" {{ block.shopify_attributes }}>
             {%- if resolved_img != nil -%}
               <img
+                class="cgg-grid-img-primary"
                 src="{{ resolved_img_src }}"
                 alt="{{ resolved_img_alt }}"
                 loading="lazy"
                 width="{{ resolved_img_w | default: 900 }}"
                 height="{{ resolved_img_h | default: 900 }}"
               >
+              {%- if hover_img != nil -%}
+                <img
+                  class="cgg-grid-img-hover"
+                  src="{{ hover_img_src }}"
+                  alt="{{ resolved_img_alt }}"
+                  loading="lazy"
+                  width="{{ hover_img.width | default: 900 }}"
+                  height="{{ hover_img.height | default: 900 }}"
+                >
+              {%- endif -%}
             {%- else -%}
-              {{ 'image' | placeholder_svg_tag: 'cgg-placeholder' }}
+              <span class="visually-hidden">No product image available</span>
             {%- endif -%}
             <div
               class="cgg-hotspot"
@@ -262,6 +298,11 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
       {%- assign product = block.settings.product -%}
       {%- if product == blank and section.settings.fallback_collection != blank -%}
         {%- assign product = section.settings.fallback_collection.products[forloop.index0] -%}
+      {%- elsif product == blank -%}
+        {%- assign default_product_handle = default_product_handles[forloop.index0] -%}
+        {%- if default_product_handle != blank -%}
+          {%- assign product = all_products[default_product_handle] -%}
+        {%- endif -%}
       {%- endif -%}
       <div class="cgg-popup-overlay" id="cgg-popup-{{ block.id }}" role="dialog" aria-modal="true" aria-label="{{ product.title | default: block.settings.hotspot_label | escape }}">
         <div class="cgg-popup">
@@ -269,7 +310,10 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
 
           {%- if product != blank -%}
             {%- assign popup_img_src = nil -%}
-            {%- if product.featured_image != blank -%}
+            {%- if product.featured_media.preview_image != blank -%}
+              {%- assign popup_img_src = product.featured_media.preview_image | image_url: width: 240 -%}
+              {%- assign popup_img_alt = product.title | escape -%}
+            {%- elsif product.featured_image != blank -%}
               {%- assign popup_img_src = product.featured_image | image_url: width: 240 -%}
               {%- assign popup_img_alt = product.title | escape -%}
             {%- elsif product.media != empty -%}
@@ -289,7 +333,7 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
                   height="120"
                 >
               {%- else -%}
-                <div class="cgg-popup-img">{{ 'product-1' | placeholder_svg_tag }}</div>
+                <div class="cgg-popup-img" aria-hidden="true"></div>
               {%- endif -%}
               <div class="cgg-popup-info">
                 <p class="cgg-popup-name">{{ product.title }}</p>
@@ -347,9 +391,125 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
 
 </div>
 
+<script type="application/json" id="cgg-products-debug-{{ section.id }}">
+[
+  {%- assign debug_index = 0 -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'hotspot_image' -%}
+      {%- assign debug_product = block.settings.product -%}
+      {%- if debug_product == blank and section.settings.fallback_collection != blank -%}
+        {%- assign debug_product = section.settings.fallback_collection.products[forloop.index0] -%}
+      {%- elsif debug_product == blank -%}
+        {%- assign default_product_handle = default_product_handles[forloop.index0] -%}
+        {%- if default_product_handle != blank -%}
+          {%- assign debug_product = all_products[default_product_handle] -%}
+        {%- endif -%}
+      {%- endif -%}
+      {%- assign debug_first_image_url = nil -%}
+      {%- if debug_product.featured_media.preview_image != blank -%}
+        {%- assign debug_first_image_url = debug_product.featured_media.preview_image | image_url: width: 900 -%}
+      {%- elsif debug_product.featured_image != blank -%}
+        {%- assign debug_first_image_url = debug_product.featured_image | image_url: width: 900 -%}
+      {%- elsif debug_product.media.first.preview_image != blank -%}
+        {%- assign debug_first_image_url = debug_product.media.first.preview_image | image_url: width: 900 -%}
+      {%- endif -%}
+      {%- unless debug_index == 0 -%},{%- endunless -%}
+      {
+        "blockId": {{ block.id | json }},
+        "product": {
+          "id": {{ debug_product.id | json }},
+          "handle": {{ debug_product.handle | json }},
+          "title": {{ debug_product.title | json }},
+          "featured_image": {{ debug_product.featured_image | json }},
+          "images": {{ debug_product.images | json }},
+          "media": {{ debug_product.media | json }},
+          "featuredMedia": {{ debug_product.featured_media | json }},
+          "featuredImage": {{ debug_product.featured_image | json }},
+          "firstImageUrl": {{ debug_first_image_url | json }},
+          "ajaxUrl": {{ debug_product.url | append: '.js' | json }}
+        },
+        "graphqlResponse": "No Storefront GraphQL query is used by this Liquid theme section.",
+        "storefrontApiResponse": null
+      }
+      {%- assign debug_index = debug_index | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+]
+</script>
+
 <script>
 (function(){
   'use strict';
+
+  var debugEl = document.getElementById('cgg-products-debug-{{ section.id }}');
+  if (debugEl) {
+    try {
+      var debugProducts = JSON.parse(debugEl.textContent || '[]');
+      console.log('[Custom Gift Guide] GraphQL response:', 'No Storefront GraphQL query is present. This Shopify theme renders products through Liquid and validates product JSON through /products/{handle}.js.');
+      debugProducts.forEach(function(entry, index) {
+        var product = entry.product || {};
+        var firstImageUrl = product.firstImageUrl;
+        console.group('[Custom Gift Guide] Product image trace #' + (index + 1));
+        console.log('product.id', product.id);
+        console.log('product.title', product.title);
+        console.log('product.featured_image', product.featured_image);
+        console.log('product.images', product.images);
+        console.log('product.media', product.media);
+        console.log('product.featuredMedia', product.featuredMedia);
+        console.log('product.featuredImage', product.featuredImage);
+        console.log('first image URL', firstImageUrl);
+        console.log('GraphQL response', entry.graphqlResponse);
+        console.log('Storefront API response', entry.storefrontApiResponse);
+
+        if (!firstImageUrl) {
+          console.error('Image URL is missing/null/undefined/empty for product', product);
+          console.groupEnd();
+          return;
+        }
+
+        fetch(firstImageUrl, { method: 'HEAD' })
+          .then(function(response) {
+            console.log('Image URL HEAD status', response.status, response.ok ? 'OK' : 'BROKEN');
+            console.log('Image URL content-type', response.headers.get('content-type'));
+          })
+          .catch(function(error) {
+            console.error('Image URL HEAD failed', error);
+          });
+
+        var probe = new Image();
+        probe.onload = function() {
+          console.log('Image opens in browser', true);
+          console.log('naturalWidth', probe.naturalWidth);
+          console.log('naturalHeight', probe.naturalHeight);
+        };
+        probe.onerror = function(error) {
+          console.error('Image failed to open directly in browser', error);
+        };
+        probe.src = firstImageUrl;
+
+        if (product.ajaxUrl) {
+          fetch(product.ajaxUrl)
+            .then(function(response) {
+              console.log('Storefront API response status', response.status, response.ok ? 'OK' : 'BROKEN');
+              return response.json();
+            })
+            .then(function(data) {
+              console.log('Storefront API response', data);
+              console.log('Storefront featured_image', data.featured_image);
+              console.log('Storefront images', data.images);
+              console.log('Storefront media', data.media);
+            })
+            .catch(function(error) {
+              console.error('Storefront API response failed', error);
+            });
+        }
+
+        console.groupEnd();
+      });
+    } catch (error) {
+      console.error('[Custom Gift Guide] Failed to parse product debug payload', error);
+    }
+  }
 
   // ── Open popup ──
   document.querySelectorAll('.cgg-hotspot-btn').forEach(function(btn){
