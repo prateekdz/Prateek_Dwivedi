@@ -1,1 +1,16 @@
-{%- comment -%} Quick add modal placeholder — rendered when settings.quick_add or settings.mobile_quick_add is enabled {%- endcomment -%}
+<quick-add-dialog id="quick-add-dialog">
+  <dialog
+    ref="dialog"
+    class="quick-add-modal"
+    aria-label="{{ 'accessibility.quick_add' | t | default: 'Quick add' }}"
+  >
+    <button
+      class="quick-add-modal__close button button--tertiary"
+      on:click="dialog-component/closeDialog"
+      aria-label="{{ 'accessibility.close' | t | default: 'Close' }}"
+    >
+      {{- 'icon-close.svg' | inline_asset_content -}}
+    </button>
+    <div id="quick-add-modal-content" class="quick-add-modal__content"></div>
+  </dialog>
+</quick-add-dialog>

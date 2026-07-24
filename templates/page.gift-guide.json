@@ -11,7 +11,16 @@
         "block_6": { "type": "hotspot_image", "settings": { "hotspot_label": "Shop this look", "hotspot_x": 72, "hotspot_y": 68 } }
       },
       "block_order": ["block_1", "block_2", "block_3", "block_4", "block_5", "block_6"],
-      "settings": {}
+      "settings": {
+        "logo_text": "TISSO VISON",
+        "header_tagline": "Find the ideal gift for your loved ones.",
+        "header_cta_label": "CHOOSE GIFT",
+        "card_title": "The Gift Guide",
+        "card_desc": "Discover Joy: Your Ultimate Holiday Gift Destination.\nExplore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+        "card_cta_label": "SHOP NOW",
+        "strip_text": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL",
+        "wild_title": "Tisso vison in the wild"
+      }
     }
   },
   "order": ["custom_gift_guide"]

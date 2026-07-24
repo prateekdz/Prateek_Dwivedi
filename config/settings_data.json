@@ -16,8 +16,8 @@
     "type_body_font": "poppins_n4",
     "heading_scale": 100,
     "body_scale": 100,
-    "quick_add": false,
-    "mobile_quick_add": false
+    "quick_add": true,
+    "mobile_quick_add": true
   },
   "presets": {
     "Default": {

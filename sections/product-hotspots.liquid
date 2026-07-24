@@ -90,7 +90,7 @@
   .section-product-hotspots__content {
     position: relative;
     aspect-ratio: var(--ratio, 21 / 9);
-    overflow: hidden;
+    overflow: visible;
   }
 
   /* Hide hotspots without products on touch devices (tablets included) */
@@ -193,7 +193,7 @@
     position: absolute;
     inset: 0;
     z-index: var(--layer-flat);
-    overflow: clip;
+    overflow: visible;
   }
 
   .hotspots__background-image {
