@@ -30,7 +30,7 @@
     {% if template == 'index' or template == 'page.gift-guide' or template contains 'gift-guide' or page_template == 'gift-guide' or request.path contains 'gift-guide' %}
       {% assign is_gift_guide = true %}
     {% endif %}
-    {% if is_gift_guide or content_for_layout contains 'gg-banner' %}
+    {% if template == 'index' or is_gift_guide %}
       <link rel="stylesheet" href="{{ 'gift-guide.css' | asset_url }}">
     {% endif %}
 
@@ -98,8 +98,9 @@
         {{ content_for_layout }}
       </main>
 
-      {% if is_gift_guide %}
+      {% if template == 'index' or is_gift_guide %}
         <script src="{{ 'gift-guide.js' | asset_url }}" defer></script>
+        <script src="{{ 'gift-guide-quickview.js' | asset_url }}" defer></script>
       {% endif %}
 
       <footer>
