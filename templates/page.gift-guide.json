@@ -1,34 +1,46 @@
 {
   "sections": {
-    "custom_g": {
-      "type": "tisso-banner",
-      "settings": {}
+    "gift_guide_banner": {
+      "type": "gift-guide-banner",
+      "settings": {
+        "brand_text": "TISSO VISON",
+        "top_text": "Find the ideal gift for your loved ones.",
+        "top_button_text": "CHOOSE GIFT",
+        "top_button_url": "#gift-guide-grid",
+        "hero_heading": "The Gift Guide",
+        "hero_copy": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+        "hero_cta_text": "SHOP NOW",
+        "hero_cta_url": "#gift-guide-grid",
+        "strip_text_desktop": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR",
+        "strip_text_mobile": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
+      }
     },
     "gift_guide_grid": {
-      "type": "custom-gift-grid",
-      "settings": {
-        "section_heading": "Tisso vison in the wild"
-      },
+      "type": "gift-guide-grid",
       "blocks": {
-        "product_block_1": { "type": "product_block", "settings": { "product": "led-high-tops", "hotspot_position": "top-right", "show_dot_markers": false } },
-        "product_block_2": { "type": "product_block", "settings": { "product": "striped-skirt-and-top", "hotspot_position": "top-right", "show_dot_markers": false } },
-        "product_block_3": { "type": "product_block", "settings": { "product": "red-sports-tee", "hotspot_position": "top-right", "show_dot_markers": false } },
-        "product_block_4": { "type": "product_block", "settings": { "product": "blue-silk-tuxedo", "hotspot_position": "center-right", "show_dot_markers": true } },
-        "product_block_5": { "type": "product_block", "settings": { "product": "olive-green-jacket", "hotspot_position": "top-left", "show_dot_markers": false } },
-        "product_block_6": { "type": "product_block", "settings": { "product": "white-cotton-shirt", "hotspot_position": "top-right", "show_dot_markers": false } }
+        "product_card_1": { "type": "product_card", "settings": { "product": "" } },
+        "product_card_2": { "type": "product_card", "settings": { "product": "" } },
+        "product_card_3": { "type": "product_card", "settings": { "product": "" } },
+        "product_card_4": { "type": "product_card", "settings": { "product": "" } },
+        "product_card_5": { "type": "product_card", "settings": { "product": "" } },
+        "product_card_6": { "type": "product_card", "settings": { "product": "" } }
       },
       "block_order": [
-        "product_block_1",
-        "product_block_2",
-        "product_block_3",
-        "product_block_4",
-        "product_block_5",
-        "product_block_6"
-      ]
+        "product_card_1",
+        "product_card_2",
+        "product_card_3",
+        "product_card_4",
+        "product_card_5",
+        "product_card_6"
+      ],
+      "settings": {
+        "heading": "Tisso vison in the wild",
+        "auto_add_product": ""
+      }
     }
   },
   "order": [
-    "custom_gift_guide",
+    "gift_guide_banner",
     "gift_guide_grid"
   ]
 }
