@@ -194,7 +194,7 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
         {%- if block.type == 'hotspot_image' -%}
           {%- assign grid_product = block.settings.product -%}
           {%- assign grid_image = block.settings.image -%}
-          {%- comment -%} Resolve image: block image > product featured_image > product media.first > placeholder {%- endcomment -%}
+          {%- comment -%} Resolve image: block image > product featured_image > product media.first > fallback collection product > placeholder {%- endcomment -%}
           {%- if grid_image != blank -%}
             {%- assign resolved_img = grid_image -%}
             {%- assign resolved_img_src = grid_image | image_url: width: 900 -%}
@@ -208,11 +208,23 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
             {%- assign resolved_img_w = grid_product.featured_image.width -%}
             {%- assign resolved_img_h = grid_product.featured_image.height -%}
           {%- elsif grid_product != blank and grid_product.media != empty -%}
-            {%- assign resolved_img = grid_product.media.first -%}
-            {%- assign resolved_img_src = grid_product.media.first | image_url: width: 900 -%}
+            {%- assign resolved_img = grid_product.media.first.preview_image -%}
+            {%- assign resolved_img_src = grid_product.media.first.preview_image | image_url: width: 900 -%}
             {%- assign resolved_img_alt = grid_product.title | escape -%}
             {%- assign resolved_img_w = grid_product.media.first.preview_image.width -%}
             {%- assign resolved_img_h = grid_product.media.first.preview_image.height -%}
+          {%- elsif section.settings.fallback_collection != blank -%}
+            {%- assign fallback_product = section.settings.fallback_collection.products[forloop.index0] -%}
+            {%- if fallback_product != blank and fallback_product.featured_image != blank -%}
+              {%- assign resolved_img = fallback_product.featured_image -%}
+              {%- assign resolved_img_src = fallback_product.featured_image | image_url: width: 900 -%}
+              {%- assign resolved_img_alt = fallback_product.title | escape -%}
+              {%- assign resolved_img_w = fallback_product.featured_image.width -%}
+              {%- assign resolved_img_h = fallback_product.featured_image.height -%}
+              {%- assign grid_product = fallback_product -%}
+            {%- else -%}
+              {%- assign resolved_img = nil -%}
+            {%- endif -%}
           {%- else -%}
             {%- assign resolved_img = nil -%}
           {%- endif -%}
@@ -248,6 +260,9 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
   {%- for block in section.blocks -%}
     {%- if block.type == 'hotspot_image' -%}
       {%- assign product = block.settings.product -%}
+      {%- if product == blank and section.settings.fallback_collection != blank -%}
+        {%- assign product = section.settings.fallback_collection.products[forloop.index0] -%}
+      {%- endif -%}
       <div class="cgg-popup-overlay" id="cgg-popup-{{ block.id }}" role="dialog" aria-modal="true" aria-label="{{ product.title | default: block.settings.hotspot_label | escape }}">
         <div class="cgg-popup">
           <button class="cgg-popup-close" aria-label="Close">✕</button>
@@ -258,7 +273,7 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
               {%- assign popup_img_src = product.featured_image | image_url: width: 240 -%}
               {%- assign popup_img_alt = product.title | escape -%}
             {%- elsif product.media != empty -%}
-              {%- assign popup_img_src = product.media.first | image_url: width: 240 -%}
+              {%- assign popup_img_src = product.media.first.preview_image | image_url: width: 240 -%}
               {%- assign popup_img_alt = product.title | escape -%}
             {%- elsif block.settings.image != blank -%}
               {%- assign popup_img_src = block.settings.image | image_url: width: 240 -%}
@@ -428,7 +443,8 @@ body[data-template="page.gift-guide"] .shopify-section{display:block!important;m
     { "type": "text",         "id": "card_cta_label",   "label": "Card CTA label",    "default": "SHOP NOW" },
     { "type": "url",          "id": "card_cta_link",    "label": "Card CTA link" },
     { "type": "text",         "id": "strip_text",       "label": "Bottom strip text", "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL" },
-    { "type": "text",         "id": "wild_title",       "label": "Grid section title","default": "Tisso vison in the wild" }
+    { "type": "text",         "id": "wild_title",       "label": "Grid section title","default": "Tisso vison in the wild" },
+    { "type": "collection",   "id": "fallback_collection", "label": "Fallback collection (used when blocks have no image/product)" }
   ],
   "blocks": [
     {
