@@ -4,6 +4,12 @@
   @param {object} [product] - The product object, available on product pages.
 {% enddoc %}
 
+{% liquid
+  assign is_collection_or_search = template.name == 'collection' or template.name == 'search'
+  assign is_product_template = template == 'product' or template.name == 'product' or request.page_type == 'product'
+  assign should_load_localization = localization.available_countries.size > 1 or localization.available_languages.size > 1
+%}
+
 <script type="importmap">
   {
     "imports": {
@@ -91,7 +97,7 @@
   fetchpriority="low"
 >
 
-{% if template.name == 'collection' or template.name == 'search' %}
+{% if is_collection_or_search %}
   <link
     rel="modulepreload"
     href="{{ 'paginated-list-aspect-ratio.js' | asset_url }}"
@@ -258,7 +264,7 @@
   fetchpriority="low"
 ></script>
 
-{% if localization.available_countries.size > 1 or localization.available_languages.size > 1 %}
+{% if should_load_localization %}
   <script
     src="{{ 'localization.js' | asset_url }}"
     type="module"
@@ -266,7 +272,7 @@
   ></script>
 {% endif %}
 
-{% if template == 'product' or template.name == 'product' or request.page_type == 'product' %}
+{% if is_product_template %}
   <script
     src="{{ 'sticky-add-to-cart.js' | asset_url }}"
     type="module"

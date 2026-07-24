@@ -1,8 +1,6 @@
 <!doctype html>
 <html
-  {% if request.design_mode %}
-    class="shopify-design-mode"
-  {% endif %}
+  {% if request.design_mode %}class="shopify-design-mode"{% endif %}
   lang="{{ request.locale.iso_code }}"
 >
   <head>
@@ -26,32 +24,35 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Playfair+Display:wght@400;500;700;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <script src="{{ 'constants.js' | asset_url }}" defer></script>
-    <script src="{{ 'pubsub.js' | asset_url }}" defer></script>
-    <script src="{{ 'global.js' | asset_url }}" defer></script>
+    {%- if template == 'page.gift-guide' or template == 'index' -%}
+      <style>
+        html:has(body[data-template="page.gift-guide"]),
+        html:has(body[data-template="index"]) { height: auto !important; overflow: auto !important; }
 
-    {% if template == 'page.gift-guide' or template == 'index' %}
-    <style>
-      html:has(body[data-template="page.gift-guide"]),
-      html:has(body[data-template="index"]) { height:auto!important; overflow:auto!important; }
-      body[data-template="page.gift-guide"],
-      body[data-template="index"] { overflow-y:auto!important; height:auto!important; }
-      body[data-template="page.gift-guide"] .page-wrapper,
-      body[data-template="index"] .page-wrapper { height:auto!important; overflow:visible!important; overflow-x:hidden!important; display:block!important; }
-      body[data-template="page.gift-guide"] #MainContent,
-      body[data-template="page.gift-guide"] .content-for-layout,
-      body[data-template="index"] #MainContent,
-      body[data-template="index"] .content-for-layout { display:block!important; flex:none!important; padding:0!important; margin:0!important; }
-      body[data-template="page.gift-guide"] .shopify-section,
-      body[data-template="index"] .shopify-section { margin:0!important; padding:0!important; display:block!important; }
-      body[data-template="page.gift-guide"] #header-group,
-      body[data-template="index"] #header-group { display:none!important; }
-      body[data-template="page.gift-guide"] footer,
-      body[data-template="index"] footer { display:none!important; }
-    </style>
-    {% endif %}
+        body[data-template="page.gift-guide"],
+        body[data-template="index"] { overflow-y: auto !important; height: auto !important; }
+
+        body[data-template="page.gift-guide"] .page-wrapper,
+        body[data-template="index"] .page-wrapper { height: auto !important; overflow: visible !important; overflow-x: hidden !important; display: block !important; }
+
+        body[data-template="page.gift-guide"] #MainContent,
+        body[data-template="page.gift-guide"] .content-for-layout,
+        body[data-template="index"] #MainContent,
+        body[data-template="index"] .content-for-layout { display: block !important; flex: none !important; padding: 0 !important; margin: 0 !important; }
+
+        body[data-template="page.gift-guide"] .shopify-section,
+        body[data-template="index"] .shopify-section { margin: 0 !important; padding: 0 !important; display: block !important; }
+
+        body[data-template="page.gift-guide"] #header-group,
+        body[data-template="index"] #header-group { display: none !important; }
+
+        body[data-template="page.gift-guide"] footer,
+        body[data-template="index"] footer { display: none !important; }
+      </style>
+    {%- endif -%}
 
     {{ content_for_header }}
+
     <style>
       :root {
         --color-foreground: #121212;
@@ -191,7 +192,7 @@
         --input-disabled-background-color: #f3f3f3;
         --input-disabled-border-color: #d9d9d9;
         --input-disabled-text-color: #6d6d6d;
-        --shadow-popover: 0 4px 24px rgba(18,18,18,0.12);
+        --shadow-popover: 0 4px 24px rgba(18, 18, 18, 0.12);
         --backdrop-opacity: 0.5;
         --layer-flat: 1;
         --layer-raised: 2;
@@ -226,47 +227,54 @@
       </div>
 
       <script>
-        (function setHeaderHeighCustomProperties() {
+        (function setHeaderHeightCustomProperties() {
+          const body = document.body;
           const header = document.querySelector('header-component');
           const headerGroup = document.querySelector('#header-group');
+
           if (!header || !headerGroup) return;
+
           const headerTopRow = header.querySelector('.header__row--top');
           const headerHeight = header.offsetHeight;
           let headerGroupHeight = 0;
-          const children = headerGroup.children;
-          for (let i = 0; i < children.length; i++) {
-            const element = children[i];
-            if (element === header || !(element instanceof HTMLElement)) continue;
-            headerGroupHeight += element.offsetHeight;
+
+          for (const child of headerGroup.children) {
+            if (child === header || !(child instanceof HTMLElement)) continue;
+            headerGroupHeight += child.offsetHeight;
           }
-          if (header.hasAttribute('transparent') && header.parentElement?.nextElementSibling) {
+
+          if (header.hasAttribute('transparent') && header.parentElement && header.parentElement.nextElementSibling) {
             headerGroupHeight += headerHeight;
           }
-          document.body.style.setProperty('--header-height', `${headerHeight}px`);
-          document.body.style.setProperty('--header-group-height', `${headerGroupHeight}px`);
+
+          body.style.setProperty('--header-height', `${headerHeight}px`);
+          body.style.setProperty('--header-group-height', `${headerGroupHeight}px`);
+
           if (headerTopRow) {
             window.requestAnimationFrame(function () {
-              document.body.style.setProperty('--top-row-height', `${headerTopRow.offsetHeight}px`);
+              body.style.setProperty('--top-row-height', `${headerTopRow.offsetHeight}px`);
             });
           }
+
           const hasHeaderSection = headerGroup.querySelector('.header-section');
-          if (!hasHeaderSection || !header?.hasAttribute('transparent')) {
-            document.body.style.setProperty('--transparent-header-offset-boolean', '0');
+          if (!hasHeaderSection || !header.hasAttribute('transparent')) {
+            body.style.setProperty('--transparent-header-offset-boolean', '0');
             return;
           }
-          const hasImmediateSection = hasHeaderSection.nextElementSibling?.classList.contains('shopify-section');
-          const shouldApplyOffset = !hasImmediateSection ? '1' : '0';
-          document.body.style.setProperty('--transparent-header-offset-boolean', shouldApplyOffset);
+
+          const hasImmediateSection = hasHeaderSection.nextElementSibling && hasHeaderSection.nextElementSibling.classList.contains('shopify-section');
+          body.style.setProperty('--transparent-header-offset-boolean', hasImmediateSection ? '0' : '1');
         })();
 
         (function setHeaderMenuStyle() {
           const headerComponent = document.querySelector('#header-component');
-          if (headerComponent) {
-            const isTouchDevice = 'ontouchstart' in window && navigator.maxTouchPoints > 0;
-            const overflowList = headerComponent?.querySelector('overflow-list');
-            const hasReachedMinimum = overflowList && overflowList.hasAttribute('minimum-reached');
-            headerComponent.dataset.menuStyle = isTouchDevice || hasReachedMinimum ? 'drawer' : 'menu';
-          }
+          if (!headerComponent) return;
+
+          const isTouchDevice = 'ontouchstart' in window && navigator.maxTouchPoints > 0;
+          const overflowList = headerComponent.querySelector('overflow-list');
+          const hasReachedMinimum = overflowList && overflowList.hasAttribute('minimum-reached');
+
+          headerComponent.dataset.menuStyle = isTouchDevice || hasReachedMinimum ? 'drawer' : 'menu';
         })();
       </script>
 

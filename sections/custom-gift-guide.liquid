@@ -12,13 +12,13 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
 .cgg-hero-top{display:block;width:100%;height:360px;overflow:hidden;background:#fff;line-height:0}
 .cgg-hero-top img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
 .cgg-hero-body{display:grid;grid-template-columns:452px 1fr;width:100%;min-height:350px;background:#fff}
-.cgg-card{display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start;gap:0;padding:42px 40px 46px 62px;background:#fff}
-.cgg-card-title{font-family:'Poppins',Arial,sans-serif;font-size:65px;font-weight:700;line-height:.98;letter-spacing:0;margin:0 0 44px;padding:0;color:#000;white-space:nowrap}
+.cgg-card{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start;gap:0;padding:42px 40px 46px 62px;background:#fff}
+.cgg-card-title{font-family:'Poppins',Arial,sans-serif;font-size:65px;font-weight:700;line-height:.98;letter-spacing:0;max-width:360px;margin:0 0 44px;padding:0;color:#000;white-space:normal}
 .cgg-card-desc{font-size:18px;line-height:1.28;max-width:405px;margin:0 0 48px;padding:0;font-weight:400;letter-spacing:0;color:#000}
 .cgg-card-btn,.cgg-card-btn-mobile{display:inline-flex;align-items:center;justify-content:center;gap:26px;width:210px;height:48px;padding:0;background:#000;color:#fff;font-size:14px;font-weight:400;letter-spacing:0;text-transform:uppercase;text-decoration:none;border:0;border-radius:0;cursor:pointer;transition:background .18s ease}
 .cgg-card-btn:hover,.cgg-card-btn-mobile:hover{background:#222;color:#fff;text-decoration:none}
-.cgg-hero-right{position:relative;min-height:350px;overflow:hidden;background:#fff}
-.cgg-hero-right img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:right bottom}
+.cgg-hero-right{position:relative;z-index:1;min-height:350px;overflow:hidden;background:#fff}
+.cgg-hero-right img{position:absolute;right:0;bottom:0;display:block;width:min(92%,1080px);height:auto;max-width:none;object-fit:contain;object-position:right bottom}
 .cgg-strip{width:100%;height:31px;background:#f4f4f4;display:flex;align-items:center;justify-content:center;padding:0 24px}
 .cgg-strip-text{font-size:14px;font-weight:400;letter-spacing:0;line-height:1;text-align:center;text-transform:uppercase;color:#000}
 .cgg-wild{display:block;width:100%;padding:88px 48px 80px;background:#fff}
@@ -29,12 +29,12 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
 .cgg-grid-item .cgg-grid-img-hover{position:absolute;inset:0;opacity:0;transition:opacity .2s ease}
 .cgg-grid-item:hover .cgg-grid-img-hover{opacity:1}
 .cgg-hotspot{position:absolute;z-index:10;transform:translate(-50%,-50%);cursor:pointer}
-.cgg-hotspot-btn{display:flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.9);color:#000;font-size:18px;font-weight:400;line-height:1;box-shadow:0 1px 4px rgba(0,0,0,.18);cursor:pointer;appearance:none;transition:transform .18s ease,background .18s ease}
+.cgg-hotspot-btn{display:flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.9);color:#000;font-size:18px;font-weight:400;line-height:1;box-shadow:0 1px 4px rgba(0,0,0,.18);cursor:pointer;appearance:none;transition:transform .18s ease,background .18s ease}
 .cgg-hotspot:hover .cgg-hotspot-btn{transform:scale(1.12);background:#fff}
 .cgg-popup-overlay{display:none;position:fixed;inset:0;z-index:9000;align-items:flex-start;justify-content:center;padding-top:98px;background:rgba(0,0,0,.35)}
 .cgg-popup-overlay.active{display:flex}
 .cgg-popup{position:relative;width:390px;max-width:calc(100vw - 32px);max-height:90vh;overflow-y:auto;background:#fff;padding:44px 29px 26px;box-shadow:0 8px 28px rgba(0,0,0,.18)}
-.cgg-popup-close{position:absolute;top:14px;right:14px;display:flex;align-items:center;justify-content:center;min-width:36px;min-height:36px;padding:0;background:none;border:0;color:#000;font-size:26px;line-height:1;cursor:pointer}
+.cgg-popup-close{position:absolute;top:10px;right:10px;display:flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0;background:none;border:0;color:#000;font-size:26px;line-height:1;cursor:pointer}
 .cgg-popup-top{display:flex;gap:13px;margin-bottom:12px}
 .cgg-popup-img{width:150px;height:174px;object-fit:cover;flex-shrink:0;background:#eee}
 .cgg-popup-info{flex:1;min-width:0;padding-top:17px}
@@ -89,7 +89,7 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
   .cgg-wild-title{font-size:28px;text-align:center;margin-bottom:23px}
   .cgg-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
   .cgg-grid-item{aspect-ratio:1/1.11}
-  .cgg-hotspot-btn{width:19px;height:19px;font-size:16px}
+  .cgg-hotspot-btn{width:44px;height:44px;font-size:16px}
   .cgg-popup-overlay{align-items:center;padding:0 16px}
   .cgg-popup{width:360px;padding:40px 24px 24px}
   .cgg-popup-img{width:130px;height:150px}
@@ -274,7 +274,8 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
       {%- if product == blank and section.settings.fallback_collection != blank -%}
         {%- assign product = section.settings.fallback_collection.products[forloop.index0] -%}
       {%- endif -%}
-      <div class="cgg-popup-overlay" id="cgg-popup-{{ block.id }}" role="dialog" aria-modal="true" aria-label="{{ product.title | default: block.settings.hotspot_label | default: 'Product' | escape }}" data-product-handle="{{ product.handle | escape }}">
+      {%- assign popup_label = product.title | default: block.settings.hotspot_label | default: 'Product details' -%}
+      <div class="cgg-popup-overlay" id="cgg-popup-{{ block.id }}" role="dialog" aria-modal="true" aria-label="{{ popup_label | escape }}" data-product-handle="{{ product.handle | escape }}">
         <div class="cgg-popup">
           <button class="cgg-popup-close" aria-label="Close">&times;</button>
 
@@ -415,6 +416,10 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
       var overlay = document.getElementById(btn.getAttribute('data-popup'));
       if (!overlay) return;
       var popup = overlay.querySelector('.cgg-popup');
+      // Propagate handle before loading variants and opening
+      if (popup && overlay.dataset.productHandle) {
+        popup.dataset.productHandle = overlay.dataset.productHandle;
+      }
       if (popup) loadVariants(popup);
       openPopup(overlay, btn);
     });
@@ -487,7 +492,7 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
       .catch(function() {});
   }
 
-  // Propagate product handle from overlay to inner popup element
+  // Propagate product handle from overlay to inner popup element (init)
   document.querySelectorAll('.cgg-popup-overlay').forEach(function(overlay) {
     var popup = overlay.querySelector('.cgg-popup');
     if (popup && overlay.dataset.productHandle) {
@@ -533,12 +538,12 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
       })
       .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function(data) {
-        if (data.id) {
+        if (data && data.id) {
           atcBtn.innerHTML = 'ADDED \u2713';
           document.dispatchEvent(new CustomEvent('cart:refresh'));
           document.dispatchEvent(new CustomEvent('cart:updated'));
         } else {
-          atcBtn.innerHTML = 'UNAVAILABLE';
+          throw new Error('no_id');
         }
         setTimeout(function() { atcBtn.innerHTML = orig; atcBtn.disabled = false; }, 2000);
       })
