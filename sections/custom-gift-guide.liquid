@@ -83,18 +83,17 @@ body[data-template="page.gift-guide"] .shopify-section {
   display: block;
   width: 100%;
   background: #fff;
-  position: relative;
-  overflow: hidden;
 }
 
-/* Single SVG fills entire hero as background */
-.cgg-hero-bg {
-  position: absolute;
-  inset: 0 0 42px 0;
-  z-index: 0;
+/* Row 1: SVG top half — full width */
+.cgg-hero-top {
+  display: block;
+  width: 100%;
+  height: 300px;
   overflow: hidden;
+  background: #fff;
 }
-.cgg-hero-bg img {
+.cgg-hero-top img {
   display: block;
   width: 100%;
   height: 100%;
@@ -102,26 +101,35 @@ body[data-template="page.gift-guide"] .shopify-section {
   object-position: center top;
 }
 
-/* Hero inner: fixed height to show full illustration */
-.cgg-hero-inner {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  min-height: calc(100svh - 70px);
-  padding-bottom: 42px;
+/* Row 2: text left + SVG bottom-half right */
+.cgg-hero-body {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  width: 100%;
+  background: #fff;
+  min-height: 280px;
 }
 
-/* Text card: white bg, bottom-left, exact width */
+/* Left text card */
 .cgg-card {
   display: flex;
   flex-direction: column;
   gap: 18px;
   padding: 28px 32px 32px 32px;
   background: #fff;
-  width: 400px;
-  flex-shrink: 0;
+}
+
+/* Right: SVG bottom half */
+.cgg-hero-right {
+  overflow: hidden;
+  background: #fff;
+}
+.cgg-hero-right img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 55%;
 }
 
 .cgg-card-title {
@@ -380,7 +388,9 @@ body[data-template="page.gift-guide"] .shopify-section {
 /* ── TABLET ── */
 @media (max-width: 1024px) {
   .cgg-nav { padding: 0 28px; gap: 16px; }
-  .cgg-card { width: min(360px, calc(100% - 56px)); padding: 24px 28px 28px 28px; }
+  .cgg-hero-top { height: 260px; }
+  .cgg-hero-body { grid-template-columns: 340px 1fr; }
+  .cgg-card { padding: 24px 28px 28px 28px; }
   .cgg-card-title { font-size: clamp(40px, 5vw, 56px) !important; }
   .cgg-wild { padding: 48px 28px 64px; }
 }
@@ -389,8 +399,10 @@ body[data-template="page.gift-guide"] .shopify-section {
 @media (max-width: 680px) {
   .cgg-nav { grid-template-columns: 1fr; height: auto; padding: 14px 20px; gap: 10px; text-align: center; justify-items: center; }
   .cgg-nav-btn { width: 100%; max-width: 280px; }
-  .cgg-hero-inner { min-height: 100svh; }
-  .cgg-card { width: 100%; padding: 20px; }
+  .cgg-hero-top { height: 55vw; }
+  .cgg-hero-body { grid-template-columns: 1fr; }
+  .cgg-hero-right { display: none; }
+  .cgg-card { padding: 20px; }
   .cgg-card-title { font-size: clamp(32px, 9vw, 48px) !important; }
   .cgg-card-desc { font-size: 13px !important; max-width: 100% !important; }
   .cgg-card-btn { width: 100% !important; padding: 0 !important; justify-content: center !important; }
@@ -419,18 +431,22 @@ body[data-template="page.gift-guide"] .shopify-section {
   {%- endif -%}
 
   <div class="cgg-hero">
-    {%- comment -%} Single SVG as absolute background image {%- endcomment -%}
-    <div class="cgg-hero-bg" aria-hidden="true">
+    {%- comment -%} Row 1: SVG top half, full width {%- endcomment -%}
+    <div class="cgg-hero-top" aria-hidden="true">
       <img src="{{ bg_src }}" alt="" width="1600" height="900">
     </div>
 
-    <div class="cgg-hero-inner">
+    {%- comment -%} Row 2: text left + SVG bottom-half right {%- endcomment -%}
+    <div class="cgg-hero-body">
       <div class="cgg-card">
         <span class="cgg-card-title">{{ section.settings.card_title }}</span>
         <span class="cgg-card-desc">{{ section.settings.card_desc | newline_to_br }}</span>
         <a class="cgg-card-btn" href="{{ section.settings.card_cta_link | default: '#' }}">
           {{- section.settings.card_cta_label -}}&nbsp;&nbsp;→
         </a>
+      </div>
+      <div class="cgg-hero-right" aria-hidden="true">
+        <img src="{{ bg_src }}" alt="" width="1600" height="900">
       </div>
     </div>
 
