@@ -2,7 +2,17 @@
   "sections": {
     "gift_guide_banner": {
       "type": "gift-guide-banner",
-      "settings": {}
+      "settings": {
+        "logo_text": "TISSO VISON",
+        "topbar_text": "Find the ideal gift for your loved ones.",
+        "topbar_button_label": "CHOOSE GIFT",
+        "topbar_button_link": "#gift-guide-grid",
+        "heading": "The Gift Guide",
+        "subheading": "Discover Joy: Your Ultimate Holiday Gift Destination. Explore our curated selection and find the perfect gifts to delight your loved ones this holiday season.",
+        "cta_label": "SHOP NOW",
+        "cta_link": "#gift-guide-grid",
+        "bottom_bar_text": "SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR"
+      }
     },
     "gift_guide_grid": {
       "type": "gift-guide-grid",
