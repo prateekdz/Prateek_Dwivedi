@@ -1,129 +1,103 @@
 {%- style -%}
-/* ── RESET ── */
 body[data-template="page.gift-guide"] .shopify-section,
 body[data-template="index"] .shopify-section{display:block!important;margin:0!important;padding:0!important}
-
-/* ── WRAP ── */
-.cgg-wrap{display:block;width:100%;font-family:'Poppins',sans-serif;color:#000;-webkit-font-smoothing:antialiased;background:#fff}
+.cgg-wrap{display:block;width:100%;font-family:'Poppins',Arial,sans-serif;color:#000;background:#fff;-webkit-font-smoothing:antialiased}
 .cgg-wrap *,.cgg-wrap *::before,.cgg-wrap *::after{box-sizing:border-box}
-
-/* ── NAV ── */
-.cgg-nav{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;width:100%;height:70px;background:#F6F6F4;padding:0 40px}
-.cgg-logo{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#000;white-space:nowrap;line-height:1}
-.cgg-tagline{font-size:14px;font-weight:400;text-align:center;color:#000;line-height:1.4}
-.cgg-nav-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:0 24px;height:48px;background:#FFF159;color:#000;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;white-space:nowrap;flex-shrink:0;border:none;border-radius:0;cursor:pointer}
+.cgg-nav{display:grid;grid-template-columns:260px 1fr 260px;align-items:center;width:100%;height:60px;background:#f4f4f4;padding:0 48px;gap:0}
+.cgg-logo{font-size:23px;font-weight:700;letter-spacing:.08em;line-height:1;text-transform:uppercase;white-space:nowrap;color:#000}
+.cgg-tagline{font-size:15px;font-weight:400;line-height:1.4;text-align:center;color:#000}
+.cgg-nav-btn{justify-self:end;display:inline-flex;align-items:center;justify-content:center;width:196px;height:42px;padding:0;gap:22px;background:#fff33f;color:#000;font-size:14px;font-weight:400;letter-spacing:0;text-transform:uppercase;text-decoration:none;white-space:nowrap;border:0;border-radius:0;cursor:pointer;transition:background .18s ease}
 .cgg-nav-btn:hover{background:#f0e500;color:#000;text-decoration:none}
-
-/* ── HERO TOP: full-width SVG, clipped to show top ~55% ── */
-.cgg-hero-top{display:block;width:100%;overflow:hidden;background:#fff;line-height:0;height:300px}
+.cgg-hero{width:100%;overflow:hidden;background:#fff}
+.cgg-hero-top{display:block;width:100%;height:360px;overflow:hidden;background:#fff;line-height:0}
 .cgg-hero-top img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
-
-/* ── HERO BODY: left text + right SVG (bottom half) ── */
-.cgg-hero-body{display:grid;grid-template-columns:400px 1fr;width:100%;background:#fff}
-.cgg-card{display:flex;flex-direction:column;justify-content:center;gap:20px;padding:36px 40px 40px;background:#fff}
-.cgg-card-title{font-family:'Playfair Display',serif!important;font-size:56px!important;font-weight:700!important;line-height:1.0!important;color:#000!important;letter-spacing:-.01em!important;margin:0!important;padding:0!important}
-.cgg-card-desc{font-size:13px!important;line-height:1.65!important;color:#000!important;max-width:320px!important;margin:0!important;padding:0!important;font-weight:400!important}
-.cgg-card-btn{display:inline-flex!important;align-items:center!important;gap:14px!important;height:50px!important;padding:0 28px!important;background:#000!important;color:#fff!important;font-size:11px!important;font-weight:700!important;letter-spacing:.2em!important;text-transform:uppercase!important;text-decoration:none!important;border:none!important;border-radius:0!important;cursor:pointer!important;width:fit-content!important}
-.cgg-card-btn:hover{background:#222!important;color:#fff!important;text-decoration:none!important}
-
-/* Right panel: same SVG, shows bottom half via object-position bottom */
-.cgg-hero-right{overflow:hidden;background:#fff;position:relative;min-height:280px}
-.cgg-hero-right img{display:block;width:100%;height:100%;object-fit:cover;object-position:center bottom;position:absolute;inset:0}
-
-/* ── STRIP ── */
-.cgg-strip{width:100%;height:42px;background:#e8e8e8;display:flex;align-items:center;justify-content:center;padding:0 24px}
-.cgg-strip-text{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#000;text-align:center;line-height:1}
-
-/* ── WILD SECTION ── */
-.cgg-wild{display:block;width:100%;padding:56px 32px 80px;background:#fff}
-.cgg-wild-title{font-family:'Playfair Display',serif;font-size:34px;font-weight:400;color:#000;margin:0 0 28px 0;padding:0;line-height:1.2;letter-spacing:-.01em}
-.cgg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.cgg-grid-item{position:relative;overflow:hidden;aspect-ratio:290/310;background:#d0d0d0;cursor:pointer}
+.cgg-hero-body{display:grid;grid-template-columns:452px 1fr;width:100%;min-height:350px;background:#fff}
+.cgg-card{display:flex;flex-direction:column;justify-content:flex-start;align-items:flex-start;gap:0;padding:42px 40px 46px 62px;background:#fff}
+.cgg-card-title{font-family:'Poppins',Arial,sans-serif;font-size:65px;font-weight:700;line-height:.98;letter-spacing:0;margin:0 0 44px;padding:0;color:#000;white-space:nowrap}
+.cgg-card-desc{font-size:18px;line-height:1.28;max-width:405px;margin:0 0 48px;padding:0;font-weight:400;letter-spacing:0;color:#000}
+.cgg-card-btn,.cgg-card-btn-mobile{display:inline-flex;align-items:center;justify-content:center;gap:26px;width:210px;height:48px;padding:0;background:#000;color:#fff;font-size:14px;font-weight:400;letter-spacing:0;text-transform:uppercase;text-decoration:none;border:0;border-radius:0;cursor:pointer;transition:background .18s ease}
+.cgg-card-btn:hover,.cgg-card-btn-mobile:hover{background:#222;color:#fff;text-decoration:none}
+.cgg-hero-right{position:relative;min-height:350px;overflow:hidden;background:#fff}
+.cgg-hero-right img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:right bottom}
+.cgg-strip{width:100%;height:31px;background:#f4f4f4;display:flex;align-items:center;justify-content:center;padding:0 24px}
+.cgg-strip-text{font-size:14px;font-weight:400;letter-spacing:0;line-height:1;text-align:center;text-transform:uppercase;color:#000}
+.cgg-wild{display:block;width:100%;padding:88px 48px 80px;background:#fff}
+.cgg-wild-title{font-family:Georgia,'Times New Roman',serif;font-size:36px;font-weight:400;line-height:1.15;letter-spacing:0;margin:0 0 26px;padding:0;color:#000}
+.cgg-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.cgg-grid-item{position:relative;overflow:hidden;aspect-ratio:433/422;background:#e5e5e5;cursor:pointer}
 .cgg-grid-item img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
 .cgg-grid-item .cgg-grid-img-hover{position:absolute;inset:0;opacity:0;transition:opacity .2s ease}
 .cgg-grid-item:hover .cgg-grid-img-hover{opacity:1}
-
-/* ── HOTSPOT ── */
 .cgg-hotspot{position:absolute;z-index:10;transform:translate(-50%,-50%);cursor:pointer}
-.cgg-hotspot-btn{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.92);border:1.5px solid #ccc;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:300;color:#000;line-height:1;cursor:pointer;transition:transform .2s ease,border-color .2s ease;box-shadow:0 1px 4px rgba(0,0,0,.18);padding:0;appearance:none}
-.cgg-hotspot:hover .cgg-hotspot-btn{transform:scale(1.15);border-color:#333}
-
-/* ── POPUP OVERLAY ── */
-.cgg-popup-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:9000;align-items:center;justify-content:center}
+.cgg-hotspot-btn{display:flex;align-items:center;justify-content:center;width:22px;height:22px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.9);color:#000;font-size:18px;font-weight:400;line-height:1;box-shadow:0 1px 4px rgba(0,0,0,.18);cursor:pointer;appearance:none;transition:transform .18s ease,background .18s ease}
+.cgg-hotspot:hover .cgg-hotspot-btn{transform:scale(1.12);background:#fff}
+.cgg-popup-overlay{display:none;position:fixed;inset:0;z-index:9000;align-items:flex-start;justify-content:center;padding-top:98px;background:rgba(0,0,0,.35)}
 .cgg-popup-overlay.active{display:flex}
-
-/* ── POPUP ── */
-.cgg-popup{background:#fff;width:380px;max-width:calc(100vw - 32px);max-height:90vh;overflow-y:auto;position:relative;padding:28px 24px 24px;box-shadow:0 8px 40px rgba(0,0,0,.18)}
-.cgg-popup-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:18px;cursor:pointer;color:#000;line-height:1;padding:0;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center}
-.cgg-popup-top{display:flex;gap:16px;margin-bottom:20px}
-.cgg-popup-img{width:120px;height:120px;object-fit:cover;flex-shrink:0;background:#eee}
-.cgg-popup-info{flex:1;min-width:0}
-.cgg-popup-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;margin:0 0 6px 0;color:#000;line-height:1.3}
-.cgg-popup-price{font-size:16px;font-weight:600;margin:0 0 8px 0;color:#000}
-.cgg-popup-desc{font-size:12px;line-height:1.5;color:#555;margin:0}
-.cgg-popup-label{font-size:12px;font-weight:600;color:#000;margin:0 0 8px 0}
-
-/* Color variant buttons: outer border container, divider between, selected = left thick border */
-.cgg-popup-variants{display:flex;gap:0;flex-wrap:nowrap;margin-bottom:16px;border:1.5px solid #ddd;overflow:hidden}
-.cgg-popup-variant{flex:1;padding:10px 16px;border:none;border-right:1.5px solid #ddd;background:#fff;font-size:13px;cursor:pointer;text-align:center;font-family:inherit;outline:none}
-.cgg-popup-variant:last-child{border-right:none}
-.cgg-popup-variant.selected{box-shadow:inset 3px 0 0 #000;font-weight:600;background:#fff}
-.cgg-popup-variant:hover:not(.selected){background:#f5f5f5}
-
-/* Size dropdown */
-.cgg-popup-select-wrap{position:relative;margin-bottom:20px}
-.cgg-popup-select{width:100%;padding:12px 40px 12px 14px;border:1.5px solid #ddd;background:#fff;font-size:13px;appearance:none;-webkit-appearance:none;cursor:pointer;font-family:inherit;border-radius:0}
-.cgg-popup-select-wrap::after{content:'';position:absolute;right:14px;top:50%;transform:translateY(-50%);width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid #000;pointer-events:none}
-
-/* ATC button */
-.cgg-popup-atc{display:flex;align-items:center;justify-content:center;gap:14px;width:100%;height:52px;background:#000;color:#fff;font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;border:none;cursor:pointer;transition:background .15s;font-family:inherit}
+.cgg-popup{position:relative;width:390px;max-width:calc(100vw - 32px);max-height:90vh;overflow-y:auto;background:#fff;padding:44px 29px 26px;box-shadow:0 8px 28px rgba(0,0,0,.18)}
+.cgg-popup-close{position:absolute;top:14px;right:14px;display:flex;align-items:center;justify-content:center;min-width:36px;min-height:36px;padding:0;background:none;border:0;color:#000;font-size:26px;line-height:1;cursor:pointer}
+.cgg-popup-top{display:flex;gap:13px;margin-bottom:12px}
+.cgg-popup-img{width:150px;height:174px;object-fit:cover;flex-shrink:0;background:#eee}
+.cgg-popup-info{flex:1;min-width:0;padding-top:17px}
+.cgg-popup-name{font-family:'Poppins',Arial,sans-serif;font-size:18px;font-weight:400;line-height:1.25;margin:0 0 24px;color:#000}
+.cgg-popup-price{font-size:20px;font-weight:400;margin:0 0 16px;color:#000}
+.cgg-popup-desc{font-size:15px;line-height:1.18;color:#000;margin:0}
+.cgg-popup-label{font-size:15px;font-weight:400;margin:0 0 9px;color:#000}
+.cgg-popup-variants{display:flex;gap:0;flex-wrap:nowrap;margin-bottom:16px;border:1px solid #9b9b9b;overflow:hidden}
+.cgg-popup-variant{flex:1;height:50px;padding:0 17px;border:0;border-right:1px solid #9b9b9b;background:#fff;font-family:inherit;font-size:20px;font-weight:400;text-align:left;color:#000;cursor:pointer}
+.cgg-popup-variant:last-child{border-right:0}
+.cgg-popup-variant.selected{box-shadow:inset 5px 0 0 #1e5aa7;font-weight:400}
+.cgg-popup-variant:hover:not(.selected){background:#f7f7f7}
+.cgg-popup-select-wrap{position:relative;margin-bottom:63px}
+.cgg-popup-select{width:100%;height:51px;padding:0 64px 0 17px;border:1px solid #9b9b9b;background:#fff;font-family:inherit;font-size:20px;color:#000;border-radius:0;appearance:none;-webkit-appearance:none;cursor:pointer}
+.cgg-popup-select-wrap::before{content:'';position:absolute;right:68px;top:0;width:1px;height:100%;background:#9b9b9b;pointer-events:none}
+.cgg-popup-select-wrap::after{content:'';position:absolute;right:24px;top:50%;width:14px;height:14px;border-right:2px solid #000;border-bottom:2px solid #000;transform:translateY(-65%) rotate(45deg);pointer-events:none}
+.cgg-popup-atc{display:flex;align-items:center;justify-content:center;width:100%;height:56px;gap:28px;background:#000;color:#fff;border:0;font-family:inherit;font-size:17px;font-weight:400;letter-spacing:0;text-transform:uppercase;cursor:pointer;transition:background .18s ease}
 .cgg-popup-atc:hover{background:#222}
 .cgg-popup-atc:disabled{opacity:.6;cursor:not-allowed}
-
-/* Mobile button — hidden on desktop via CSS */
 .cgg-mobile-btn-wrap{display:none}
-
-/* ── TABLET ── */
 @media(max-width:1024px){
-  .cgg-nav{padding:0 28px;gap:16px}
-  .cgg-hero-top{height:240px}
-  .cgg-hero-body{grid-template-columns:320px 1fr}
-  .cgg-hero-right{min-height:240px}
-  .cgg-card{padding:28px 28px 32px}
-  .cgg-card-title{font-size:clamp(38px,5vw,56px)!important}
-  .cgg-wild{padding:48px 28px 64px}
+  .cgg-nav{grid-template-columns:220px 1fr 220px;padding:0 28px}
+  .cgg-logo{font-size:21px}
+  .cgg-nav-btn{width:180px}
+  .cgg-hero-top{height:300px}
+  .cgg-hero-body{grid-template-columns:390px 1fr;min-height:320px}
+  .cgg-card{padding:38px 30px 40px 42px}
+  .cgg-card-title{font-size:52px;margin-bottom:34px}
+  .cgg-card-desc{font-size:16px;margin-bottom:40px}
+  .cgg-wild{padding:68px 32px 70px}
+  .cgg-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 }
-
-/* ── MOBILE ── */
 @media(max-width:680px){
-  /* Nav: stacked, centered */
-  .cgg-nav{grid-template-columns:1fr;height:auto;padding:14px 20px;gap:10px;text-align:center;justify-items:center}
-  .cgg-nav-btn{width:100%;max-width:280px}
-
-  /* Hide top SVG on mobile — SVG shown in hero-right below text */
+  .cgg-nav{position:relative;grid-template-columns:1fr;height:69px;padding:0 48px;text-align:center;justify-items:center}
+  .cgg-nav::before{content:'';position:absolute;left:14px;top:29px;width:22px;height:15px;border-top:2px solid #000;border-bottom:2px solid #000}
+  .cgg-nav::after{content:'';position:absolute;left:14px;top:36px;width:22px;height:2px;background:#000}
+  .cgg-logo{font-size:25px;letter-spacing:.07em}
+  .cgg-tagline,.cgg-nav-btn{display:none}
   .cgg-hero-top{display:none}
-
-  /* Hero body: single column, card on top */
-  .cgg-hero-body{grid-template-columns:1fr}
-  .cgg-card{padding:28px 20px 20px;gap:12px;align-items:center;text-align:center}
-  .cgg-card-title{font-size:clamp(30px,9vw,42px)!important;text-align:center}
-  .cgg-card-desc{font-size:13px!important;max-width:100%!important;text-align:center}
-  /* Hide desktop SHOP NOW button on mobile */
-  .cgg-card .cgg-card-btn{display:none!important}
-
-  /* Right SVG: full width, natural height, shows full SVG on mobile */
-  .cgg-hero-right{min-height:unset;position:relative}
-  .cgg-hero-right img{position:static;width:100%;height:auto;object-fit:unset;object-position:unset}
-
-  /* Mobile SHOP NOW button: overlaid on SVG */
-  .cgg-mobile-btn-wrap{display:flex;justify-content:center;align-items:center;position:relative;margin-top:-56px;z-index:5;padding-bottom:16px}
-  .cgg-card-btn-mobile{display:inline-flex!important;align-items:center!important;gap:14px!important;height:50px!important;padding:0 28px!important;background:#000!important;color:#fff!important;font-size:11px!important;font-weight:700!important;letter-spacing:.2em!important;text-transform:uppercase!important;text-decoration:none!important;border:none!important;border-radius:0!important;cursor:pointer!important}
-  .cgg-card-btn-mobile:hover{background:#222!important;color:#fff!important;text-decoration:none!important}
-
-  /* Grid: 2 columns */
-  .cgg-wild{padding:40px 16px 56px}
-  .cgg-wild-title{font-size:26px;text-align:center}
-  .cgg-grid{grid-template-columns:repeat(2,1fr);gap:6px}
+  .cgg-hero-body{display:flex;flex-direction:column;min-height:unset}
+  .cgg-card{order:1;padding:49px 24px 26px;align-items:center;text-align:center}
+  .cgg-card-title{font-size:32px;line-height:1.1;margin:0 0 23px;white-space:nowrap;text-align:center}
+  .cgg-card-desc{font-size:18px;line-height:1.25;max-width:335px;margin:0;text-align:center}
+  .cgg-card .cgg-card-btn{display:none}
+  .cgg-hero-right{order:2;min-height:282px;position:relative}
+  .cgg-hero-right img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center}
+  .cgg-mobile-btn-wrap{display:flex;justify-content:center;align-items:center;position:relative;margin-top:-128px;z-index:5;padding-bottom:77px}
+  .cgg-card-btn-mobile{width:259px;height:49px;font-size:16px;gap:27px}
+  .cgg-strip{height:35px}
+  .cgg-strip-text{font-size:13px;line-height:1.1}
+  .cgg-wild{padding:41px 16px 32px}
+  .cgg-wild-title{font-size:28px;text-align:center;margin-bottom:23px}
+  .cgg-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+  .cgg-grid-item{aspect-ratio:1/1.11}
+  .cgg-hotspot-btn{width:19px;height:19px;font-size:16px}
+  .cgg-popup-overlay{align-items:center;padding:0 16px}
+  .cgg-popup{width:360px;padding:40px 24px 24px}
+  .cgg-popup-img{width:130px;height:150px}
+  .cgg-popup-name{font-size:17px;margin-bottom:18px}
+  .cgg-popup-price{font-size:18px}
+  .cgg-popup-desc{font-size:14px}
+  .cgg-popup-variant,.cgg-popup-select{font-size:18px}
+  .cgg-popup-select-wrap{margin-bottom:44px}
 }
 {%- endstyle -%}
 
@@ -137,18 +111,16 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
 
 <div class="cgg-wrap">
 
-  {%- comment -%} NAV {%- endcomment -%}
   <nav class="cgg-nav" aria-label="Gift guide navigation">
     <span class="cgg-logo">{{ section.settings.logo_text }}</span>
     <span class="cgg-tagline">{{ section.settings.header_tagline }}</span>
     <a class="cgg-nav-btn" href="{{ section.settings.header_cta_link | default: '#' }}">
-      {{- section.settings.header_cta_label -}}&nbsp;&nbsp;→
+      {{- section.settings.header_cta_label -}}&nbsp;&nbsp;&rarr;
     </a>
   </nav>
 
   <div class="cgg-hero">
 
-    {%- comment -%} TOP SVG — full width, clipped to show top portion {%- endcomment -%}
     <div class="cgg-hero-top" aria-hidden="true">
       {%- if use_svg -%}
         <img src="{{ bg_svg }}" alt="" width="1052" height="400">
@@ -157,13 +129,12 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
       {%- endif -%}
     </div>
 
-    {%- comment -%} HERO BODY: left text + right SVG (bottom half) {%- endcomment -%}
     <div class="cgg-hero-body">
       <div class="cgg-card">
         <span class="cgg-card-title">{{ section.settings.card_title }}</span>
         <span class="cgg-card-desc">{{ section.settings.card_desc | newline_to_br }}</span>
         <a class="cgg-card-btn" href="{{ section.settings.card_cta_link | default: '#' }}">
-          {{- section.settings.card_cta_label -}}&nbsp;&nbsp;→
+          {{- section.settings.card_cta_label -}}&nbsp;&nbsp;&rarr;
         </a>
       </div>
       <div class="cgg-hero-right" aria-hidden="true">
@@ -175,10 +146,9 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
       </div>
     </div>
 
-    {%- comment -%} Mobile SHOP NOW button overlaid on SVG {%- endcomment -%}
     <div class="cgg-mobile-btn-wrap">
       <a class="cgg-card-btn-mobile" href="{{ section.settings.card_cta_link | default: '#' }}">
-        {{- section.settings.card_cta_label -}}&nbsp;&nbsp;→
+        {{- section.settings.card_cta_label -}}&nbsp;&nbsp;&rarr;
       </a>
     </div>
 
@@ -188,7 +158,6 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
 
   </div>
 
-  {%- comment -%} PRODUCT GRID {%- endcomment -%}
   <div class="cgg-wild">
     <h2 class="cgg-wild-title">{{ section.settings.wild_title }}</h2>
     <div class="cgg-grid">
@@ -196,26 +165,25 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
         {%- if block.type == 'hotspot_image' -%}
           {%- assign grid_product = block.settings.product -%}
           {%- assign grid_image = block.settings.image -%}
-          {%- comment -%} Resolve image: block image > product featured_media preview > product image media > fallback collection product. {%- endcomment -%}
           {%- if grid_image != blank -%}
             {%- assign resolved_img = grid_image -%}
             {%- assign resolved_img_src = grid_image | image_url: width: 900 -%}
             {%- assign resolved_img_alt = grid_image.alt | default: '' -%}
             {%- assign resolved_img_w = grid_image.width -%}
             {%- assign resolved_img_h = grid_image.height -%}
-          {%- elsif grid_product != blank and grid_product.featured_media.preview_image != blank -%}
-            {%- assign resolved_img = grid_product.featured_media.preview_image -%}
-            {%- assign resolved_img_src = grid_product.featured_media.preview_image | image_url: width: 900 -%}
-            {%- assign resolved_img_alt = grid_product.title | escape -%}
-            {%- assign resolved_img_w = grid_product.featured_media.preview_image.width -%}
-            {%- assign resolved_img_h = grid_product.featured_media.preview_image.height -%}
           {%- elsif grid_product != blank and grid_product.featured_image != blank -%}
             {%- assign resolved_img = grid_product.featured_image -%}
             {%- assign resolved_img_src = grid_product.featured_image | image_url: width: 900 -%}
             {%- assign resolved_img_alt = grid_product.title | escape -%}
             {%- assign resolved_img_w = grid_product.featured_image.width -%}
             {%- assign resolved_img_h = grid_product.featured_image.height -%}
-          {%- elsif grid_product != blank and grid_product.media != empty -%}
+          {%- elsif grid_product != blank and grid_product.selected_or_first_available_variant.featured_image != blank -%}
+            {%- assign resolved_img = grid_product.selected_or_first_available_variant.featured_image -%}
+            {%- assign resolved_img_src = grid_product.selected_or_first_available_variant.featured_image | image_url: width: 900 -%}
+            {%- assign resolved_img_alt = grid_product.title | escape -%}
+            {%- assign resolved_img_w = grid_product.selected_or_first_available_variant.featured_image.width -%}
+            {%- assign resolved_img_h = grid_product.selected_or_first_available_variant.featured_image.height -%}
+          {%- elsif grid_product != blank and grid_product.media != empty and grid_product.media.first.preview_image != blank -%}
             {%- assign resolved_img = grid_product.media.first.preview_image -%}
             {%- assign resolved_img_src = grid_product.media.first.preview_image | image_url: width: 900 -%}
             {%- assign resolved_img_alt = grid_product.title | escape -%}
@@ -229,6 +197,20 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
               {%- assign resolved_img_alt = fallback_product.title | escape -%}
               {%- assign resolved_img_w = fallback_product.featured_image.width -%}
               {%- assign resolved_img_h = fallback_product.featured_image.height -%}
+              {%- assign grid_product = fallback_product -%}
+            {%- elsif fallback_product != blank and fallback_product.selected_or_first_available_variant.featured_image != blank -%}
+              {%- assign resolved_img = fallback_product.selected_or_first_available_variant.featured_image -%}
+              {%- assign resolved_img_src = fallback_product.selected_or_first_available_variant.featured_image | image_url: width: 900 -%}
+              {%- assign resolved_img_alt = fallback_product.title | escape -%}
+              {%- assign resolved_img_w = fallback_product.selected_or_first_available_variant.featured_image.width -%}
+              {%- assign resolved_img_h = fallback_product.selected_or_first_available_variant.featured_image.height -%}
+              {%- assign grid_product = fallback_product -%}
+            {%- elsif fallback_product != blank and fallback_product.media != empty and fallback_product.media.first.preview_image != blank -%}
+              {%- assign resolved_img = fallback_product.media.first.preview_image -%}
+              {%- assign resolved_img_src = fallback_product.media.first.preview_image | image_url: width: 900 -%}
+              {%- assign resolved_img_alt = fallback_product.title | escape -%}
+              {%- assign resolved_img_w = fallback_product.media.first.preview_image.width -%}
+              {%- assign resolved_img_h = fallback_product.media.first.preview_image.height -%}
               {%- assign grid_product = fallback_product -%}
             {%- else -%}
               {%- assign resolved_img = nil -%}
@@ -286,7 +268,6 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
     </div>
   </div>
 
-  {%- comment -%} PRODUCT POPUPS {%- endcomment -%}
   {%- for block in section.blocks -%}
     {%- if block.type == 'hotspot_image' -%}
       {%- assign product = block.settings.product -%}
@@ -295,17 +276,17 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
       {%- endif -%}
       <div class="cgg-popup-overlay" id="cgg-popup-{{ block.id }}" role="dialog" aria-modal="true" aria-label="{{ product.title | default: block.settings.hotspot_label | default: 'Product' | escape }}" data-product-handle="{{ product.handle | escape }}">
         <div class="cgg-popup">
-          <button class="cgg-popup-close" aria-label="Close">✕</button>
+          <button class="cgg-popup-close" aria-label="Close">&times;</button>
 
           {%- if product != blank -%}
             {%- assign popup_img_src = nil -%}
-            {%- if product.featured_media.preview_image != blank -%}
-              {%- assign popup_img_src = product.featured_media.preview_image | image_url: width: 240 -%}
-              {%- assign popup_img_alt = product.title | escape -%}
-            {%- elsif product.featured_image != blank -%}
+            {%- if product.featured_image != blank -%}
               {%- assign popup_img_src = product.featured_image | image_url: width: 240 -%}
               {%- assign popup_img_alt = product.title | escape -%}
-            {%- elsif product.media != empty -%}
+            {%- elsif product.selected_or_first_available_variant.featured_image != blank -%}
+              {%- assign popup_img_src = product.selected_or_first_available_variant.featured_image | image_url: width: 240 -%}
+              {%- assign popup_img_alt = product.title | escape -%}
+            {%- elsif product.media != empty and product.media.first.preview_image != blank -%}
               {%- assign popup_img_src = product.media.first.preview_image | image_url: width: 240 -%}
               {%- assign popup_img_alt = product.title | escape -%}
             {%- elsif block.settings.image != blank -%}
@@ -362,7 +343,9 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
             <form action="/cart/add" method="post" data-popup-form="{{ block.id }}">
               <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-id>
               <input type="hidden" name="quantity" value="1">
-              <button type="submit" class="cgg-popup-atc">ADD TO CART &nbsp;→</button>
+              <button type="submit" class="cgg-popup-atc"{% if size_option or product.selected_or_first_available_variant.available == false %} disabled{% endif %}>
+                {%- if product.selected_or_first_available_variant.available -%}ADD TO CART &nbsp;&rarr;{%- else -%}UNAVAILABLE{%- endif -%}
+              </button>
             </form>
 
           {%- else -%}
@@ -388,18 +371,22 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
   var lastTrigger = null;
 
   function getFocusable(popup) {
+    if (!popup) return [];
     return Array.prototype.slice.call(popup.querySelectorAll(FOCUSABLE));
   }
 
   function openPopup(overlay, trigger) {
+    if (!overlay) return;
     lastTrigger = trigger || null;
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
-    var focusable = getFocusable(overlay.querySelector('.cgg-popup'));
+    var popup = overlay.querySelector('.cgg-popup');
+    var focusable = getFocusable(popup);
     if (focusable.length) focusable[0].focus();
   }
 
   function closePopup(overlay) {
+    if (!overlay) return;
     overlay.classList.remove('active');
     document.body.style.overflow = '';
     if (lastTrigger) { lastTrigger.focus(); lastTrigger = null; }
@@ -465,6 +452,11 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
     var selectedSize = sizeSelect ? sizeSelect.value : null;
     var cached = variantCache[handle];
     if (!cached) return;
+    if (sizeSelect && !selectedSize) {
+      variantInput.value = '';
+      if (atcBtn) { atcBtn.disabled = true; atcBtn.textContent = 'ADD TO CART \u00a0\u2192'; }
+      return;
+    }
     var match = cached.find(function(v) {
       var colorOk = !selectedColor || v.option1 === selectedColor || v.option2 === selectedColor || v.option3 === selectedColor;
       var sizeOk = !selectedSize || v.option1 === selectedSize || v.option2 === selectedSize || v.option3 === selectedSize;
@@ -476,7 +468,6 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
         atcBtn.disabled = !match.available;
         atcBtn.textContent = match.available ? 'ADD TO CART \u00a0\u2192' : 'UNAVAILABLE';
       }
-      maybeAddBonusProduct(selectedColor, selectedSize);
     } else {
       variantInput.value = '';
       if (atcBtn) { atcBtn.disabled = true; atcBtn.textContent = 'UNAVAILABLE'; }
@@ -507,7 +498,9 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
   // ── Color variant selection ──
   document.querySelectorAll('.cgg-popup-variant').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      btn.closest('.cgg-popup-variants').querySelectorAll('.cgg-popup-variant').forEach(function(b) { b.classList.remove('selected'); });
+      var group = btn.closest('.cgg-popup-variants');
+      if (!group) return;
+      group.querySelectorAll('.cgg-popup-variant').forEach(function(b) { b.classList.remove('selected'); });
       btn.classList.add('selected');
       var popup = btn.closest('.cgg-popup');
       if (popup) resolveVariant(popup);
@@ -522,42 +515,6 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
     });
   });
 
-  // ── Bonus product rule: Black + Medium -> Soft Winter Jacket (once per session) ──
-  var BONUS_KEY = 'cgg_bonus_added';
-  var bonusAdding = false;
-
-  function maybeAddBonusProduct(color, size) {
-    if (color !== 'Black' || size !== 'Medium') return;
-    if (sessionStorage.getItem(BONUS_KEY)) return;
-    if (bonusAdding) return;
-    bonusAdding = true;
-    fetch('/products/soft-winter-jacket.js')
-      .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-      .then(function(data) {
-        var variant = (data.variants || []).find(function(v) { return v.available; });
-        if (!variant) { bonusAdding = false; return; }
-        return fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-          body: JSON.stringify({ id: variant.id, quantity: 1 })
-        });
-      })
-      .then(function(r) {
-        if (!r) return;
-        if (!r.ok) throw new Error(r.status);
-        return r.json();
-      })
-      .then(function(data) {
-        if (data && data.id) {
-          sessionStorage.setItem(BONUS_KEY, '1');
-          document.dispatchEvent(new CustomEvent('cart:refresh'));
-          document.dispatchEvent(new CustomEvent('cart:updated'));
-        }
-        bonusAdding = false;
-      })
-      .catch(function() { bonusAdding = false; });
-  }
-
   // ── AJAX Add to Cart ──
   document.querySelectorAll('[data-popup-form]').forEach(function(form) {
     form.addEventListener('submit', function(e) {
@@ -565,6 +522,7 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
       var variantInput = form.querySelector('[data-variant-id]');
       if (!variantInput || !variantInput.value) return;
       var atcBtn = form.querySelector('.cgg-popup-atc');
+      if (!atcBtn) return;
       var orig = atcBtn.innerHTML;
       atcBtn.innerHTML = 'ADDING...';
       atcBtn.disabled = true;
