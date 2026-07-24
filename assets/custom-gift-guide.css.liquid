@@ -1,273 +1,355 @@
-/* ============================================================
-   custom-gift-guide — fully isolated, zero theme dependencies
-   BEM: .cgg__*
-   ============================================================ */
+/* ==========================================================
+   GIFT GUIDE — isolated styles
+   All rules use .cgg prefix + !important where base.css wins
+   ========================================================== */
 
-/* Hide the Shopify theme header on the gift-guide page so our
-   custom header is the only one visible */
-body[data-template="page.gift-guide"] #header-group,
+/* ── 1. PAGE-LEVEL FIXES (scoped to gift-guide template) ── */
+
+/* base.css locks html/body to 100dvh + overflow:hidden on desktop.
+   This breaks our full-height hero. Undo it. */
+body[data-template="page.gift-guide"],
+body[data-template="page.gift-guide"] html {
+  height: auto !important;
+  overflow: visible !important;
+  overflow-x: hidden !important;
+}
+
+/* Hide the Shopify theme header + footer — our section has its own header */
+body[data-template="page.gift-guide"] #header-group {
+  display: none !important;
+}
+
 body[data-template="page.gift-guide"] footer {
   display: none !important;
 }
 
-body[data-template="page.gift-guide"] #MainContent {
-  padding-top: 0 !important;
-  margin-top: 0 !important;
+/* Remove any top padding/margin the theme injects into main */
+body[data-template="page.gift-guide"] #MainContent,
+body[data-template="page.gift-guide"] .content-for-layout {
+  padding: 0 !important;
+  margin: 0 !important;
+  flex: none !important;
+  display: block !important;
 }
 
-body[data-template="page.gift-guide"] .page-wrapper {
-  padding-top: 0 !important;
-  margin-top: 0 !important;
+/* Remove shopify-section wrapper spacing */
+body[data-template="page.gift-guide"] .shopify-section {
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-/* ── Reset scope ── */
+/* ── 2. COMPONENT RESET (scoped to .cgg) ── */
+
 .cgg,
 .cgg *,
 .cgg *::before,
 .cgg *::after {
   box-sizing: border-box !important;
-  margin: 0;
-  padding: 0;
 }
 
 .cgg {
+  all: initial;
+  display: block;
   font-family: 'Poppins', sans-serif;
   color: #000;
   width: 100%;
-  /* Nuke any theme margin/padding on the shopify-section wrapper */
-  display: block;
 }
 
-/* ── HEADER ── */
+/* ── 3. HEADER ── */
+
 .cgg__header {
-  width: 100%;
-  height: 72px;
-  background: #f2f2f2;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 16px;
-  padding: 0 56px;
-  position: relative;
-  z-index: 10;
+  display: grid !important;
+  grid-template-columns: auto 1fr auto !important;
+  align-items: center !important;
+  width: 100% !important;
+  height: 72px !important;
+  background: #f2f2f2 !important;
+  padding: 0 56px !important;
+  gap: 16px !important;
+  position: relative !important;
+  z-index: 100 !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
 }
 
 .cgg__header-logo {
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  white-space: nowrap;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.28em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  color: #000 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
 }
 
 .cgg__header-tagline {
-  font-size: 0.9rem;
-  font-weight: 400;
-  text-align: center;
-  letter-spacing: 0.02em;
-  line-height: 1.4;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  text-align: center !important;
+  color: #000 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.4 !important;
 }
 
 .cgg__header-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 220px;
-  height: 52px;
-  background: #ece21c;
-  color: #000;
-  text-decoration: none;
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  flex-shrink: 0;
+  /* Reset all inherited/theme button styles */
+  all: unset !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 220px !important;
+  height: 52px !important;
+  background: #ece21c !important;
+  color: #000 !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  border-radius: 0 !important;
+  border: none !important;
+  flex-shrink: 0 !important;
 }
 
 .cgg__header-cta:hover {
-  background: #d9cf00;
+  background: #d9cf00 !important;
+  color: #000 !important;
 }
 
-/* ── HERO ── */
+/* ── 4. HERO ── */
+
 .cgg__hero {
-  position: relative;
-  width: 100%;
-  height: calc(100vh - 72px);
-  min-height: 600px;
-  overflow: hidden;
-  background: #f5f5f5;
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: calc(100vh - 72px) !important;
+  min-height: 600px !important;
+  overflow: hidden !important;
+  background: #e8e8e8 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-/* Full-bleed background */
+/* ── 5. BACKGROUND IMAGE ── */
+
 .cgg__hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  /* stop at the strip */
+  bottom: 42px !important;
+  z-index: 0 !important;
+  overflow: hidden !important;
 }
 
+/* Override base.css: img { width:100%; height:auto } */
 .cgg__hero-bg-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  display: block;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: center top !important;
 }
 
-/* ── OVERLAY CARD ── */
+/* ── 6. OVERLAY CARD ── */
+
 .cgg__card {
-  position: absolute;
-  left: 56px;
-  /* sit above the 42px strip */
-  bottom: calc(42px + 32px);
-  z-index: 5;
-  width: 540px;
-  min-height: 520px;
-  background: #efefef !important;
+  position: absolute !important;
+  left: 56px !important;
+  bottom: 74px !important;
+  z-index: 10 !important;
+  width: 540px !important;
+  min-height: 520px !important;
+  background-color: #efefef !important;
   border-radius: 40px !important;
   padding: 50px !important;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12) !important;
   display: flex !important;
-  flex-direction: column;
-  gap: 24px;
-  justify-content: center;
-  /* Ensure theme resets don't bleed in */
-  color: #000;
+  flex-direction: column !important;
+  gap: 24px !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  color: #000 !important;
+  /* Prevent base.css section grid from collapsing this */
+  grid-column: unset !important;
 }
 
+/* Override base.css h1 font/size/weight */
 .cgg__card-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 96px;
-  font-weight: 900;
-  line-height: 0.9;
-  color: #000;
-  letter-spacing: -0.02em;
+  all: unset !important;
+  display: block !important;
+  font-family: 'Playfair Display', serif !important;
+  font-size: 96px !important;
+  font-weight: 900 !important;
+  line-height: 0.9 !important;
+  color: #000 !important;
+  letter-spacing: -0.02em !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-wrap: break-word !important;
 }
 
+/* Override base.css p margin */
 .cgg__card-desc {
-  font-size: 22px;
-  line-height: 1.8;
-  color: #000;
-  max-width: 430px;
-  white-space: pre-line;
+  all: unset !important;
+  display: block !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 22px !important;
+  line-height: 1.8 !important;
+  color: #000 !important;
+  max-width: 430px !important;
+  white-space: pre-line !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
+/* Override base.css .button completely */
 .cgg__card-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 280px;
-  height: 74px;
-  background: #000;
-  color: #fff;
-  border-radius: 999px;
-  text-decoration: none;
-  font-size: 0.82rem;
-  font-weight: 800;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  flex-shrink: 0;
+  all: unset !important;
+  box-sizing: border-box !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 280px !important;
+  height: 74px !important;
+  background-color: #000 !important;
+  color: #fff !important;
+  border-radius: 999px !important;
+  text-decoration: none !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.25em !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  flex-shrink: 0 !important;
+  border: none !important;
+  padding: 0 !important;
 }
 
 .cgg__card-cta:hover {
-  background: #222;
+  background-color: #222 !important;
+  color: #fff !important;
 }
 
-/* ── BOTTOM STRIP ── */
+/* ── 7. BOTTOM STRIP ── */
+
 .cgg__strip {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 42px;
-  background: #e8e8e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 6;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  height: 42px !important;
+  background: #e8e8e8 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 20 !important;
+  margin: 0 !important;
+  padding: 0 16px !important;
 }
 
 .cgg__strip-text {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #000;
-  text-align: center;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #000 !important;
+  text-align: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1 !important;
 }
 
-/* ── RESPONSIVE — Tablet (≤1024px) ── */
+/* ── 8. TABLET (≤1024px) ── */
+
 @media (max-width: 1024px) {
   .cgg__header {
-    padding: 0 32px;
+    padding: 0 32px !important;
   }
 
   .cgg__card {
-    left: 32px;
-    bottom: calc(42px + 24px);
-    width: min(480px, calc(100% - 64px));
-    min-height: auto;
+    left: 32px !important;
+    width: min(480px, calc(100% - 64px)) !important;
+    min-height: auto !important;
     padding: 40px !important;
   }
 
   .cgg__card-title {
-    font-size: clamp(56px, 8vw, 96px);
+    font-size: clamp(56px, 8vw, 96px) !important;
   }
 
   .cgg__card-desc {
-    font-size: 18px;
+    font-size: 18px !important;
   }
 }
 
-/* ── RESPONSIVE — Mobile (≤680px) ── */
+/* ── 9. MOBILE (≤680px) ── */
+
 @media (max-width: 680px) {
   .cgg__header {
-    grid-template-columns: 1fr;
-    height: auto;
-    padding: 16px 20px;
-    gap: 10px;
-    text-align: center;
-    justify-items: center;
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    padding: 16px 20px !important;
+    gap: 10px !important;
+    text-align: center !important;
+    justify-items: center !important;
   }
 
   .cgg__hero {
-    height: auto;
-    min-height: 100svh;
-    padding-bottom: 42px;
-  }
-
-  .cgg__card {
-    position: relative;
-    left: auto;
-    bottom: auto;
-    width: calc(100% - 32px);
-    margin: 24px auto 0;
-    min-height: auto;
-    padding: 32px 28px;
-    border-radius: 28px;
-  }
-
-  .cgg__card-title {
-    font-size: clamp(44px, 12vw, 72px);
-  }
-
-  .cgg__card-desc {
-    font-size: 16px;
-    max-width: 100%;
-  }
-
-  .cgg__card-cta {
-    width: 100%;
-    height: 64px;
+    height: auto !important;
+    min-height: 100svh !important;
+    padding-bottom: 42px !important;
   }
 
   .cgg__hero-bg {
-    position: fixed;
-    height: 100svh;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 42px !important;
+    height: auto !important;
+  }
+
+  .cgg__card {
+    position: relative !important;
+    left: auto !important;
+    bottom: auto !important;
+    width: calc(100% - 32px) !important;
+    margin: 24px auto 0 !important;
+    min-height: auto !important;
+    padding: 32px 28px !important;
+    border-radius: 28px !important;
+  }
+
+  .cgg__card-title {
+    font-size: clamp(44px, 12vw, 72px) !important;
+  }
+
+  .cgg__card-desc {
+    font-size: 16px !important;
+    max-width: 100% !important;
+  }
+
+  .cgg__card-cta {
+    width: 100% !important;
+    height: 64px !important;
   }
 
   .cgg__strip {
-    position: relative;
-    margin-top: 16px;
+    position: relative !important;
+    margin-top: 0 !important;
   }
 }
