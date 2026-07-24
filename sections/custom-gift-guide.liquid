@@ -1,5 +1,5 @@
 {%- style -%}
-/* ── RESET HORIZON CONFLICTS ── */
+/* ── RESET HORIZON ── */
 body[data-template="page.gift-guide"],
 body[data-template="page.gift-guide"] .page-wrapper,
 body[data-template="page.gift-guide"] #MainContent,
@@ -39,11 +39,8 @@ body[data-template="page.gift-guide"] .shopify-section {
   background: #F6F6F4;
   padding: 0 40px;
   margin: 0;
-  position: relative;
-  z-index: 100;
 }
 .cgg-logo {
-  font-family: 'Poppins', sans-serif;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -53,7 +50,6 @@ body[data-template="page.gift-guide"] .shopify-section {
   line-height: 1;
 }
 .cgg-tagline {
-  font-family: 'Poppins', sans-serif;
   font-size: 14px;
   font-weight: 400;
   text-align: center;
@@ -69,7 +65,6 @@ body[data-template="page.gift-guide"] .shopify-section {
   height: 48px;
   background: #FFF159;
   color: #000;
-  font-family: 'Poppins', sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -80,45 +75,53 @@ body[data-template="page.gift-guide"] .shopify-section {
   border: none;
   border-radius: 0;
   cursor: pointer;
-  transition: background 0.15s;
 }
 .cgg-nav-btn:hover { background: #f0e500; color: #000; text-decoration: none; }
 
-/* ── HERO ── */
+/* ── HERO: SVG on top, text below, NO overlap ── */
 .cgg-hero {
-  position: relative;
+  display: block;
   width: 100%;
-  height: calc(100svh - 70px);
-  min-height: 580px;
-  overflow: hidden;
   background: #fff;
 }
 
-/* SVG fills entire hero area edge-to-edge */
-.cgg-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 42px;
-  z-index: 0;
-  background-color: #fff;
+/* SVG illustration — top block, fixed height */
+.cgg-hero-img {
+  display: block;
+  width: 100%;
+  height: 55vw;
+  max-height: 520px;
+  min-height: 280px;
   background-repeat: no-repeat;
   background-position: center top;
   background-size: 100% 100%;
+  background-color: #fff;
 }
 
-/* Card: transparent, bottom-left, no box */
+/* Text content row — below SVG, side by side with right side showing more SVG */
+.cgg-hero-body {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  width: 100%;
+  background: #fff;
+}
+
+/* Left: text card */
 .cgg-card {
-  position: absolute;
-  left: 32px;
-  bottom: 62px;
-  z-index: 10;
-  width: 370px;
   display: flex;
   flex-direction: column;
   gap: 18px;
-  background: transparent;
+  padding: 32px 40px 36px 32px;
+  background: #fff;
+}
+
+/* Right: continuation of SVG */
+.cgg-hero-right {
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: 100% auto;
+  background-color: #fff;
+  min-height: 220px;
 }
 
 .cgg-card-title {
@@ -131,9 +134,7 @@ body[data-template="page.gift-guide"] .shopify-section {
   margin: 0 !important;
   padding: 0 !important;
 }
-
 .cgg-card-desc {
-  font-family: 'Poppins', sans-serif !important;
   font-size: 13px !important;
   line-height: 1.65 !important;
   color: #000 !important;
@@ -142,17 +143,14 @@ body[data-template="page.gift-guide"] .shopify-section {
   padding: 0 !important;
   font-weight: 400 !important;
 }
-
 .cgg-card-btn {
   display: inline-flex !important;
   align-items: center !important;
-  justify-content: center !important;
   gap: 14px !important;
   height: 50px !important;
   padding: 0 28px !important;
   background: #000 !important;
   color: #fff !important;
-  font-family: 'Poppins', sans-serif !important;
   font-size: 11px !important;
   font-weight: 700 !important;
   letter-spacing: 0.2em !important;
@@ -162,26 +160,20 @@ body[data-template="page.gift-guide"] .shopify-section {
   border-radius: 0 !important;
   cursor: pointer !important;
   width: fit-content !important;
-  transition: background 0.15s !important;
 }
 .cgg-card-btn:hover { background: #222 !important; color: #fff !important; text-decoration: none !important; }
 
 /* ── BOTTOM STRIP ── */
 .cgg-strip {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100%;
   height: 42px;
   background: #e8e8e8;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 20;
   padding: 0 24px;
 }
 .cgg-strip-text {
-  font-family: 'Poppins', sans-serif;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.2em;
@@ -218,6 +210,7 @@ body[data-template="page.gift-guide"] .shopify-section {
   overflow: hidden;
   aspect-ratio: 290 / 310;
   background: #d0d0d0;
+  cursor: pointer;
 }
 .cgg-grid-item img {
   display: block;
@@ -256,66 +249,154 @@ body[data-template="page.gift-guide"] .shopify-section {
   transition: transform 0.2s ease, border-color 0.2s ease;
   box-shadow: 0 1px 4px rgba(0,0,0,0.18);
   padding: 0;
-  font-family: 'Poppins', sans-serif;
   appearance: none;
+  background-color: rgba(255,255,255,0.92);
 }
 .cgg-hotspot:hover .cgg-hotspot-btn {
   transform: scale(1.15);
   border-color: #333;
 }
-.cgg-hotspot-tooltip {
-  position: absolute;
-  bottom: calc(100% + 8px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 6px 10px;
-  white-space: nowrap;
-  font-size: 11px;
-  font-family: 'Poppins', sans-serif;
-  color: #000;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-  z-index: 20;
+
+/* ── PRODUCT POPUP ── */
+.cgg-popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 9000;
+  align-items: center;
+  justify-content: center;
 }
-.cgg-hotspot:hover .cgg-hotspot-tooltip { opacity: 1; }
+.cgg-popup-overlay.active { display: flex; }
+.cgg-popup {
+  background: #fff;
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  padding: 24px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+}
+.cgg-popup-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #000;
+  line-height: 1;
+  padding: 4px;
+}
+.cgg-popup-top {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.cgg-popup-img {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: #eee;
+}
+.cgg-popup-info { flex: 1; }
+.cgg-popup-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0 0 6px 0;
+  color: #000;
+}
+.cgg-popup-price {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #000;
+}
+.cgg-popup-desc {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #555;
+  margin: 0;
+}
+.cgg-popup-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #000;
+  margin: 0 0 8px 0;
+  text-transform: none;
+}
+.cgg-popup-variants {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.cgg-popup-variant {
+  padding: 8px 16px;
+  border: 1.5px solid #ddd;
+  background: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.cgg-popup-variant.selected,
+.cgg-popup-variant:hover { border-color: #000; }
+.cgg-popup-select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #ddd;
+  background: #fff;
+  font-size: 13px;
+  margin-bottom: 20px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23000' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  cursor: pointer;
+}
+.cgg-popup-atc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  height: 52px;
+  background: #000;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.cgg-popup-atc:hover { background: #222; }
 
 /* ── TABLET ── */
 @media (max-width: 1024px) {
   .cgg-nav { padding: 0 28px; gap: 16px; }
-  .cgg-card { left: 28px; width: min(340px, calc(100% - 56px)); }
+  .cgg-hero-body { grid-template-columns: 360px 1fr; }
+  .cgg-card { padding: 28px 32px 32px 28px; }
   .cgg-card-title { font-size: clamp(40px, 5vw, 56px) !important; }
   .cgg-wild { padding: 48px 28px 64px; }
 }
 
 /* ── MOBILE ── */
 @media (max-width: 680px) {
-  .cgg-nav {
-    grid-template-columns: 1fr;
-    height: auto;
-    padding: 14px 20px;
-    gap: 10px;
-    text-align: center;
-    justify-items: center;
-  }
+  .cgg-nav { grid-template-columns: 1fr; height: auto; padding: 14px 20px; gap: 10px; text-align: center; justify-items: center; }
   .cgg-nav-btn { width: 100%; max-width: 280px; }
-  .cgg-hero { height: auto; min-height: unset; padding-bottom: 42px; }
-  .cgg-bg { position: relative; bottom: auto; height: 55vw; min-height: 200px; }
-  .cgg-card {
-    position: relative;
-    left: auto;
-    bottom: auto;
-    width: calc(100% - 32px);
-    margin: 20px auto 0;
-    gap: 14px;
-  }
+  .cgg-hero-img { height: 70vw; max-height: 320px; }
+  .cgg-hero-body { grid-template-columns: 1fr; }
+  .cgg-hero-right { display: none; }
+  .cgg-card { padding: 24px 20px; }
   .cgg-card-title { font-size: clamp(32px, 9vw, 48px) !important; }
   .cgg-card-desc { font-size: 13px !important; max-width: 100% !important; }
-  .cgg-card-btn { width: 100% !important; padding: 0 !important; }
-  .cgg-strip { position: relative; }
+  .cgg-card-btn { width: 100% !important; padding: 0 !important; justify-content: center !important; }
   .cgg-wild { padding: 40px 16px 56px; }
   .cgg-wild-title { font-size: 26px; }
   .cgg-grid { grid-template-columns: 1fr; gap: 6px; }
@@ -324,6 +405,7 @@ body[data-template="page.gift-guide"] .shopify-section {
 
 <div class="cgg-wrap">
 
+  {%- comment -%} HEADER {%- endcomment -%}
   <nav class="cgg-nav" aria-label="Gift guide navigation">
     <span class="cgg-logo">{{ section.settings.logo_text }}</span>
     <span class="cgg-tagline">{{ section.settings.header_tagline }}</span>
@@ -332,20 +414,27 @@ body[data-template="page.gift-guide"] .shopify-section {
     </a>
   </nav>
 
-  <div class="cgg-hero">
-    {%- if section.settings.bg_image != blank -%}
-      {%- assign bg_src = section.settings.bg_image | image_url: width: 2400 -%}
-    {%- else -%}
-      {%- assign bg_src = 'gift-guide-banner.svg' | asset_url -%}
-    {%- endif -%}
-    <div class="cgg-bg" aria-hidden="true" style="background-image: url('{{ bg_src }}');"></div>
+  {%- comment -%} HERO {%- endcomment -%}
+  {%- if section.settings.bg_image != blank -%}
+    {%- assign bg_src = section.settings.bg_image | image_url: width: 2400 -%}
+  {%- else -%}
+    {%- assign bg_src = 'gift-guide-banner.svg' | asset_url -%}
+  {%- endif -%}
 
-    <div class="cgg-card">
-      <span class="cgg-card-title">{{ section.settings.card_title }}</span>
-      <span class="cgg-card-desc">{{ section.settings.card_desc | newline_to_br }}</span>
-      <a class="cgg-card-btn" href="{{ section.settings.card_cta_link | default: '#' }}">
-        {{- section.settings.card_cta_label -}}&nbsp;&nbsp;→
-      </a>
+  <div class="cgg-hero">
+    {%- comment -%} Top: full-width SVG illustration {%- endcomment -%}
+    <div class="cgg-hero-img" aria-hidden="true" style="background-image: url('{{ bg_src }}');"></div>
+
+    {%- comment -%} Bottom: left text + right SVG continuation side by side {%- endcomment -%}
+    <div class="cgg-hero-body">
+      <div class="cgg-card">
+        <span class="cgg-card-title">{{ section.settings.card_title }}</span>
+        <span class="cgg-card-desc">{{ section.settings.card_desc | newline_to_br }}</span>
+        <a class="cgg-card-btn" href="{{ section.settings.card_cta_link | default: '#' }}">
+          {{- section.settings.card_cta_label -}}&nbsp;&nbsp;→
+        </a>
+      </div>
+      <div class="cgg-hero-right" aria-hidden="true" style="background-image: url('{{ bg_src }}'); background-position: center bottom; background-size: 100% auto;"></div>
     </div>
 
     <div class="cgg-strip">
@@ -353,36 +442,118 @@ body[data-template="page.gift-guide"] .shopify-section {
     </div>
   </div>
 
+  {%- comment -%} GRID {%- endcomment -%}
   <div class="cgg-wild">
     <h2 class="cgg-wild-title">{{ section.settings.wild_title }}</h2>
     <div class="cgg-grid">
       {%- for block in section.blocks -%}
         {%- if block.type == 'hotspot_image' -%}
+          {%- assign product = block.settings.product -%}
           <div class="cgg-grid-item" {{ block.shopify_attributes }}>
             {%- if block.settings.image != blank -%}
-              <img
-                src="{{ block.settings.image | image_url: width: 800 }}"
-                alt="{{ block.settings.image.alt | escape }}"
-                loading="lazy"
-                width="800"
-                height="880"
-              >
+              <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.image.alt | escape }}" loading="lazy" width="800" height="880">
             {%- else -%}
               {{ 'image' | placeholder_svg_tag: 'cgg-placeholder' }}
             {%- endif -%}
-            {%- if block.settings.hotspot_label != blank -%}
-              <div class="cgg-hotspot" style="left: {{ block.settings.hotspot_x }}%; top: {{ block.settings.hotspot_y }}%;">
-                <button class="cgg-hotspot-btn" aria-label="{{ block.settings.hotspot_label }}">+</button>
-                <div class="cgg-hotspot-tooltip">{{ block.settings.hotspot_label }}</div>
-              </div>
-            {%- endif -%}
+            <div
+              class="cgg-hotspot"
+              style="left: {{ block.settings.hotspot_x }}%; top: {{ block.settings.hotspot_y }}%;"
+              data-block="{{ block.id }}"
+            >
+              <button
+                class="cgg-hotspot-btn"
+                aria-label="View product"
+                onclick="cggOpenPopup('{{ block.id }}')"
+              >+</button>
+            </div>
           </div>
         {%- endif -%}
       {%- endfor -%}
     </div>
   </div>
 
+  {%- comment -%} PRODUCT POPUPS {%- endcomment -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'hotspot_image' -%}
+      {%- assign product = block.settings.product -%}
+      <div class="cgg-popup-overlay" id="cgg-popup-{{ block.id }}">
+        <div class="cgg-popup">
+          <button class="cgg-popup-close" onclick="cggClosePopup('{{ block.id }}')" aria-label="Close">✕</button>
+
+          {%- if product != blank -%}
+            <div class="cgg-popup-top">
+              {%- if product.featured_image -%}
+                <img class="cgg-popup-img" src="{{ product.featured_image | image_url: width: 220 }}" alt="{{ product.title | escape }}">
+              {%- endif -%}
+              <div class="cgg-popup-info">
+                <p class="cgg-popup-name">{{ product.title }}</p>
+                <p class="cgg-popup-price">{{ product.price | money }}</p>
+                <p class="cgg-popup-desc">{{ product.description | strip_html | truncate: 100 }}</p>
+              </div>
+            </div>
+
+            {%- assign color_option = product.options_with_values | where: 'name', 'Color' | first -%}
+            {%- assign size_option = product.options_with_values | where: 'name', 'Size' | first -%}
+
+            {%- if color_option -%}
+              <p class="cgg-popup-label">{{ color_option.name }}</p>
+              <div class="cgg-popup-variants">
+                {%- for value in color_option.values -%}
+                  <button class="cgg-popup-variant{% if forloop.first %} selected{% endif %}" onclick="cggSelectVariant(this)">{{ value }}</button>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
+            {%- if size_option -%}
+              <p class="cgg-popup-label">{{ size_option.name }}</p>
+              <select class="cgg-popup-select">
+                <option value="">Choose your size</option>
+                {%- for value in size_option.values -%}
+                  <option value="{{ value }}">{{ value }}</option>
+                {%- endfor -%}
+              </select>
+            {%- endif -%}
+
+            <form action="/cart/add" method="post">
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              <button type="submit" class="cgg-popup-atc">ADD TO CART &nbsp;→</button>
+            </form>
+
+          {%- else -%}
+            <div class="cgg-popup-top">
+              <div class="cgg-popup-info">
+                <p class="cgg-popup-name">{{ block.settings.hotspot_label }}</p>
+                <p class="cgg-popup-desc">Assign a product to this hotspot in the theme editor.</p>
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+
 </div>
+
+<script>
+function cggOpenPopup(id) {
+  document.getElementById('cgg-popup-' + id).classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function cggClosePopup(id) {
+  document.getElementById('cgg-popup-' + id).classList.remove('active');
+  document.body.style.overflow = '';
+}
+function cggSelectVariant(btn) {
+  btn.closest('.cgg-popup-variants').querySelectorAll('.cgg-popup-variant').forEach(function(b){ b.classList.remove('selected'); });
+  btn.classList.add('selected');
+}
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('cgg-popup-overlay')) {
+    e.target.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
+</script>
 
 {% schema %}
 {
@@ -406,7 +577,8 @@ body[data-template="page.gift-guide"] .shopify-section {
       "name": "Hotspot Image",
       "settings": [
         { "type": "image_picker", "id": "image",         "label": "Image" },
-        { "type": "text",         "id": "hotspot_label", "label": "Hotspot tooltip",  "default": "Shop this look" },
+        { "type": "product",      "id": "product",       "label": "Product" },
+        { "type": "text",         "id": "hotspot_label", "label": "Hotspot label",    "default": "Shop this look" },
         { "type": "range",        "id": "hotspot_x",     "label": "Hotspot X (%)",    "min": 5, "max": 95, "step": 1, "default": 50 },
         { "type": "range",        "id": "hotspot_y",     "label": "Hotspot Y (%)",    "min": 5, "max": 95, "step": 1, "default": 70 }
       ]
