@@ -54,7 +54,7 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
 
 /* ── POPUP ── */
 .cgg-popup{background:#fff;width:380px;max-width:calc(100vw - 32px);max-height:90vh;overflow-y:auto;position:relative;padding:28px 24px 24px;box-shadow:0 8px 40px rgba(0,0,0,.18)}
-.cgg-popup-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:18px;cursor:pointer;color:#000;line-height:1;padding:4px 6px}
+.cgg-popup-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:18px;cursor:pointer;color:#000;line-height:1;padding:0;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center}
 .cgg-popup-top{display:flex;gap:16px;margin-bottom:20px}
 .cgg-popup-img{width:120px;height:120px;object-fit:cover;flex-shrink:0;background:#eee}
 .cgg-popup-info{flex:1;min-width:0}
@@ -293,7 +293,7 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
       {%- if product == blank and section.settings.fallback_collection != blank -%}
         {%- assign product = section.settings.fallback_collection.products[forloop.index0] -%}
       {%- endif -%}
-      <div class="cgg-popup-overlay" id="cgg-popup-{{ block.id }}" role="dialog" aria-modal="true" aria-label="{{ product.title | default: block.settings.hotspot_label | escape }}">
+      <div class="cgg-popup-overlay" id="cgg-popup-{{ block.id }}" role="dialog" aria-modal="true" aria-label="{{ product.title | default: block.settings.hotspot_label | default: 'Product' | escape }}" data-product-handle="{{ product.handle | escape }}">
         <div class="cgg-popup">
           <button class="cgg-popup-close" aria-label="Close">✕</button>
 
@@ -380,192 +380,213 @@ body[data-template="index"] .shopify-section{display:block!important;margin:0!im
 
 </div>
 
-<script type="application/json" id="cgg-products-debug-{{ section.id }}">
-[
-  {%- assign debug_index = 0 -%}
-  {%- for block in section.blocks -%}
-    {%- if block.type == 'hotspot_image' -%}
-      {%- assign debug_product = block.settings.product -%}
-      {%- if debug_product == blank and section.settings.fallback_collection != blank -%}
-        {%- assign debug_product = section.settings.fallback_collection.products[forloop.index0] -%}
-      {%- endif -%}
-      {%- assign debug_first_image_url = nil -%}
-      {%- if debug_product.featured_media.preview_image != blank -%}
-        {%- assign debug_first_image_url = debug_product.featured_media.preview_image | image_url: width: 900 -%}
-      {%- elsif debug_product.featured_image != blank -%}
-        {%- assign debug_first_image_url = debug_product.featured_image | image_url: width: 900 -%}
-      {%- elsif debug_product.media.first.preview_image != blank -%}
-        {%- assign debug_first_image_url = debug_product.media.first.preview_image | image_url: width: 900 -%}
-      {%- endif -%}
-      {%- unless debug_index == 0 -%},{%- endunless -%}
-      {
-        "blockId": {{ block.id | json }},
-        "product": {
-          "id": {{ debug_product.id | json }},
-          "handle": {{ debug_product.handle | json }},
-          "title": {{ debug_product.title | json }},
-          "featured_image": {{ debug_product.featured_image | json }},
-          "images": {{ debug_product.images | json }},
-          "media": {{ debug_product.media | json }},
-          "featuredMedia": {{ debug_product.featured_media | json }},
-          "featuredImage": {{ debug_product.featured_image | json }},
-          "firstImageUrl": {{ debug_first_image_url | json }},
-          "ajaxUrl": {{ debug_product.url | append: '.js' | json }}
-        },
-        "graphqlResponse": "No Storefront GraphQL query is used by this Liquid theme section.",
-        "storefrontApiResponse": null
-      }
-      {%- assign debug_index = debug_index | plus: 1 -%}
-    {%- endif -%}
-  {%- endfor -%}
-]
-</script>
-
 <script>
 (function(){
   'use strict';
 
-  var debugEl = document.getElementById('cgg-products-debug-{{ section.id }}');
-  if (debugEl) {
-    try {
-      var debugProducts = JSON.parse(debugEl.textContent || '[]');
-      console.log('[Custom Gift Guide] GraphQL response:', 'No Storefront GraphQL query is present. This Shopify theme renders products through Liquid and validates product JSON through /products/{handle}.js.');
-      debugProducts.forEach(function(entry, index) {
-        var product = entry.product || {};
-        var firstImageUrl = product.firstImageUrl;
-        console.group('[Custom Gift Guide] Product image trace #' + (index + 1));
-        console.log('product.id', product.id);
-        console.log('product.title', product.title);
-        console.log('product.featured_image', product.featured_image);
-        console.log('product.images', product.images);
-        console.log('product.media', product.media);
-        console.log('product.featuredMedia', product.featuredMedia);
-        console.log('product.featuredImage', product.featuredImage);
-        console.log('first image URL', firstImageUrl);
-        console.log('GraphQL response', entry.graphqlResponse);
-        console.log('Storefront API response', entry.storefrontApiResponse);
+  var FOCUSABLE = 'a[href],button:not([disabled]),select,textarea,input,[tabindex]:not([tabindex="-1"])';
+  var lastTrigger = null;
 
-        if (!firstImageUrl) {
-          console.error('Image URL is missing/null/undefined/empty for product', product);
-          console.groupEnd();
-          return;
-        }
-
-        fetch(firstImageUrl, { method: 'HEAD' })
-          .then(function(response) {
-            console.log('Image URL HEAD status', response.status, response.ok ? 'OK' : 'BROKEN');
-            console.log('Image URL content-type', response.headers.get('content-type'));
-          })
-          .catch(function(error) {
-            console.error('Image URL HEAD failed', error);
-          });
-
-        var probe = new Image();
-        probe.onload = function() {
-          console.log('Image opens in browser', true);
-          console.log('naturalWidth', probe.naturalWidth);
-          console.log('naturalHeight', probe.naturalHeight);
-        };
-        probe.onerror = function(error) {
-          console.error('Image failed to open directly in browser', error);
-        };
-        probe.src = firstImageUrl;
-
-        if (product.ajaxUrl) {
-          fetch(product.ajaxUrl)
-            .then(function(response) {
-              console.log('Storefront API response status', response.status, response.ok ? 'OK' : 'BROKEN');
-              return response.json();
-            })
-            .then(function(data) {
-              console.log('Storefront API response', data);
-              console.log('Storefront featured_image', data.featured_image);
-              console.log('Storefront images', data.images);
-              console.log('Storefront media', data.media);
-            })
-            .catch(function(error) {
-              console.error('Storefront API response failed', error);
-            });
-        }
-
-        console.groupEnd();
-      });
-    } catch (error) {
-      console.error('[Custom Gift Guide] Failed to parse product debug payload', error);
-    }
+  function getFocusable(popup) {
+    return Array.prototype.slice.call(popup.querySelectorAll(FOCUSABLE));
   }
 
-  // ── Open popup ──
-  document.querySelectorAll('.cgg-hotspot-btn').forEach(function(btn){
-    btn.addEventListener('click', function(e){
+  function openPopup(overlay, trigger) {
+    lastTrigger = trigger || null;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    var focusable = getFocusable(overlay.querySelector('.cgg-popup'));
+    if (focusable.length) focusable[0].focus();
+  }
+
+  function closePopup(overlay) {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+    if (lastTrigger) { lastTrigger.focus(); lastTrigger = null; }
+  }
+
+  // ── Focus trap ──
+  document.addEventListener('keydown', function(e) {
+    var active = document.querySelector('.cgg-popup-overlay.active');
+    if (!active) return;
+    if (e.key === 'Escape') { closePopup(active); return; }
+    if (e.key !== 'Tab') return;
+    var focusable = getFocusable(active.querySelector('.cgg-popup'));
+    if (!focusable.length) return;
+    var first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  // ── Open popup + load variants ──
+  document.querySelectorAll('.cgg-hotspot-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
       e.stopPropagation();
       var overlay = document.getElementById(btn.getAttribute('data-popup'));
-      if(overlay){ overlay.classList.add('active'); document.body.style.overflow='hidden'; }
+      if (!overlay) return;
+      var popup = overlay.querySelector('.cgg-popup');
+      if (popup) loadVariants(popup);
+      openPopup(overlay, btn);
     });
   });
 
   // ── Close via X ──
-  document.querySelectorAll('.cgg-popup-close').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      btn.closest('.cgg-popup-overlay').classList.remove('active');
-      document.body.style.overflow='';
+  document.querySelectorAll('.cgg-popup-close').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      closePopup(btn.closest('.cgg-popup-overlay'));
     });
   });
 
   // ── Close via backdrop click ──
-  document.querySelectorAll('.cgg-popup-overlay').forEach(function(overlay){
-    overlay.addEventListener('click', function(e){
-      if(e.target===overlay){ overlay.classList.remove('active'); document.body.style.overflow=''; }
+  document.querySelectorAll('.cgg-popup-overlay').forEach(function(overlay) {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closePopup(overlay);
     });
   });
 
-  // ── ESC key ──
-  document.addEventListener('keydown', function(e){
-    if(e.key==='Escape'){
-      document.querySelectorAll('.cgg-popup-overlay.active').forEach(function(o){
-        o.classList.remove('active');
-      });
-      document.body.style.overflow='';
+  // ── Variant resolution ──
+  // Cache: popupId -> { handle, variants }
+  var variantCache = {};
+
+  function resolveVariant(popup) {
+    var form = popup.querySelector('[data-popup-form]');
+    if (!form) return;
+    var variantInput = form.querySelector('[data-variant-id]');
+    var atcBtn = form.querySelector('.cgg-popup-atc');
+    if (!variantInput) return;
+    var handle = popup.dataset.productHandle;
+    if (!handle) return;
+    var colorBtn = popup.querySelector('.cgg-popup-variant.selected');
+    var sizeSelect = popup.querySelector('.cgg-popup-select[data-option="size"]');
+    var selectedColor = colorBtn ? colorBtn.dataset.value : null;
+    var selectedSize = sizeSelect ? sizeSelect.value : null;
+    var cached = variantCache[handle];
+    if (!cached) return;
+    var match = cached.find(function(v) {
+      var colorOk = !selectedColor || v.option1 === selectedColor || v.option2 === selectedColor || v.option3 === selectedColor;
+      var sizeOk = !selectedSize || v.option1 === selectedSize || v.option2 === selectedSize || v.option3 === selectedSize;
+      return colorOk && sizeOk;
+    });
+    if (match) {
+      variantInput.value = match.id;
+      if (atcBtn) {
+        atcBtn.disabled = !match.available;
+        atcBtn.textContent = match.available ? 'ADD TO CART \u00a0\u2192' : 'UNAVAILABLE';
+      }
+      maybeAddBonusProduct(selectedColor, selectedSize);
+    } else {
+      variantInput.value = '';
+      if (atcBtn) { atcBtn.disabled = true; atcBtn.textContent = 'UNAVAILABLE'; }
+    }
+  }
+
+  function loadVariants(popup) {
+    var handle = popup.dataset.productHandle;
+    if (!handle) return;
+    if (variantCache[handle]) { resolveVariant(popup); return; }
+    fetch('/products/' + handle + '.js')
+      .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(data) {
+        variantCache[handle] = data.variants || [];
+        resolveVariant(popup);
+      })
+      .catch(function() {});
+  }
+
+  // Propagate product handle from overlay to inner popup element
+  document.querySelectorAll('.cgg-popup-overlay').forEach(function(overlay) {
+    var popup = overlay.querySelector('.cgg-popup');
+    if (popup && overlay.dataset.productHandle) {
+      popup.dataset.productHandle = overlay.dataset.productHandle;
     }
   });
 
   // ── Color variant selection ──
-  document.querySelectorAll('.cgg-popup-variant').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      btn.closest('.cgg-popup-variants').querySelectorAll('.cgg-popup-variant').forEach(function(b){ b.classList.remove('selected'); });
+  document.querySelectorAll('.cgg-popup-variant').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      btn.closest('.cgg-popup-variants').querySelectorAll('.cgg-popup-variant').forEach(function(b) { b.classList.remove('selected'); });
       btn.classList.add('selected');
+      var popup = btn.closest('.cgg-popup');
+      if (popup) resolveVariant(popup);
     });
   });
 
+  // ── Size selection ──
+  document.querySelectorAll('.cgg-popup-select[data-option="size"]').forEach(function(sel) {
+    sel.addEventListener('change', function() {
+      var popup = sel.closest('.cgg-popup');
+      if (popup) resolveVariant(popup);
+    });
+  });
+
+  // ── Bonus product rule: Black + Medium -> Soft Winter Jacket (once per session) ──
+  var BONUS_KEY = 'cgg_bonus_added';
+  var bonusAdding = false;
+
+  function maybeAddBonusProduct(color, size) {
+    if (color !== 'Black' || size !== 'Medium') return;
+    if (sessionStorage.getItem(BONUS_KEY)) return;
+    if (bonusAdding) return;
+    bonusAdding = true;
+    fetch('/products/soft-winter-jacket.js')
+      .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(data) {
+        var variant = (data.variants || []).find(function(v) { return v.available; });
+        if (!variant) { bonusAdding = false; return; }
+        return fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+          body: JSON.stringify({ id: variant.id, quantity: 1 })
+        });
+      })
+      .then(function(r) {
+        if (!r) return;
+        if (!r.ok) throw new Error(r.status);
+        return r.json();
+      })
+      .then(function(data) {
+        if (data && data.id) {
+          sessionStorage.setItem(BONUS_KEY, '1');
+          document.dispatchEvent(new CustomEvent('cart:refresh'));
+          document.dispatchEvent(new CustomEvent('cart:updated'));
+        }
+        bonusAdding = false;
+      })
+      .catch(function() { bonusAdding = false; });
+  }
+
   // ── AJAX Add to Cart ──
-  document.querySelectorAll('[data-popup-form]').forEach(function(form){
-    form.addEventListener('submit', function(e){
+  document.querySelectorAll('[data-popup-form]').forEach(function(form) {
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
       var variantInput = form.querySelector('[data-variant-id]');
-      if(!variantInput || !variantInput.value) return;
+      if (!variantInput || !variantInput.value) return;
       var atcBtn = form.querySelector('.cgg-popup-atc');
       var orig = atcBtn.innerHTML;
       atcBtn.innerHTML = 'ADDING...';
       atcBtn.disabled = true;
-      fetch('/cart/add.js',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','X-Requested-With':'XMLHttpRequest'},
-        body:JSON.stringify({id:parseInt(variantInput.value,10),quantity:1})
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+        body: JSON.stringify({ id: parseInt(variantInput.value, 10), quantity: 1 })
       })
-      .then(function(r){ return r.json(); })
-      .then(function(data){
-        if(data.id){
-          atcBtn.innerHTML='ADDED ✓';
+      .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(data) {
+        if (data.id) {
+          atcBtn.innerHTML = 'ADDED \u2713';
           document.dispatchEvent(new CustomEvent('cart:refresh'));
           document.dispatchEvent(new CustomEvent('cart:updated'));
         } else {
-          atcBtn.innerHTML = data.description || 'ERROR';
+          atcBtn.innerHTML = 'UNAVAILABLE';
         }
-        setTimeout(function(){ atcBtn.innerHTML=orig; atcBtn.disabled=false; },2000);
+        setTimeout(function() { atcBtn.innerHTML = orig; atcBtn.disabled = false; }, 2000);
       })
-      .catch(function(){
-        atcBtn.innerHTML=orig;
-        atcBtn.disabled=false;
+      .catch(function() {
+        atcBtn.innerHTML = 'TRY AGAIN';
+        setTimeout(function() { atcBtn.innerHTML = orig; atcBtn.disabled = false; }, 2000);
       });
     });
   });
