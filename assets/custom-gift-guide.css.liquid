@@ -3,12 +3,29 @@
    BEM: .cgg__*
    ============================================================ */
 
+/* Hide the Shopify theme header on the gift-guide page so our
+   custom header is the only one visible */
+body[data-template="page.gift-guide"] #header-group,
+body[data-template="page.gift-guide"] footer {
+  display: none !important;
+}
+
+body[data-template="page.gift-guide"] #MainContent {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+body[data-template="page.gift-guide"] .page-wrapper {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
 /* ── Reset scope ── */
 .cgg,
 .cgg *,
 .cgg *::before,
 .cgg *::after {
-  box-sizing: border-box;
+  box-sizing: border-box !important;
   margin: 0;
   padding: 0;
 }
@@ -17,6 +34,8 @@
   font-family: 'Poppins', sans-serif;
   color: #000;
   width: 100%;
+  /* Nuke any theme margin/padding on the shopify-section wrapper */
+  display: block;
 }
 
 /* ── HEADER ── */
@@ -77,6 +96,7 @@
   height: calc(100vh - 72px);
   min-height: 600px;
   overflow: hidden;
+  background: #f5f5f5;
 }
 
 /* Full-bleed background */
@@ -98,18 +118,21 @@
 .cgg__card {
   position: absolute;
   left: 56px;
-  bottom: 56px;
+  /* sit above the 42px strip */
+  bottom: calc(42px + 32px);
   z-index: 5;
   width: 540px;
   min-height: 520px;
-  background: #efefef;
-  border-radius: 40px;
-  padding: 50px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
-  display: flex;
+  background: #efefef !important;
+  border-radius: 40px !important;
+  padding: 50px !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12) !important;
+  display: flex !important;
   flex-direction: column;
   gap: 24px;
   justify-content: center;
+  /* Ensure theme resets don't bleed in */
+  color: #000;
 }
 
 .cgg__card-title {
@@ -181,10 +204,10 @@
 
   .cgg__card {
     left: 32px;
-    bottom: 56px;
+    bottom: calc(42px + 24px);
     width: min(480px, calc(100% - 64px));
     min-height: auto;
-    padding: 40px;
+    padding: 40px !important;
   }
 
   .cgg__card-title {
