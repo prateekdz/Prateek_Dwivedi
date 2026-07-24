@@ -1,36 +1,4 @@
 {%- style -%}
-/* ── PAGE UNLOCK (scoped to gift-guide template body attribute) ── */
-body[data-template="page.gift-guide"] {
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  height: auto !important;
-}
-body[data-template="page.gift-guide"] .page-wrapper {
-  height: auto !important;
-  overflow: visible !important;
-  overflow-x: hidden !important;
-  display: block !important;
-  min-height: 100dvh;
-}
-body[data-template="page.gift-guide"] #MainContent,
-body[data-template="page.gift-guide"] .content-for-layout {
-  display: block !important;
-  flex: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-body[data-template="page.gift-guide"] .shopify-section {
-  margin: 0 !important;
-  padding: 0 !important;
-  display: block !important;
-}
-body[data-template="page.gift-guide"] #header-group {
-  display: none !important;
-}
-body[data-template="page.gift-guide"] footer {
-  display: none !important;
-}
-
 /* ── WRAPPER ── */
 .cgg-wrap {
   display: block;
@@ -100,12 +68,12 @@ body[data-template="page.gift-guide"] footer {
   position: relative;
   width: 100%;
   height: calc(100vh - 72px);
-  min-height: 580px;
+  min-height: 560px;
   overflow: hidden;
-  background: #f0f0f0;
+  background: #fff;
 }
 
-/* ── BACKGROUND ── */
+/* ── BACKGROUND — rendered as CSS background to avoid SVG crop issues ── */
 .cgg-bg {
   position: absolute;
   top: 0;
@@ -113,9 +81,12 @@ body[data-template="page.gift-guide"] footer {
   right: 0;
   bottom: 42px;
   z-index: 0;
-  overflow: hidden;
-  background: #fff;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
 }
+/* When a Liquid image is used, we render an <img> inside */
 .cgg-bg img {
   display: block !important;
   width: 100% !important;
@@ -125,22 +96,25 @@ body[data-template="page.gift-guide"] footer {
   object-position: center top !important;
 }
 
-/* ── CARD ── */
+/* ── CARD — white backing so text is always readable ── */
 .cgg-card {
   position: absolute;
-  left: 56px;
-  bottom: 74px;
+  left: 40px;
+  bottom: 62px;
   z-index: 10;
-  width: 460px;
+  width: 420px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
+  background: rgba(255,255,255,0.0);
 }
+
+/* Title */
 .cgg-card-title {
   font-family: 'Playfair Display', serif !important;
-  font-size: 76px !important;
+  font-size: 64px !important;
   font-weight: 700 !important;
-  line-height: 0.95 !important;
+  line-height: 1.0 !important;
   color: #000 !important;
   letter-spacing: -0.02em !important;
   margin: 0 !important;
@@ -148,23 +122,27 @@ body[data-template="page.gift-guide"] footer {
   display: block !important;
   text-transform: none !important;
 }
+
+/* Description */
 .cgg-card-desc {
   font-family: 'Poppins', sans-serif !important;
-  font-size: 15px !important;
-  line-height: 1.75 !important;
+  font-size: 14px !important;
+  line-height: 1.7 !important;
   color: #000 !important;
-  max-width: 380px !important;
+  max-width: 360px !important;
   margin: 0 !important;
   padding: 0 !important;
   display: block !important;
   font-weight: 400 !important;
 }
+
+/* CTA Button */
 .cgg-card-btn {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  height: 56px !important;
-  padding: 0 36px !important;
+  height: 52px !important;
+  padding: 0 32px !important;
   background: #000 !important;
   color: #fff !important;
   font-family: 'Poppins', sans-serif !important;
@@ -174,7 +152,7 @@ body[data-template="page.gift-guide"] footer {
   text-transform: uppercase !important;
   text-decoration: none !important;
   border: none !important;
-  border-radius: 4px !important;
+  border-radius: 3px !important;
   cursor: pointer !important;
   box-shadow: none !important;
   width: fit-content !important;
@@ -210,8 +188,8 @@ body[data-template="page.gift-guide"] footer {
 /* ── TABLET ── */
 @media (max-width: 1024px) {
   .cgg-nav { padding: 0 32px; gap: 16px; }
-  .cgg-card { left: 32px; width: min(420px, calc(100% - 64px)); }
-  .cgg-card-title { font-size: clamp(48px, 7vw, 76px) !important; }
+  .cgg-card { left: 32px; width: min(380px, calc(100% - 64px)); }
+  .cgg-card-title { font-size: clamp(44px, 6vw, 64px) !important; }
 }
 
 /* ── MOBILE ── */
@@ -236,10 +214,13 @@ body[data-template="page.gift-guide"] footer {
     bottom: auto;
     width: calc(100% - 32px);
     margin: 20px auto 0;
-    gap: 16px;
+    gap: 14px;
+    background: rgba(255,255,255,0.88);
+    padding: 20px;
+    border-radius: 8px;
   }
-  .cgg-card-title { font-size: clamp(40px, 11vw, 60px) !important; }
-  .cgg-card-desc { font-size: 14px !important; max-width: 100% !important; }
+  .cgg-card-title { font-size: clamp(36px, 10vw, 56px) !important; }
+  .cgg-card-desc { font-size: 13px !important; max-width: 100% !important; }
   .cgg-card-btn { width: 100% !important; padding: 0 !important; }
   .cgg-strip { position: relative; }
 }
@@ -257,27 +238,21 @@ body[data-template="page.gift-guide"] footer {
 
   <div class="cgg-hero">
 
-    <div class="cgg-bg" aria-hidden="true">
-      {%- if section.settings.bg_image != blank -%}
-        <img
-          src="{{ section.settings.bg_image | image_url: width: 2400 }}"
-          alt=""
-          loading="eager"
-          fetchpriority="high"
-          width="2400"
-          height="1350"
-        >
-      {%- else -%}
-        <img
-          src="{{ 'gift-guide-banner.svg' | asset_url }}"
-          alt=""
-          loading="eager"
-          fetchpriority="high"
-          width="1440"
-          height="900"
-        >
-      {%- endif -%}
-    </div>
+    {%- comment -%}
+      Background: use inline style with asset_url so the SVG scales as a CSS
+      background-image — avoids the object-fit crop that was showing the wrong
+      part of the illustration.
+    {%- endcomment -%}
+    {%- if section.settings.bg_image != blank -%}
+      {%- assign bg_src = section.settings.bg_image | image_url: width: 2400 -%}
+    {%- else -%}
+      {%- assign bg_src = 'gift-guide-banner.svg' | asset_url -%}
+    {%- endif -%}
+    <div
+      class="cgg-bg"
+      aria-hidden="true"
+      style="background-image: url('{{ bg_src }}');"
+    ></div>
 
     <div class="cgg-card">
       <span class="cgg-card-title">{{ section.settings.card_title }}</span>
