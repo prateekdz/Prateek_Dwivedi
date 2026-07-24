@@ -1,5 +1,5 @@
 {%- style -%}
-/* ── RESET HORIZON/DAWN CONFLICTS ── */
+/* ── RESET HORIZON CONFLICTS ── */
 body[data-template="page.gift-guide"],
 body[data-template="page.gift-guide"] .page-wrapper,
 body[data-template="page.gift-guide"] #MainContent,
@@ -16,25 +16,19 @@ body[data-template="page.gift-guide"] .shopify-section {
   margin: 0 !important;
   padding: 0 !important;
 }
-body[data-template="page.gift-guide"] html,
-body[data-template="page.gift-guide"] {
-  height: auto !important;
-  overflow: auto !important;
-}
 
-/* ── GLOBAL WRAP ── */
+/* ── WRAP ── */
 .cgg-wrap {
   display: block;
   width: 100%;
   font-family: 'Poppins', sans-serif;
   color: #000;
   -webkit-font-smoothing: antialiased;
+  background: #fff;
 }
-.cgg-wrap *, .cgg-wrap *::before, .cgg-wrap *::after {
-  box-sizing: border-box;
-}
+.cgg-wrap *, .cgg-wrap *::before, .cgg-wrap *::after { box-sizing: border-box; }
 
-/* ── HEADER NAV ── */
+/* ── HEADER ── */
 .cgg-nav {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -95,42 +89,43 @@ body[data-template="page.gift-guide"] {
   position: relative;
   width: 100%;
   height: calc(100svh - 70px);
-  min-height: 560px;
+  min-height: 580px;
   overflow: hidden;
   background: #fff;
 }
 
-/* Background illustration */
+/* SVG fills entire hero area edge-to-edge */
 .cgg-bg {
   position: absolute;
-  inset: 0 0 42px 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 42px;
   z-index: 0;
   background-color: #fff;
   background-repeat: no-repeat;
-  background-size: cover;
   background-position: center top;
-  background-size: 100% auto;
+  background-size: 100% 100%;
 }
 
-/* ── HERO CONTENT CARD — bottom-left ── */
+/* Card: transparent, bottom-left, no box */
 .cgg-card {
   position: absolute;
-  left: 0;
-  bottom: 42px;
+  left: 32px;
+  bottom: 62px;
   z-index: 10;
-  width: 420px;
+  width: 370px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  background: #fff;
-  padding: 32px 40px 36px 40px;
+  gap: 18px;
+  background: transparent;
 }
 
 .cgg-card-title {
   font-family: 'Playfair Display', serif !important;
-  font-size: 62px !important;
+  font-size: 56px !important;
   font-weight: 700 !important;
-  line-height: 1.05 !important;
+  line-height: 1.0 !important;
   color: #000 !important;
   letter-spacing: -0.01em !important;
   margin: 0 !important;
@@ -139,10 +134,10 @@ body[data-template="page.gift-guide"] {
 
 .cgg-card-desc {
   font-family: 'Poppins', sans-serif !important;
-  font-size: 13.5px !important;
+  font-size: 13px !important;
   line-height: 1.65 !important;
   color: #000 !important;
-  max-width: 340px !important;
+  max-width: 330px !important;
   margin: 0 !important;
   padding: 0 !important;
   font-weight: 400 !important;
@@ -152,7 +147,7 @@ body[data-template="page.gift-guide"] {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 12px !important;
+  gap: 14px !important;
   height: 50px !important;
   padding: 0 28px !important;
   background: #000 !important;
@@ -178,7 +173,7 @@ body[data-template="page.gift-guide"] {
   right: 0;
   bottom: 0;
   height: 42px;
-  background: #e5e5e5;
+  background: #e8e8e8;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -187,28 +182,28 @@ body[data-template="page.gift-guide"] {
 }
 .cgg-strip-text {
   font-family: 'Poppins', sans-serif;
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #000;
   text-align: center;
   line-height: 1;
 }
 
-/* ── SECOND SECTION: "Tisso vison in the wild" ── */
+/* ── WILD SECTION ── */
 .cgg-wild {
   display: block;
   width: 100%;
-  padding: 60px 40px 80px;
+  padding: 56px 32px 80px;
   background: #fff;
 }
 .cgg-wild-title {
   font-family: 'Playfair Display', serif;
-  font-size: 36px;
+  font-size: 34px;
   font-weight: 400;
   color: #000;
-  margin: 0 0 32px 0;
+  margin: 0 0 28px 0;
   padding: 0;
   line-height: 1.2;
   letter-spacing: -0.01em;
@@ -221,15 +216,20 @@ body[data-template="page.gift-guide"] {
 .cgg-grid-item {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 1 / 1.1;
-  background: #ccc;
+  aspect-ratio: 290 / 310;
+  background: #d0d0d0;
 }
 .cgg-grid-item img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: center top;
+}
+.cgg-grid-item svg.cgg-placeholder {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 /* ── HOTSPOT ── */
@@ -240,23 +240,24 @@ body[data-template="page.gift-guide"] {
   cursor: pointer;
 }
 .cgg-hotspot-btn {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
-  background: #fff;
-  border: 1.5px solid #bbb;
+  background: rgba(255,255,255,0.92);
+  border: 1.5px solid #ccc;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  font-weight: 300;
+  font-size: 15px;
+  font-weight: 400;
   color: #000;
   line-height: 1;
   cursor: pointer;
   transition: transform 0.2s ease, border-color 0.2s ease;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.18);
   padding: 0;
   font-family: 'Poppins', sans-serif;
+  appearance: none;
 }
 .cgg-hotspot:hover .cgg-hotspot-btn {
   transform: scale(1.15);
@@ -280,15 +281,13 @@ body[data-template="page.gift-guide"] {
   box-shadow: 0 2px 8px rgba(0,0,0,0.12);
   z-index: 20;
 }
-.cgg-hotspot:hover .cgg-hotspot-tooltip {
-  opacity: 1;
-}
+.cgg-hotspot:hover .cgg-hotspot-tooltip { opacity: 1; }
 
 /* ── TABLET ── */
 @media (max-width: 1024px) {
   .cgg-nav { padding: 0 28px; gap: 16px; }
-  .cgg-card { left: 28px; width: min(360px, calc(100% - 56px)); }
-  .cgg-card-title { font-size: clamp(42px, 5.5vw, 62px) !important; }
+  .cgg-card { left: 28px; width: min(340px, calc(100% - 56px)); }
+  .cgg-card-title { font-size: clamp(40px, 5vw, 56px) !important; }
   .cgg-wild { padding: 48px 28px 64px; }
 }
 
@@ -303,8 +302,8 @@ body[data-template="page.gift-guide"] {
     justify-items: center;
   }
   .cgg-nav-btn { width: 100%; max-width: 280px; }
-  .cgg-hero { height: auto; min-height: 100svh; padding-bottom: 42px; }
-  .cgg-bg { bottom: 42px; min-height: 300px; position: relative; height: 55vw; }
+  .cgg-hero { height: auto; min-height: unset; padding-bottom: 42px; }
+  .cgg-bg { position: relative; bottom: auto; height: 55vw; min-height: 200px; }
   .cgg-card {
     position: relative;
     left: auto;
@@ -313,19 +312,18 @@ body[data-template="page.gift-guide"] {
     margin: 20px auto 0;
     gap: 14px;
   }
-  .cgg-card-title { font-size: clamp(34px, 9vw, 52px) !important; }
+  .cgg-card-title { font-size: clamp(32px, 9vw, 48px) !important; }
   .cgg-card-desc { font-size: 13px !important; max-width: 100% !important; }
   .cgg-card-btn { width: 100% !important; padding: 0 !important; }
   .cgg-strip { position: relative; }
   .cgg-wild { padding: 40px 16px 56px; }
-  .cgg-wild-title { font-size: 28px; }
+  .cgg-wild-title { font-size: 26px; }
   .cgg-grid { grid-template-columns: 1fr; gap: 6px; }
 }
 {%- endstyle -%}
 
 <div class="cgg-wrap">
 
-  {%- comment -%} ── HEADER ── {%- endcomment -%}
   <nav class="cgg-nav" aria-label="Gift guide navigation">
     <span class="cgg-logo">{{ section.settings.logo_text }}</span>
     <span class="cgg-tagline">{{ section.settings.header_tagline }}</span>
@@ -334,19 +332,13 @@ body[data-template="page.gift-guide"] {
     </a>
   </nav>
 
-  {%- comment -%} ── HERO ── {%- endcomment -%}
   <div class="cgg-hero">
-
     {%- if section.settings.bg_image != blank -%}
       {%- assign bg_src = section.settings.bg_image | image_url: width: 2400 -%}
     {%- else -%}
       {%- assign bg_src = 'gift-guide-banner.svg' | asset_url -%}
     {%- endif -%}
-    <div
-      class="cgg-bg"
-      aria-hidden="true"
-      style="background-image: url('{{ bg_src }}');"
-    ></div>
+    <div class="cgg-bg" aria-hidden="true" style="background-image: url('{{ bg_src }}');"></div>
 
     <div class="cgg-card">
       <span class="cgg-card-title">{{ section.settings.card_title }}</span>
@@ -359,10 +351,8 @@ body[data-template="page.gift-guide"] {
     <div class="cgg-strip">
       <span class="cgg-strip-text">{{ section.settings.strip_text }}</span>
     </div>
-
   </div>
 
-  {%- comment -%} ── "TISSO VISON IN THE WILD" GRID ── {%- endcomment -%}
   <div class="cgg-wild">
     <h2 class="cgg-wild-title">{{ section.settings.wild_title }}</h2>
     <div class="cgg-grid">
@@ -381,10 +371,7 @@ body[data-template="page.gift-guide"] {
               {{ 'image' | placeholder_svg_tag: 'cgg-placeholder' }}
             {%- endif -%}
             {%- if block.settings.hotspot_label != blank -%}
-              <div
-                class="cgg-hotspot"
-                style="left: {{ block.settings.hotspot_x }}%; top: {{ block.settings.hotspot_y }}%;"
-              >
+              <div class="cgg-hotspot" style="left: {{ block.settings.hotspot_x }}%; top: {{ block.settings.hotspot_y }}%;">
                 <button class="cgg-hotspot-btn" aria-label="{{ block.settings.hotspot_label }}">+</button>
                 <div class="cgg-hotspot-tooltip">{{ block.settings.hotspot_label }}</div>
               </div>
@@ -401,16 +388,16 @@ body[data-template="page.gift-guide"] {
 {
   "name": "Custom Gift Guide",
   "settings": [
-    { "type": "text",         "id": "logo_text",        "label": "Logo",             "default": "TISSO VISION" },
-    { "type": "text",         "id": "header_tagline",   "label": "Header tagline",   "default": "Find the ideal gift for your loved ones." },
-    { "type": "text",         "id": "header_cta_label", "label": "Header CTA label", "default": "CHOOSE GIFT" },
+    { "type": "text",         "id": "logo_text",        "label": "Logo",              "default": "TISSO VISION" },
+    { "type": "text",         "id": "header_tagline",   "label": "Header tagline",    "default": "Find the ideal gift for your loved ones." },
+    { "type": "text",         "id": "header_cta_label", "label": "Header CTA label",  "default": "CHOOSE GIFT" },
     { "type": "url",          "id": "header_cta_link",  "label": "Header CTA link" },
     { "type": "image_picker", "id": "bg_image",         "label": "Hero background (leave blank for default SVG)" },
-    { "type": "text",         "id": "card_title",       "label": "Card title",       "default": "The Gift Guide" },
-    { "type": "textarea",     "id": "card_desc",        "label": "Card description", "default": "Discover Joy: Your Ultimate Holiday Gift Destination.\nExplore our curated selection and find the perfect gifts to delight your loved ones this holiday season." },
-    { "type": "text",         "id": "card_cta_label",   "label": "Card CTA label",   "default": "SHOP NOW" },
+    { "type": "text",         "id": "card_title",       "label": "Card title",        "default": "The Gift Guide" },
+    { "type": "textarea",     "id": "card_desc",        "label": "Card description",  "default": "Discover Joy: Your Ultimate Holiday Gift Destination.\nExplore our curated selection and find the perfect gifts to delight your loved ones this holiday season." },
+    { "type": "text",         "id": "card_cta_label",   "label": "Card CTA label",    "default": "SHOP NOW" },
     { "type": "url",          "id": "card_cta_link",    "label": "Card CTA link" },
-    { "type": "text",         "id": "strip_text",       "label": "Bottom strip text","default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL" },
+    { "type": "text",         "id": "strip_text",       "label": "Bottom strip text", "default": "SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL" },
     { "type": "text",         "id": "wild_title",       "label": "Grid section title","default": "Tisso vison in the wild" }
   ],
   "blocks": [
@@ -419,9 +406,9 @@ body[data-template="page.gift-guide"] {
       "name": "Hotspot Image",
       "settings": [
         { "type": "image_picker", "id": "image",         "label": "Image" },
-        { "type": "text",         "id": "hotspot_label", "label": "Hotspot tooltip label", "default": "Shop this look" },
-        { "type": "range",        "id": "hotspot_x",     "label": "Hotspot X position (%)", "min": 5, "max": 95, "step": 1, "default": 50 },
-        { "type": "range",        "id": "hotspot_y",     "label": "Hotspot Y position (%)", "min": 5, "max": 95, "step": 1, "default": 70 }
+        { "type": "text",         "id": "hotspot_label", "label": "Hotspot tooltip",  "default": "Shop this look" },
+        { "type": "range",        "id": "hotspot_x",     "label": "Hotspot X (%)",    "min": 5, "max": 95, "step": 1, "default": 50 },
+        { "type": "range",        "id": "hotspot_y",     "label": "Hotspot Y (%)",    "min": 5, "max": 95, "step": 1, "default": 70 }
       ]
     }
   ],
