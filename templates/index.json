@@ -28,7 +28,7 @@
     }
   },
   "order": [
-    "custom_gift_guide",
+    "tisso-banner",
     "gift_guide_grid"
   ]
 }
