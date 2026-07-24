@@ -32,7 +32,6 @@
     {% endif %}
     {% if is_gift_guide %}
       <link rel="stylesheet" href="{{ 'gift-guide.css' | asset_url }}">
-      <link rel="stylesheet" href="{{ 'custom-gift-guide.css' | asset_url }}">
     {% endif %}
 
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
@@ -101,7 +100,6 @@
 
       {% if is_gift_guide %}
         <script src="{{ 'gift-guide.js' | asset_url }}" defer></script>
-        <script src="{{ 'custom-gift-guide.js' | asset_url }}" defer></script>
       {% endif %}
 
       <footer>

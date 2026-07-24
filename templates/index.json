@@ -1,11 +1,11 @@
 {
   "sections": {
-    "custom_gift_guide": {
-      "type": "tisso=banner",
+    "gift_guide_banner": {
+      "type": "gift-guide-banner",
       "settings": {}
     },
     "gift_guide_grid": {
-      "type": "custom-gift-grid",
+      "type": "gift-guide-grid",
       "settings": {
         "section_heading": "Tisso vison in the wild"
       },
@@ -28,7 +28,7 @@
     }
   },
   "order": [
-    "tisso-banner",
+    "gift_guide_banner",
     "gift_guide_grid"
   ]
 }
