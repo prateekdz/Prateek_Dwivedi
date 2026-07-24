@@ -34,6 +34,7 @@
 
     {% if template == 'page.gift-guide' %}
     <style>
+      html:has(body[data-template="page.gift-guide"]) { height:auto!important; overflow:auto!important; }
       body[data-template="page.gift-guide"] { overflow-y:auto!important; height:auto!important; }
       body[data-template="page.gift-guide"] .page-wrapper { height:auto!important; overflow:visible!important; overflow-x:hidden!important; display:block!important; }
       body[data-template="page.gift-guide"] #MainContent, body[data-template="page.gift-guide"] .content-for-layout { display:block!important; flex:none!important; padding:0!important; margin:0!important; }
