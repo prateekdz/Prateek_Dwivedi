@@ -1,7 +1,7 @@
 {
   "sections": {
-    "custom_gift_guide": {
-      "type": "custom-gift-guide",
+    "custom_g": {
+      "type": "tisso-banner",
       "settings": {}
     },
     "gift_guide_grid": {
