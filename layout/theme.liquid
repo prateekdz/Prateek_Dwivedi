@@ -26,25 +26,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Playfair+Display:wght@400;500;700;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    {% if template == 'page.gift-guide' or template contains 'gift-guide' %}
-      {{ 'custom-gift-guide.css.liquid' | asset_url | stylesheet_tag }}
-      <style>
-        /* base.css locks .page-wrapper to overflow:hidden + height:100dvh on desktop.
-           This makes the gift-guide page appear blank. Override it. */
-        html:has(body[data-template="page.gift-guide"]),
-        html:has(body[data-template="page.gift-guide"]) body {
-          height: auto !important;
-          overflow: visible !important;
-          overflow-x: hidden !important;
-        }
-        body[data-template="page.gift-guide"] .page-wrapper {
-          height: auto !important;
-          overflow: visible !important;
-          overflow-x: hidden !important;
-          min-height: 100dvh;
-        }
-      </style>
-    {% endif %}
+
 
     <script src="{{ 'constants.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'pubsub.js' | asset_url }}" defer="defer"></script>

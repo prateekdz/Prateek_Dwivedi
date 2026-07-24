@@ -1,19 +1,281 @@
-<div class="cgg">
+{%- style -%}
+/* ============================================================
+   GIFT GUIDE PAGE — all styles inline to guarantee load order
+   Scoped entirely to [data-cgg] to prevent any bleed
+   ============================================================ */
 
-  <header class="cgg__header">
-    <span class="cgg__header-logo">{{ section.settings.logo_text }}</span>
-    <span class="cgg__header-tagline">{{ section.settings.header_tagline }}</span>
-    <a class="cgg__header-cta" href="{{ section.settings.header_cta_link | default: '#' }}">
+/* 1. PAGE RESETS — undo base.css overflow lock */
+html:has([data-cgg]),
+html:has([data-cgg]) body {
+  height: auto !important;
+  min-height: 100% !important;
+  overflow-x: hidden !important;
+}
+html:has([data-cgg]) body {
+  overflow-y: auto !important;
+}
+[data-cgg] ~ * { display: none !important; }
+#header-group:has(~ * [data-cgg]),
+body:has([data-cgg]) #header-group,
+body:has([data-cgg]) footer { display: none !important; }
+body:has([data-cgg]) .page-wrapper {
+  height: auto !important;
+  overflow: visible !important;
+  overflow-x: hidden !important;
+  display: block !important;
+}
+body:has([data-cgg]) #MainContent,
+body:has([data-cgg]) .content-for-layout {
+  display: block !important;
+  flex: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+body:has([data-cgg]) .shopify-section {
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+}
+
+/* 2. WRAPPER */
+[data-cgg] {
+  display: block;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: #000;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+[data-cgg] *, [data-cgg] *::before, [data-cgg] *::after {
+  box-sizing: border-box;
+}
+
+/* 3. NAV BAR */
+[data-cgg-nav] {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  height: 72px;
+  background: #f2f2f2;
+  padding: 0 56px;
+}
+[data-cgg-logo] {
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #000;
+  white-space: nowrap;
+  line-height: 1;
+}
+[data-cgg-tagline] {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  color: #000;
+  line-height: 1.4;
+  margin: 0;
+}
+[data-cgg-nav-cta] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 220px;
+  height: 52px;
+  background: #ece21c;
+  color: #000;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+[data-cgg-nav-cta]:hover { background: #d4cc00; color: #000; }
+
+/* 4. HERO WRAPPER */
+[data-cgg-hero] {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 72px);
+  min-height: 580px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+/* 5. BACKGROUND ILLUSTRATION */
+[data-cgg-bg] {
+  position: absolute;
+  inset: 0 0 42px 0;
+  z-index: 0;
+  overflow: hidden;
+  background: #fff;
+}
+[data-cgg-bg] img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+}
+
+/* 6. CARD */
+[data-cgg-card] {
+  position: absolute;
+  left: 56px;
+  bottom: 74px;
+  z-index: 10;
+  width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 7. CARD TITLE */
+[data-cgg-title] {
+  font-family: 'Playfair Display', serif !important;
+  font-size: 80px !important;
+  font-weight: 700 !important;
+  line-height: 0.95 !important;
+  color: #000 !important;
+  letter-spacing: -0.02em !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+  /* Override base.css h1 */
+  text-transform: none !important;
+}
+
+/* 8. CARD DESCRIPTION */
+[data-cgg-desc] {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 15px !important;
+  line-height: 1.75 !important;
+  color: #000 !important;
+  max-width: 380px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: block !important;
+  font-weight: 400 !important;
+}
+
+/* 9. CARD CTA BUTTON */
+[data-cgg-cta] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 220px !important;
+  height: 58px !important;
+  background: #000 !important;
+  color: #fff !important;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  border: none !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  outline: none !important;
+  transition: background 0.15s !important;
+  /* Override base.css .button */
+  padding: 0 !important;
+  box-shadow: none !important;
+  width: fit-content !important;
+  padding: 0 32px !important;
+}
+[data-cgg-cta]:hover { background: #222 !important; color: #fff !important; }
+
+/* 10. BOTTOM STRIP */
+[data-cgg-strip] {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 42px;
+  background: #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  padding: 0 24px;
+}
+[data-cgg-strip] span {
+  font-family: 'Poppins', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #000;
+  text-align: center;
+  line-height: 1;
+}
+
+/* 11. TABLET */
+@media (max-width: 1024px) {
+  [data-cgg-nav] { padding: 0 32px; gap: 16px; }
+  [data-cgg-card] { left: 32px; width: min(440px, calc(100% - 64px)); }
+  [data-cgg-title] { font-size: clamp(48px, 7vw, 80px) !important; }
+}
+
+/* 12. MOBILE */
+@media (max-width: 680px) {
+  [data-cgg-nav] {
+    grid-template-columns: 1fr;
+    height: auto;
+    padding: 14px 20px;
+    gap: 10px;
+    text-align: center;
+    justify-items: center;
+  }
+  [data-cgg-hero] {
+    height: auto;
+    min-height: 100svh;
+    padding-bottom: 42px;
+  }
+  [data-cgg-bg] { bottom: 42px; }
+  [data-cgg-card] {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: calc(100% - 32px);
+    margin: 20px auto 0;
+    gap: 16px;
+  }
+  [data-cgg-title] { font-size: clamp(40px, 11vw, 64px) !important; }
+  [data-cgg-desc] { font-size: 14px !important; max-width: 100% !important; }
+  [data-cgg-cta] { width: 100% !important; padding: 0 !important; }
+  [data-cgg-strip] { position: relative; }
+}
+{%- endstyle -%}
+
+<div data-cgg>
+
+  <nav data-cgg-nav aria-label="Gift guide navigation">
+    <span data-cgg-logo>{{ section.settings.logo_text }}</span>
+    <span data-cgg-tagline>{{ section.settings.header_tagline }}</span>
+    <a data-cgg-nav-cta href="{{ section.settings.header_cta_link | default: '#' }}">
       {{- section.settings.header_cta_label -}}&nbsp;&nbsp;→
     </a>
-  </header>
+  </nav>
 
-  <div class="cgg__hero">
+  <div data-cgg-hero>
 
-    <div class="cgg__hero-bg" aria-hidden="true">
+    <div data-cgg-bg aria-hidden="true">
       {%- if section.settings.bg_image != blank -%}
         <img
-          class="cgg__hero-bg-img"
           src="{{ section.settings.bg_image | image_url: width: 2400 }}"
           alt=""
           loading="eager"
@@ -23,7 +285,6 @@
         >
       {%- else -%}
         <img
-          class="cgg__hero-bg-img"
           src="{{ 'gift-guide-banner.svg' | asset_url }}"
           alt=""
           loading="eager"
@@ -34,16 +295,16 @@
       {%- endif -%}
     </div>
 
-    <div class="cgg__card">
-      <span class="cgg__card-title">{{ section.settings.card_title }}</span>
-      <span class="cgg__card-desc">{{ section.settings.card_desc | newline_to_br }}</span>
-      <a class="cgg__card-cta" href="{{ section.settings.card_cta_link | default: '#' }}">
+    <div data-cgg-card>
+      <span data-cgg-title>{{ section.settings.card_title }}</span>
+      <span data-cgg-desc>{{ section.settings.card_desc | newline_to_br }}</span>
+      <a data-cgg-cta href="{{ section.settings.card_cta_link | default: '#' }}">
         {{- section.settings.card_cta_label -}}&nbsp;&nbsp;→
       </a>
     </div>
 
-    <div class="cgg__strip">
-      <span class="cgg__strip-text">{{ section.settings.strip_text }}</span>
+    <div data-cgg-strip>
+      <span>{{ section.settings.strip_text }}</span>
     </div>
 
   </div>
