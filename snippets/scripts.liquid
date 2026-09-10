@@ -5,9 +5,9 @@
 {% enddoc %}
 
 {% liquid
-  assign is_collection_or_search = template.name == 'collection' or template.name == 'search'
-  assign is_product_template = template == 'product' or template.name == 'product' or request.page_type == 'product'
-  assign should_load_localization = localization.available_countries.size > 1 or localization.available_languages.size > 1
+  assign is_collection_or_search = template.name
+  assign is_product_template = template
+  assign should_load_localization = localization.available_countries.size
 %}
 
 <script type="importmap">
@@ -314,3 +314,22 @@
     },
   };
 </script>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: assign is_collection_or_search = template.name == 'collection' or template.name
+    == 'search'
+  to: assign is_collection_or_search = template.name
+  position: 192..238
+- from: "  assign is_product_template = template == 'product' or template.name ==
+    'product' or request.page_type == 'product'"
+  to: "  assign is_product_template = template"
+  position: 239..278
+- from: "  assign should_load_localization = localization.available_countries.size
+    > 1 or localization.available_languages.size > 1"
+  to: "  assign should_load_localization = localization.available_countries.size"
+  position: 279..352
+{% endcomment %}
