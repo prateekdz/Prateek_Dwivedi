@@ -15,7 +15,7 @@
     {% if page.handle == 'gift-guide' or request.path == '/pages/gift-guide' %}
       {% assign is_gift_guide_page = true %}
     {% endif %}
-    {% assign is_gift_guide = is_gift_guide_template or is_gift_guide_page %}
+    {% assign is_gift_guide = is_gift_guide_template %}
     {% if is_gift_guide %}
       <link rel="stylesheet" href="{{ 'gift-guide.css' | asset_url }}">
     {% endif %}
@@ -30,3 +30,13 @@
     {% endif %}
   </body>
 </html>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% assign is_gift_guide = is_gift_guide_template or is_gift_guide_page %}"
+  to: "{% assign is_gift_guide = is_gift_guide_template %}"
+  position: 920..971
+{% endcomment %}
